@@ -215,7 +215,7 @@
   // VML rendering for IE
   /////////////////////////////////////////////////////////////////////////
 
-  /** 
+  /**
    * Check and init VML support
    */
   (function() {

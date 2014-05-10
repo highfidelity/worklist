@@ -20,8 +20,8 @@ $(function() {
 
     if (confirmTxt.length > 0) {
         Utils.emptyModal({
-            title: 'Email confirmation', 
-            content: confirmTxt, 
+            title: 'Email confirmation',
+            content: confirmTxt,
             close: function() {
                 window.location = './';
             }

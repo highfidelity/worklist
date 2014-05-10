@@ -390,7 +390,7 @@ TimelineChart.prototype.getSeriesMax = function (seriesData, initialMax) {
 	}
 	return max;
 };
-    
+
 TimelineChart.prototype.normalizeSeries = function (seriesData, maxValue) {
 	var normalizedData = [];
 	for (var i = 0; i < seriesData.length; i++) {
@@ -411,7 +411,7 @@ TimelineChart.prototype.updateAxisMax = function (seriesData, targetSeriesData) 
 	    var dataValue = seriesData[i];
 	    if(dataValue == undefined || dataValue <= targetSeriesData[i]) {
 	      normalizedData[i] = targetSeriesData[i];
-	    } else { 
+	    } else {
 		normalizedData[i] = dataValue;
 	    }
 	}
@@ -629,9 +629,9 @@ LoveChart = {
             };
         });
     },
-    
+
     fetchData:undefined,
-    
+
     forceWeeklyLabels: function(forceWeekly) {
     	this.forceWeekly = forceWeekly;
     },
@@ -666,7 +666,7 @@ LoveChart = {
 	} else {
 	  callback(LoveChart.cache[key]);
 	}
-	   
+
     },
     /**
      * Set the User type ( as Sender or Receiver )

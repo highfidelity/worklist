@@ -1,10 +1,10 @@
 <?php
 
 class UserReview {
-    
+
     public function __construct() {
     }
-    
+
     /**
      * Get the review
      */
@@ -64,11 +64,11 @@ class UserReview {
         }else{
             echo $withTrustHTML . "<textarea class='userReview'></textarea>";
             exit(0);
-        }           
+        }
     }
 
     /**
-     * Save anonymous review 
+     * Save anonymous review
      */
     public function saveReview() {
         $ret = $this->validateRequest(array('userReview', 'reviewee_id', 'notify_now'));
@@ -78,7 +78,7 @@ class UserReview {
         if ($reviewer_id > 0) {
             $reqUser->findUserById($reviewer_id);
         } else {
-            $this->respond(false, "You have to be logged in to access user info!",''); 
+            $this->respond(false, "You have to be logged in to access user info!",'');
         }
         $userReview = $_REQUEST['userReview'];
         $reviewee_id = (int) $_REQUEST['reviewee_id'];
@@ -88,15 +88,15 @@ class UserReview {
         $review = new Review();
         if ($review->loadById($reviewer_id,$reviewee_id) ){
             if ($userReview == "") {
-                $oReview = $review->getReviews($reviewee_id, $reviewer_id, ' AND r.reviewer_id=' . $reviewer_id);      
+                $oReview = $review->getReviews($reviewee_id, $reviewer_id, ' AND r.reviewer_id=' . $reviewer_id);
                 if ($review->removeRow(" reviewer_id = ".$reviewer_id . " AND reviewee_id = ".$reviewee_id)) {
                     if ($notify_now) {
                         sendReviewNotification($reviewee_id, "delete", $oReview);
                     }
                     $this->respond(true, "Review deleted.", '');
                 } else {
-                    $this->respond(false, "Cannot delete review! Please retry later.",''); 
-                }  
+                    $this->respond(false, "Cannot delete review! Please retry later.",'');
+                }
             } else {
                 if (!strcmp($review->review, $userReview)) {
                     $this->respond(true, "No changes made.",'');
@@ -107,8 +107,8 @@ class UserReview {
                     $oReview = $review->getReviews($reviewee_id, $reviewer_id, ' AND r.reviewer_id=' . $reviewer_id);
                     $this->respond(true, "Review updated.",'');
                 } else {
-                    $this->respond(false, "Cannot update review! Please retry later.",''); 
-                }  
+                    $this->respond(false, "Cannot update review! Please retry later.",'');
+                }
             }
         } else {
             if ($userReview != "") {
@@ -118,7 +118,7 @@ class UserReview {
                     'review' => $userReview,
                     'journal_notified' => -1
                 );
-                        
+
                 if ($review->insertNew($values)) {
                     $myReview = $review->getReviews($reviewee_id, $reviewer_id, ' AND r.reviewer_id=' . $reviewer_id);
                     if (count($myReview) == 0) {
@@ -127,7 +127,7 @@ class UserReview {
                     }
                     $this->respond(true, "Review saved.", array('myReview' => $myReview));
                 } else {
-                    $this->respond(false, "Cannot create new review! Please retry later.", ''); 
+                    $this->respond(false, "Cannot create new review! Please retry later.", '');
                 }
             } else {
                 $this->respond(true, "New empty review is not saved.", '');
@@ -135,11 +135,11 @@ class UserReview {
         }
      }
 
-  
+
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.
-     * 
+     *
      * @fields has to be an array of strings
      */
     public function validateRequest($fields, $return=false) {
@@ -147,7 +147,7 @@ class UserReview {
         if (!is_array($fields)) {
             return false;
         }
-        
+
         foreach ($fields as $field) {
             if (!isset($_REQUEST[$field])) {
                 // If we specified that the function must return do so
@@ -160,7 +160,7 @@ class UserReview {
         }
     }
 
-    
+
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

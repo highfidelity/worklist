@@ -38,7 +38,7 @@ function tweakSizes(canvasId) {
     $("#" + canvasId).css({
         'top':  dollarHeight + 'px',
         'position': 'absolute'
-    })    
+    })
 }
 function collectData() {
     $.ajax({
@@ -197,7 +197,7 @@ function getLatLong() {
                         },
                         dataType: "json",
                     })
-                    /* */ 
+                    /* */
                     counter++;
                 } else {
                     clearInterval(geoCodeLoop);

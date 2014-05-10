@@ -3,7 +3,7 @@
  * Copyright 2014 - High Fidelity, Inc.
  */
 require_once("config.php");
- 
+
 class Dispatcher {
     public function run() {
         $url = isset($_GET['url']) ? $_GET['url'] : '';
@@ -25,7 +25,7 @@ class Dispatcher {
 
         $dispatcher->get('/help', array('Help'));
         $dispatcher->get('/jobs', array('Jobs'));
-        
+
         $dispatcher->get('/logout', array('Logout'));
         $dispatcher->get('/password', array('Password'));
         $dispatcher->post('/password', array('Password'));
@@ -82,7 +82,7 @@ class Dispatcher {
             $Controller = new $controller();
             call_user_func_array(array($Controller, $method), $params);
         } catch(Exception $e) {
-            
+
         }
     }
 }

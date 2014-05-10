@@ -32,35 +32,35 @@ class JobsView extends View {
         if ($this->currentUser['is_runner']) {
             $status_array = array(
                 "Draft",
-                "Suggested", 
-                "SuggestedWithBid", 
-                "Bidding", 
-                "Working", 
-                "Functional", 
-                "SvnHold", 
-                "Code Review", 
-                "Completed", 
-                "Done", 
+                "Suggested",
+                "SuggestedWithBid",
+                "Bidding",
+                "Working",
+                "Functional",
+                "SvnHold",
+                "Code Review",
+                "Completed",
+                "Done",
                 "Pass"
             );
         } else {
             $status_array = array(
-                "Suggested", 
-                "SuggestedWithBid", 
-                "Bidding", 
-                "Working", 
-                "Functional", 
-                "SvnHold", 
-                "Code Review", 
-                "Completed", 
-                "Done", 
+                "Suggested",
+                "SuggestedWithBid",
+                "Bidding",
+                "Working",
+                "Functional",
+                "SvnHold",
+                "Code Review",
+                "Completed",
+                "Done",
                 "Pass"
             );
         }
 
         $box = '<select id="statusCombo" name="status" multiple="multiple" data-placeholder="All status">';
         //$box .= '<option value="ALL"' . (($filter->inStatus("ALL") || ($filter->inStatus(""))) ? ' selected="selected"' : '') .' > ' . $allDisplay . '</option>';
-        
+
         foreach ($status_array as $status) {
             $selected = '';
             if (empty($req_status)) {
@@ -70,51 +70,51 @@ class JobsView extends View {
             } else {
                 switch ($status) {
                     case 'Draft':
-                        if ($req_status == 'draft') { 
+                        if ($req_status == 'draft') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'Bidding':
-                        if ($req_status == 'bidding') { 
+                        if ($req_status == 'bidding') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'SuggestedWithBid':
-                        if ($req_status == 'suggestedwithbid') { 
+                        if ($req_status == 'suggestedwithbid') {
                             $selected = ' selected="selected"';
                         }
-                        break;    
+                        break;
                     case 'Working':
-                        if ($req_status == 'working') { 
+                        if ($req_status == 'working') {
                             $selected = ' selected="selected"';
                         }
                         //must be left in tact for the Jobs Underway link to produce accurate data
                         //holds true for functional and review below
-                        if ($req_status == 'underway') { 
+                        if ($req_status == 'underway') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'Functional':
-                        if ($req_status == 'functional') { 
+                        if ($req_status == 'functional') {
                             $selected = ' selected="selected"';
                         }
-                        if ($req_status == 'underway') { 
+                        if ($req_status == 'underway') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'SvnHold':
-                        if ($req_status == 'svnhold') { 
+                        if ($req_status == 'svnhold') {
                             $selected = ' selected="selected"';
                         }
-                        if ($req_status == 'underway') { 
+                        if ($req_status == 'underway') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'Code Review':
-                        if ($req_status == 'review') { 
+                        if ($req_status == 'review') {
                             $selected = ' selected="selected"';
                         }
-                        if ($req_status == 'underway') { 
+                        if ($req_status == 'underway') {
                             $selected = ' selected="selected"';
                         }
                         if ($req_status == 'needs-review') {
@@ -122,15 +122,15 @@ class JobsView extends View {
                         }
                         break;
                     case 'Completed':
-                        if ($req_status == 'completed') { 
+                        if ($req_status == 'completed') {
                             $selected = ' selected="selected"';
                         }
                         break;
                     case 'Done':
-                        if ($req_status == 'done') { 
+                        if ($req_status == 'done') {
                             $selected = ' selected="selected"';
                         }
-                        if ($req_status == 'completed') { 
+                        if ($req_status == 'completed') {
                             $selected = ' selected="selected"';
                         }
                         break;
@@ -138,7 +138,7 @@ class JobsView extends View {
             }
             $box .= '<option value="' . $status . '"' . $selected . '>' . $status . '</option>';
         }
-        
+
         //$box .= '<option value="CheckDone">Done</option>';
         $box .= '</select>';
         return $box;

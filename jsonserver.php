@@ -1,6 +1,6 @@
-<?php 
+<?php
 //  Copyright (c) 2010, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 include ("config.php");
 

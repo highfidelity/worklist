@@ -28,15 +28,15 @@ body > nav.navbar a.navbar-brand[href="https://highfidelity.io"] {
 
 /*navbar links colors and background */
 body > nav.navbar-inverse .navbar-nav > .li > a {
-    color: #515151;    
+    color: #515151;
 }
 
 /* navbar active links bg are too dark for us, let's make them a bit lighter */
-body > nav.navbar-inverse .navbar-nav > .open > a, 
-body > nav.navbar-inverse .navbar-nav > .open > a:hover, 
+body > nav.navbar-inverse .navbar-nav > .open > a,
+body > nav.navbar-inverse .navbar-nav > .open > a:hover,
 body > nav.navbar-inverse .navbar-nav > .open > a:focus,
-body > nav.navbar-inverse .navbar-nav > .active > a, 
-body > nav.navbar-inverse .navbar-nav > .active > a:hover, 
+body > nav.navbar-inverse .navbar-nav > .active > a,
+body > nav.navbar-inverse .navbar-nav > .active > a:hover,
 body > nav.navbar-inverse .navbar-nav > .active > a:focus {
     color: #ddd;
     background-color: #282828;

@@ -93,11 +93,11 @@ class JobView extends View {
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
         return $this->currentUser['id'] && (
-            (   !$this->workitem->getIsRelRunner() 
-                || ($user->getIs_admin() == 1 && $is_runner) 
+            (   !$this->workitem->getIsRelRunner()
+                || ($user->getIs_admin() == 1 && $is_runner)
                 || ($worklist['mechanic_id'] == $this->currentUser['id']) &&
                 $worklist['status'] != 'Done'
-            ) 
+            )
           || $workitem->getIsRelRunner()
           || ($worklist['creator_id']== $this->currentUser['user_id'] && $worklist['status'] != 'Done')
         );
@@ -114,10 +114,10 @@ class JobView extends View {
 
         $ret = '';
         if (!
-            ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) 
+            ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner))
           &&($worklist['mechanic_id'] == $this->currentUser['id'])
-          && $worklist['status'] != 'Done') 
-        { 
+          && $worklist['status'] != 'Done')
+        {
             //mechanics
             foreach ($statusListMechanic as $status) {
                 if ($status != $worklist['status']) {
@@ -125,7 +125,7 @@ class JobView extends View {
                     $ret .= '<option value="' . $status . '">' . $printStatus  . '</option>';
                 }
             }
-        } else if ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) { 
+        } else if ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) {
             //runners and admins
             foreach ($statusListRunner as $status) {
                 if ( $status != $worklist['status'] ) {
@@ -134,10 +134,10 @@ class JobView extends View {
                 }
             }
         } else if (
-             $worklist['creator_id']== $this->currentUser['id'] 
-          && $worklist['status'] != 'Working' 
-          && $worklist['status'] != 'Functional' && $worklist['status'] != 'Review' 
-          && $worklist['status'] != 'Completed' && $worklist['status'] != 'Done' 
+             $worklist['creator_id']== $this->currentUser['id']
+          && $worklist['status'] != 'Working'
+          && $worklist['status'] != 'Functional' && $worklist['status'] != 'Review'
+          && $worklist['status'] != 'Completed' && $worklist['status'] != 'Done'
         ) {
             //creator
             foreach ($statusListCreator as $status) {
@@ -158,15 +158,15 @@ class JobView extends View {
         $ret = '';
         if (
             (
-                $user->isRunnerOfWorkitem($workitem) 
+                $user->isRunnerOfWorkitem($workitem)
               || (
                     array_key_exists('userid', $_SESSION)
                   && (
-                        $_SESSION['userid'] == $worklist['budget_giver_id'] 
+                        $_SESSION['userid'] == $worklist['budget_giver_id']
                       || strpos(BUDGET_AUTHORIZED_USERS, "," . $_SESSION['userid'] . ",") !== false
-                    ) 
-                ) 
-            ) 
+                    )
+                )
+            )
           && !empty($worklist['budget_id'])
         ) {
             if ($this->action !="edit") {
@@ -194,7 +194,7 @@ class JobView extends View {
         $runnerslist = Project::getAllowedRunnerlist($worklist['project_id']);
         $ret = ' ';
         if ($worklist['runner_nickname'] != 'Not funded') {
-            $ret .= 
+            $ret .=
                 '<a href="./user/' . $worklist['runner_id'] . '"  id="ping-r-btn"' .
                 ' title="' . (isset($_SESSION['userid']) ? "Ping Designer" : "Log in to Ping Designer") . '"' .
                 ' data-user-id="' . $worklist['runner_id'] . '">' .
@@ -205,12 +205,12 @@ class JobView extends View {
         }
         $ret .= '<span class="changeRunner"><select name="runner">';
         foreach ($runnerslist as $r) {
-            $ret .= 
-                '<option value="' . $r->getId() . '"' . (($worklist['runner_id'] == $r->getId()) ? ' selected="selected"' : '') . '>' . 
-                    $r->getNickname() . 
+            $ret .=
+                '<option value="' . $r->getId() . '"' . (($worklist['runner_id'] == $r->getId()) ? ' selected="selected"' : '') . '>' .
+                    $r->getNickname() .
                 '</option>';
         }
-        $ret .= 
+        $ret .=
             '</select>' .
             '<input type="button" class="smbutton" name="changerunner" value="Change Designer" />' .
             '<input type="button" class="smbutton" name="cancel" value="Cancel" />' .
@@ -222,11 +222,11 @@ class JobView extends View {
         $worklist = $this->worklist;
         $ret = '';
         if ($worklist['runner_nickname'] != 'Not funded' && $worklist['runner_nickname'] != '') {
-            $ret .= 
+            $ret .=
                 '<span id="pingRunner" class="runnerName" title="' . (isset($_SESSION['userid']) ? "Ping Designer" : "Log in to Ping Designer") .'">' .
                 '<a href="#">Designer:</a></span>' .
-                '<a href="./user/' . $worklist['runner_id'] . '" >' . 
-                    substr($worklist['runner_nickname'], 0, 9) . (strlen($worklist['runner_nickname']) > 9 ? '...' : '') . 
+                '<a href="./user/' . $worklist['runner_id'] . '" >' .
+                    substr($worklist['runner_nickname'], 0, 9) . (strlen($worklist['runner_nickname']) > 9 ? '...' : '') .
                 '</a>';
         } else {
             $ret .= '<span class="runnerName" title="Ping Designer">Designer:</span> Not funded';
@@ -250,10 +250,10 @@ class JobView extends View {
             $mech = '<span class="mechanicName">Developer:</span>Not assigned';
         } else {
             $tooltip = isset($_SESSION['userid']) ? "Ping Developer" : "Log in to Ping Developer";
-            $mech = 
-                '<span id ="pingMechanic" class="mechanicName" title="' . $tooltip . '" >' . 
-                  '<a href="#">Developer:</a>' . 
-                '</span>' . 
+            $mech =
+                '<span id ="pingMechanic" class="mechanicName" title="' . $tooltip . '" >' .
+                  '<a href="#">Developer:</a>' .
+                '</span>' .
                 '<a id="ping-btn" href="./user/' . $worklist['mechanic_id'] . '" >' . $mech . '</a>';
         }
         return $mech;
@@ -266,10 +266,10 @@ class JobView extends View {
         $is_runner = $this->currentUser['is_runner'];
 
        return (
-             (($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) && $worklist['status']!='Done') 
+             (($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) && $worklist['status']!='Done')
           || (
-                 $worklist['creator_id'] == $this->currentUser['id']  
-              && ($worklist['status']=='Suggested' || $worklist['status']=='SuggestedWithBid') 
+                 $worklist['creator_id'] == $this->currentUser['id']
+              && ($worklist['status']=='Suggested' || $worklist['status']=='SuggestedWithBid')
               && is_null($worklist['runner_id'])
             )
         );
@@ -302,7 +302,7 @@ class JobView extends View {
                 $ret .= '<option value="' . $status . '" ' . ($status == $worklist['status'] ? ' selected="selected"' : '') . '>' .  $status . '</option>';
             }
             $ret .= '</select>';
-        } else { 
+        } else {
             $ret .= $worklist['status'] . ' <input type="hidden" id="status" name="status" value="' . $worklist['status'] . '" />';
         }
         return $ret;
@@ -332,7 +332,7 @@ class JobView extends View {
         $worklist = $this->worklist;
         $user = $this->user;
         return (
-            $user->isRunnerOfWorkitem($workitem) 
+            $user->isRunnerOfWorkitem($workitem)
           || $_SESSION['userid'] == $worklist['budget_giver_id']
           || strpos(BUDGET_AUTHORIZED_USERS, "," . $_SESSION['userid'] . ",") !== false
         );
@@ -365,7 +365,7 @@ class JobView extends View {
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
         return (
-             (strcasecmp($worklist['status'], 'Working') == 0 || strcasecmp($worklist['status'], 'Review') == 0 || strcasecmp($worklist['status'], 'Functional') == 0) 
+             (strcasecmp($worklist['status'], 'Working') == 0 || strcasecmp($worklist['status'], 'Review') == 0 || strcasecmp($worklist['status'], 'Functional') == 0)
           && ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner) ||($worklist['mechanic_id'] == $this->currentUser['id']))
         );
     }
@@ -377,7 +377,7 @@ class JobView extends View {
         $is_project_founder = $this->read('is_project_founder');
         return (
              ($worklist['status'] == 'Functional' || $worklist['status'] == 'Review')
-          && $worklist['sandbox'] != 'N/A' 
+          && $worklist['sandbox'] != 'N/A'
           || ($worklist['status'] == 'Working' && ($user->isRunnerOfWorkitem($workitem) || $is_project_founder || $user->getId() == $worklist['mechanic_id']))
         );
     }
@@ -386,7 +386,7 @@ class JobView extends View {
         $is_project_runner = $this->read('is_project_runner');
         $worklist = $this->worklist;
         return (
-             ($is_project_runner || $worklist['creator_id'] == $this->currentUser['id'] || ($this->currentUser['is_admin'] && $this->currentUser['is_runner'])) 
+             ($is_project_runner || $worklist['creator_id'] == $this->currentUser['id'] || ($this->currentUser['is_admin'] && $this->currentUser['is_runner']))
           && ($worklist['status'] != 'Done')
         );
     }
@@ -423,7 +423,7 @@ class JobView extends View {
         } else {
             return array_reverse($this->read('comments'), true);
         }
-        
+
     }
 
     public function isDescOrder() {
@@ -450,12 +450,12 @@ class JobView extends View {
         return (
              ($this->currentUser['id'] > 0 && $user->isEligible() && $worklist['mechanic_id'] != $this->currentUser['id'])
           && (
-                 $worklist['status'] == 'Review' 
+                 $worklist['status'] == 'Review'
               && (! $workitem->getCRCompleted())
               && (
-                     (! $workitem->getCRStarted()) 
-                  || $this->currentUser['id'] == $workitem->getCReviewerId() 
-                  || $workitem->getIsRelRunner() 
+                     (! $workitem->getCRStarted())
+                  || $this->currentUser['id'] == $workitem->getCReviewerId()
+                  || $workitem->getIsRelRunner()
                   || ($user->getIs_admin() == 1 && $is_runner)
                 )
             )
@@ -466,19 +466,19 @@ class JobView extends View {
         $workitem = $this->workitem;
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
-        return 
-             $this->read('userHasRights') 
+        return
+             $this->read('userHasRights')
           && (
-                 $this->currentUser['id'] == $workitem->getCReviewerId() 
-              || $workitem->getIsRelRunner() 
+                 $this->currentUser['id'] == $workitem->getCReviewerId()
+              || $workitem->getIsRelRunner()
               || ($user->getIs_admin() == 1 && $is_runner)
             );
     }
 
     public function canBid() {
         $worklist = $this->worklist;
-        return $worklist['status'] == 'Bidding' 
-          || $worklist['status'] == 'SuggestedWithBid' 
+        return $worklist['status'] == 'Bidding'
+          || $worklist['status'] == 'SuggestedWithBid'
           || ($worklist['status'] == 'Suggested' && $worklist['creator_id'] == $this->currentUser['id']);
     }
 
@@ -492,9 +492,9 @@ class JobView extends View {
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
         return (
-             (!empty($bids)) 
-          && ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner) || $this->currentUser['id'] == $workitem->getRunnerId()) 
-          && count($bids) >1 
+             (!empty($bids))
+          && ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner) || $this->currentUser['id'] == $workitem->getRunnerId())
+          && count($bids) >1
           && !$workitem->hasAcceptedBids()
           && ((($workitem->getStatus()) == "Bidding") || $workitem->getStatus() == "SuggestedWithBid")
         );
@@ -538,7 +538,7 @@ class JobView extends View {
             $notes = addcslashes(preg_replace("/\r?\n/", "<br />", $bid['notes']),"\\\'\"&\n\r<>");
 
             if ($canSeeBid) {
-                $ret .= 
+                $ret .=
                     "<script type='data'>".
                         "{id: {$bid['id']}, " .
                         "nickname: '{$bid['nickname']}', " .
@@ -553,11 +553,11 @@ class JobView extends View {
                         "notes: '" .  replaceEncodedNewLinesWithBr($notes) . "'}" .
                     "</script>";
             }
-            $ret .= 
+            $ret .=
                  '<td>'
                 . (
-                    $canSeeBid 
-                      ? '<a href="./user/' . $bid['bidder_id'] . '" bidderId="' . $bid['bidder_id'] . '">' . getSubNickname($bid['nickname']) . '</a>' 
+                    $canSeeBid
+                      ? '<a href="./user/' . $bid['bidder_id'] . '" bidderId="' . $bid['bidder_id'] . '">' . getSubNickname($bid['nickname']) . '</a>'
                       : $bid['nickname']
                   )
                 .'</td>'
@@ -581,15 +581,15 @@ class JobView extends View {
         $workitem = $this->workitem;
         $worklist = $this->worklist;
         $user = $this->user;
- 
+
         $feeTotal = 0;
         $ret = '';
-        
+
         foreach($fees as $fee) {
             $paid = (bool) $fee['paid'];
             $feeTotal += (float) $fee['amount'];
             $date = explode("/", $fee['date']);
-            $ret .= 
+            $ret .=
                 '<tr class="row-feelist-live">' .
                     '<script type="data">' .
                         "{id: {$fee['id']}, " .
@@ -605,7 +605,7 @@ class JobView extends View {
                         '</a>' .
                     '</td>' .
                     '<td class="fee">' .
-                        '$' . $fee['amount'] . 
+                        '$' . $fee['amount'] .
                     '</td>' .
                     '<td class="pre fee-description what">&nbsp;</td>' .
                     '<td class="when">' .
@@ -626,11 +626,11 @@ class JobView extends View {
                                  $worklist['status'] != 'Done'
                               && (
                                     (
-                                         $workitem->getIsRelRunner() 
+                                         $workitem->getIsRelRunner()
                                       || ($user->getIs_admin() == 1 && $this->currentUser['is_runner'])
-                                      || $this->currentUser['id'] == $workitem->getRunnerId() 
+                                      || $this->currentUser['id'] == $workitem->getRunnerId()
                                       || $this->currentUser['id'] == $fee['user_id']
-                                    ) 
+                                    )
                                   && ($this->currentUser['id'] && !$paid)
                                 )
                             )
@@ -655,7 +655,7 @@ class JobView extends View {
                             '<h5>Job Total :</h5>' .
                             '<span class="data">$ ' . number_format($feeTotal, 2)  . '</span>' .
                     '</td>' .
-                '</tr>';            
+                '</tr>';
         } else {
             $ret = '<tr><td colspan="5">No fees yet.</td></tr>';
         }
@@ -671,8 +671,8 @@ class JobView extends View {
         $is_project_runner = $this->read('is_project_runner');
         $user = $this->user;
         return (int) (
-            $is_project_runner 
-          || ($user->getIs_admin() == 1 && $this->currentUser['is_runner']) 
+            $is_project_runner
+          || ($user->getIs_admin() == 1 && $this->currentUser['is_runner'])
           || (isset($worklist['runner_id']) && $this->currentUser['id'] == $worklist['runner_id'])
         );
     }
@@ -684,7 +684,7 @@ class JobView extends View {
     public function insufficientRightsToEdit() {
         $worklist = $this->worklist;
         return (int) (
-            (!$worklist['status'] == 'Suggested' || !$worklist['status'] == 'SuggestedWithBid') 
+            (!$worklist['status'] == 'Suggested' || !$worklist['status'] == 'SuggestedWithBid')
           && !$worklist['creator_id'] == $this->currentUser['id']
         );
     }
@@ -703,10 +703,10 @@ class JobView extends View {
     public function showWithdrawOrDeclineButtons() {
         $worklist = $this->worklist;
         return (int) (
-             $worklist['status'] != 'Done' 
-          && $worklist['status'] != 'Working' 
-          && $worklist['status'] != 'Functional' 
-          && $worklist['status'] != 'Review' 
+             $worklist['status'] != 'Done'
+          && $worklist['status'] != 'Working'
+          && $worklist['status'] != 'Functional'
+          && $worklist['status'] != 'Review'
           && $worklist['status'] != 'Completed'
         );
     }
@@ -782,12 +782,12 @@ class JobView extends View {
     }
 
     public function taskEntries() {
-        // we don't need comments from status entries cause 
+        // we don't need comments from status entries cause
         // we are mixing them with real comments
         $worklist_entries = self::removeCommentsEntries($this->read('entries'));
 
         // let's group reply comments so they get rendered toghether, no matter their
-        // date according to the rest of the entries of other groups (only the first 
+        // date according to the rest of the entries of other groups (only the first
         // level comment date is taken for orfering)
         $comments = self::groupComments($this->read('comments'));
 
@@ -805,7 +805,7 @@ class JobView extends View {
                 $date = strtotime($entry->date);
                 $content = self::formatEntry($entry);
 
-                $ret .= 
+                $ret .=
                       '<li entryid="' . $id . '" date="' . $date  . '" type="' . $type .  '">'
                     .     '<h4>' . relativeTime($date - $now) . '</h4>'
                     .     $content
@@ -830,9 +830,9 @@ class JobView extends View {
                         '              ' . $commentObj->getCommentWithLinks() .
                         (
                             ($this->currentUser['id'] && !$this->statusDone())
-                                ? '<div class="reply-lnk"><a href="#commentform" onClick="return reply(' . $comment['id'] . ');">Reply</a></div>' 
+                                ? '<div class="reply-lnk"><a href="#commentform" onClick="return reply(' . $comment['id'] . ');">Reply</a></div>'
                                 : ''
-                        ) . 
+                        ) .
                         '            </div>' .
                         '        </div>' .
                         '    </div>' .
@@ -866,7 +866,7 @@ class JobView extends View {
                     $ret[] = $currentGroup;
                 }
                 $currentGroup = array(
-                    'date' => $comment['comment']->getDate(), 
+                    'date' => $comment['comment']->getDate(),
                     'content' => array()
                 );
             }

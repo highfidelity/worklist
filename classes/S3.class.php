@@ -794,7 +794,7 @@ class S3 {
 		}
 		array_push($policy->conditions, array('content-length-range', 0, $maxFileSize));
 		$policy = base64_encode(str_replace('\/', '/', json_encode($policy)));
-	
+
 		// Create parameters
 		$params = new stdClass;
 		$params->AWSAccessKeyId = self::$__accessKey;

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -12,27 +12,27 @@ var WLFavorites = {
             var newVal = ($(this).hasClass("myfavorite")) ? 0 : 1;
             WLFavorites.setFavorite(favorite_user_id, newVal, containerID, null, fav_user_nickname);
         });
-        
+
         var favCount = $('.profileFavoriteText').attr('data-favorite-count');
         var isMyFav = false;
         if ($('.favorite_user').hasClass('myfavorite')) {
             isMyFav = true;
         }
-        
+
         var favText = WLFavorites.getFavoriteText(favCount, isMyFav, 'Trusted ');
-        
+
         $('.profileFavoriteText').html(favText);
     },
     setFavorite: function( favorite_user_id, newVal, containerID, fAfter, fav_user_nickname ) {
         /*
-         * remove the .favorite_count 
+         * remove the .favorite_count
          */
         $.ajax({
             type: 'POST',
             url: 'api.php',
-            data: { 
-                action: 'setFavorite',  
-                favorite_user_id: favorite_user_id, 
+            data: {
+                action: 'setFavorite',
+                favorite_user_id: favorite_user_id,
                 newVal: newVal
             },
             dataType: 'json',
@@ -62,13 +62,13 @@ var WLFavorites = {
                         .removeClass("myfavorite")
                         .addClass("notmyfavorite")
                         .attr("title",  "Add " + fav_user_nickname + " as one of your trusted people.");
-                    
+
                 }
                 if (fAfter) {
                     fAfter(true);
                 }
             }
-                                     
+
         });
     },
     getFavoriteIcon: function(favoriteEnabled, objectId, type) {
@@ -97,12 +97,12 @@ var WLFavorites = {
     // logged in user.
     getFavoriteText: function(favCount, isMyFav, favText) {
         favText = typeof(favText) != 'undefined' ? favText : '';
-                
+
         var pluralize = 'people';
         if (favCount == 1) {
             pluralize = 'person';
         }
-     
+
         // if there are no favorites
         if (favCount == 0) {
             favText += 'by no one... for now!';
@@ -113,13 +113,13 @@ var WLFavorites = {
                 if (favCount == 2) {
                     pluralize = 'person';
                 }
-                favText += 'by <span class="favBlack">' + favCount 
+                favText += 'by <span class="favBlack">' + favCount
                 + '</span> ' + pluralize + ' <span class="favBlue">(including you)</span>';
             }
         } else /*if the user has not favorited the mission */ {
             favText += 'by <span class="favBlack">' + favCount + '</span> ' + pluralize;
         }
-        
+
         return favText;
     }
 };

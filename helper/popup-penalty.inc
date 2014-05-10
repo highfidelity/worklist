@@ -9,4 +9,4 @@
 	<input type="submit" name="penalize-cancel" value="Cancel" />
 	<input type="submit" name="penalize" value="Penalize" />
       </form>
-    </div><!-- End of popup for penalize user --> 
+    </div><!-- End of popup for penalize user -->

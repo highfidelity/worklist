@@ -31,10 +31,10 @@ class Utils{
         // user just logged  in, let's update the last seen date in session
         // date will be checked against db in initUserById
         $_SESSION['last_seen'] = date('Y-m-d');
-        
+
         initSessionDataByUserId($id);
     }
-    
+
     function currentPageUrl() {
         $pageURL = 'http';
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") { $pageURL .= "s"; }
@@ -75,7 +75,7 @@ class Utils{
         }
         return $str;
     }
-    
+
     /**
      * Encrypts a cleartext password via the crypt() function
      *
@@ -105,7 +105,7 @@ class Utils{
             );
             break;
         }
-        
+
         return crypt($clearText, $salt);
     }
 
@@ -114,7 +114,7 @@ class Utils{
         header('Location: ' . $redirect);
         die;
     }
-    
+
     /**
      * International phone number validation
      */

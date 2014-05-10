@@ -8,16 +8,16 @@
 /**
  * Class Html2Text. (HtmlParser example.)
  * Converts HTML to ASCII attempting to preserve
- * document structure. 
+ * document structure.
  * To use, create an instance of Html2Text passing
  * the text to convert and the desired maximum
- * number of characters per line. Then invoke 
+ * number of characters per line. Then invoke
  * convert() which returns ASCII text.
  */
 class Html2Text {
 
     // Private fields
-  
+
     var $iCurrentLine = "";
     var $iCurrentWord = "";
     var $iCurrentWordArray;
@@ -28,7 +28,7 @@ class Html2Text {
     var $iMaxColumns;
     var $iHtmlParser;
     var $iInText;
-    
+
     // Constants
 
     var $TOKEN_BR       = 0;
@@ -37,7 +37,7 @@ class Html2Text {
     var $TOKEN_AFTERLI  = 3;
     var $TOKEN_UL       = 4;
     var $TOKEN_ENDUL    = 5;
-   
+
     function Html2Text ($aHtmlText, $aMaxColumns) {
         $this->iHtmlText = $aHtmlText;
         $this->iMaxColumns = $aMaxColumns;
@@ -58,7 +58,7 @@ class Html2Text {
                 $retvalue = $this->iCurrentLine;
                 $this->iCurrentLine = "";
                 return $retvalue;
-            }                
+            }
             $word = $this->getWord();
             if ($word === false) {
                 if ($this->iCurrentLine == "") {
@@ -68,7 +68,7 @@ class Html2Text {
                 $this->iCurrentLine = "";
                 $this->iInText = false;
                 $this->iCurrentWord = "";
-                return $retvalue;                
+                return $retvalue;
             }
         }
         return false;
@@ -198,7 +198,7 @@ class Html2Text {
     function htmlDecode ($text) {
         // TBD
         return $text;
-    } 
+    }
 
     function getIndentation ($hasLI) {
         $indent = "";

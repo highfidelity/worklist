@@ -31,7 +31,7 @@ body {
 
 /* global links styling */
 a {
-    color: #333333;    
+    color: #333333;
 }
 a:hover {
     color: #009999;
@@ -74,7 +74,7 @@ body.onAjax nav.navbar > .container-fluid:after {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00007f7c', endColorstr='#00007f7c',GradientType=1 );
 }
 
-@keyframes moveLoadingBar { 
+@keyframes moveLoadingBar {
     0% {
         left: 0%;
         width: 0%;
@@ -89,7 +89,7 @@ body.onAjax nav.navbar > .container-fluid:after {
     }
 }
 
-@-o-keyframes moveLoadingBar { 
+@-o-keyframes moveLoadingBar {
     0% {
         left: 0%;
         width: 0%;
@@ -104,7 +104,7 @@ body.onAjax nav.navbar > .container-fluid:after {
     }
 }
 
-@-webkit-keyframes moveLoadingBar { 
+@-webkit-keyframes moveLoadingBar {
     0% {
         left: 0%;
         width: 0%;
@@ -119,7 +119,7 @@ body.onAjax nav.navbar > .container-fluid:after {
     }
 }
 
-@-moz-keyframes moveLoadingBar { 
+@-moz-keyframes moveLoadingBar {
     0% {
         left: 0%;
         width: 0%;
@@ -198,7 +198,7 @@ input.wlcheckbox[type="checkbox"] + label:before {
     content: '\00a0';
     width: 23px;
     line-height: 1em;
-    border-radius: 5px;    
+    border-radius: 5px;
     font-family: FontAwesome;
     display: inline-block;
     border: 1px solid #ccc;
@@ -220,7 +220,7 @@ form .row {
 }
 
 /**
- * chosen dropdown common styling 
+ * chosen dropdown common styling
  */
 body .chosen-container-single .chosen-single,
 body .chosen-container-multi .chosen-choices {
@@ -280,7 +280,7 @@ body .chosen-container-single .chosen-search:before {
 }
 
 
-body .chosen-container-single .chosen-single, 
+body .chosen-container-single .chosen-single,
 body .chosen-container-single .chosen-search input[type="text"] {
     background: none repeat scroll 0% 0% transparent;
 }
@@ -340,12 +340,12 @@ body .chosen-container-multi .chosen-choices:before {
 @media (max-width: 1024px) {
     body .chosen-container-multi .chosen-choices:before {
         padding: 6px 7px 6px 8px;
-    }    
+    }
 }
 
 body .chosen-container-multi.chosen-with-drop .chosen-choices:before,
 body .chosen-container-single.chosen-with-drop .chosen-single div b:before {
-    content: "\f077";    
+    content: "\f077";
 }
 
 body .chosen-container-single .chosen-single,
@@ -424,7 +424,7 @@ body .jumbotron a:hover {
     color: #009999;
 }
 body .jumbotron a:active {
-    color: #333333;    
+    color: #333333;
 }
 
 button:focus, a:focus {
@@ -479,9 +479,9 @@ button:focus, a:focus {
     margin-bottom: 0;
 }
 
-.container > .navbar-header, 
-.container-fluid > .navbar-header, 
-.container > .navbar-collapse, 
+.container > .navbar-header,
+.container-fluid > .navbar-header,
+.container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
     margin: 0;
 }
@@ -509,27 +509,27 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
     .dropdown > .dropdown-toggle {
         text-align: left;
     }
-    
+
     .navbar-nav.navbar-right {
         max-width: none;
     }
-    
+
     body > nav.navbar a.navbar-brand {
         margin-top: 9px;
     }
-    
+
     body > nav.navbar a.navbar-brand.wl-icon-worklist {
         margin-left: auto;
         margin-right: auto;
         width: calc(100% - 125px);
     }
-    
+
     .nav.navbar-nav a {
         background: none;
     }
 }
 
-.navbar.affix, 
+.navbar.affix,
 .navbar.affix-bottom {
     position: fixed;
     top: 0;
@@ -1106,7 +1106,7 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
     background: url('chosen/chosen-sprite.svg') no-repeat -30px -20px,linear-gradient(#eee 1%,#fff 15%);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:144dpi) { 
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-resolution:144dpi) {
     .chosen-rtl .chosen-search input[type=text],
     .chosen-container-single .chosen-single abbr,
     .chosen-container-single .chosen-single div b,

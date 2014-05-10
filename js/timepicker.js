@@ -171,7 +171,7 @@ $.datepicker._updateDatepickerOverride = $.datepicker._updateDatepicker;
 $.datepicker._updateDatepicker = function(inst) {
     $.datepicker._updateDatepickerOverride(inst);
     $.timepicker.resize();
-	
+
 };
 
 function Timepicker() {}
@@ -206,14 +206,14 @@ Timepicker.prototype = {
 
         $('#hourSlider').slider('option', 'max', 24 - stepHours);
         $('#hourSlider').slider('option', 'step', stepHours);
-		$('#hourSlider').slider({ change: function(event, ui) { 
+		$('#hourSlider').slider({ change: function(event, ui) {
 			   $.timepicker.update($.datepicker._formatDate(inst));
 		   }
 });
 
         $('#minuteSlider').slider('option', 'max', 60 - stepMinutes);
         $('#minuteSlider').slider('option', 'step', stepMinutes);
-		$('#minuteSlider').slider({ change: function(event, ui) { 
+		$('#minuteSlider').slider({ change: function(event, ui) {
 			   $.timepicker.update($.datepicker._formatDate(inst));
 		   }
 });

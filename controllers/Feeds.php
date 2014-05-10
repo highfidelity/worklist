@@ -17,7 +17,7 @@ class FeedsController extends Controller {
 
         if (!($format == 'atom' || $format == 'rss')) {
             $format = 'rss';
-        } 
+        }
         $name = isset($_REQUEST['name']) ? $_REQUEST['name'] : 'completed';
         // Connect to db
         try {
@@ -25,10 +25,10 @@ class FeedsController extends Controller {
             $db->getConnection();
         } catch (Zend_Db_Adapter_Exception $e) {
             // failed login, db not running
-            
+
         } catch (Zend_Exception $e) {
             // factory() failed load of mysqli
-        } 
+        }
 
         switch ($name) {
             case 'priority' :
@@ -48,16 +48,16 @@ class FeedsController extends Controller {
                 }
                 $query = "
                     SELECT
-                        w.id as worklist_id, 
-                        u1.nickname as author, 
-                        username as email, 
-                        summary as title, 
+                        w.id as worklist_id,
+                        u1.nickname as author,
+                        username as email,
+                        summary as title,
                         notes as content
                     FROM " . WORKLIST . " w
                         JOIN " . USERS . " u1 ON u1.id = w.creator_id
-                        JOIN " . PROJECTS . " p ON p.project_id = w.project_id  
+                        JOIN " . PROJECTS . " p ON p.project_id = w.project_id
                     WHERE " . $cond . "
-                    ORDER BY priority 
+                    ORDER BY priority
                     LIMIT " . $limit;
                 break;
             case 'comments' :
@@ -74,20 +74,20 @@ class FeedsController extends Controller {
                     $entryDescription = 'Worklist latest comments';
                 }
                 $query = "
-                    SELECT 
-                        c.id AS comment_id, 
+                    SELECT
+                        c.id AS comment_id,
                         c.worklist_id AS worklist_id,
                         c.date AS timestamp,
                         c.comment AS summary,
                         c.comment AS content,
-                        u.nickname as author, 
+                        u.nickname as author,
                         u.username as email
                     FROM ".COMMENTS." c
                     JOIN ".USERS." u on u.id = c.user_id
                     " . $where . "
                     ORDER BY timestamp DESC LIMIT 20";
                 break;
-            case 'completed' : 
+            case 'completed' :
             default :
                 $name = 'completed';
                 $title = 'Worklist most Recent completed jobs';
@@ -101,37 +101,37 @@ class FeedsController extends Controller {
 
         $url = WORKLIST_URL;
         $link = $url . "feed?name=$name&format=$format";
-        $writer = new Zend_Feed_Writer_Feed; 
-        $writer->setTitle($title); 
-        $writer->setLink(WORKLIST_URL); 
+        $writer = new Zend_Feed_Writer_Feed;
+        $writer->setTitle($title);
+        $writer->setLink(WORKLIST_URL);
         $writer->setFeedLink($link, $format);
         $writer->setDescription($description);
-        $writer->setDateModified(time()); //Atom needs this  
+        $writer->setDateModified(time()); //Atom needs this
         $this->loadFeed($writer, $query, $entryDescription);
 
-        echo $writer->export($format); 
+        echo $writer->export($format);
     }
 
     private function addEntry($writer, $entryData, $entryDescription) {
         global $name;
 
         $entry = $writer->createEntry();
-        $entry->setLink(SERVER_URL . $entryData['worklist_id']); 
+        $entry->setLink(SERVER_URL . $entryData['worklist_id']);
         // must supply a non-empty value for description
         $content = !empty($entryData['content']) ? html_entity_decode($entryData['content'], ENT_QUOTES) : "N/A";
-        $entry->setDescription($content);   
-        $entry->addAuthor($entryData['author'], $entryData['email']); 
+        $entry->setDescription($content);
+        $entry->addAuthor($entryData['author'], $entryData['email']);
 
         if ($name == 'comments') {
             $entry->setTitle($entryData['author'] . ' added a comment to job #' . $entryData['worklist_id']);
-            $entry->setDateCreated(strtotime($entryData['timestamp'])); 
-            $entry->setDateCreated(strtotime($entryData['timestamp'])); 
+            $entry->setDateCreated(strtotime($entryData['timestamp']));
+            $entry->setDateCreated(strtotime($entryData['timestamp']));
         } else {
             $entry->setTitle(html_entity_decode($entryData['title'], ENT_QUOTES));
-            $entry->setDateCreated(time()); 
-            $entry->setDateModified(time()); 
+            $entry->setDateCreated(time());
+            $entry->setDateModified(time());
         }
-        $writer->addEntry($entry); // manual addition post-creation 
+        $writer->addEntry($entry); // manual addition post-creation
     }
 
     private function loadFeed($writer, $query, $entryDescription) {

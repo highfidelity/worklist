@@ -108,7 +108,7 @@ var Auth = {
                 access_token: $('form#auth input[name="access_token"]').val(),
                 username: $('form#auth input[name="username"]').val(),
                 password: $('input[name="password"]', dialog).val(),
-            }, 
+            },
             success: function(data) {
                 var password = new LiveValidation('pass1', {onlyOnSubmit: true});
                 password.add(Validate.Custom, {
@@ -148,7 +148,7 @@ var Auth = {
                     username: $('form#auth input[name="username"]').val(),
                     password: $('input[name="password"]', dialog).val(),
                     password2: $('input[name="password2"]', dialog).val(),
-                }, 
+                },
                 success: function(data) {
                     if (!data.success) {
                         alert(data.msg);
@@ -156,8 +156,8 @@ var Auth = {
                     }
                     $(dialog).modal('hide');
                     Utils.emptyModal({
-                        title: 'Email confirmation', 
-                        content: data.msg, 
+                        title: 'Email confirmation',
+                        content: data.msg,
                         close: function() {
                             window.location.href = './';
                         }

@@ -14,7 +14,7 @@ function worklist_autoloader($class) {
         $fileName = substr($class, 0, -5);
         $file = MODELS_DIR . DIRECTORY_SEPARATOR . $fileName . '.php';
     } else {
-        $file = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes') . 
+        $file = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'classes') .
             DIRECTORY_SEPARATOR . "$class.class.php";
     }
     if (file_exists($file)) {
@@ -98,7 +98,7 @@ function convertTimeZoneToLocalTime($timeoffset, $short) {
     else
         $LocalTime = date("h:i:s A", $time);
 
-    return $LocalTime;      
+    return $LocalTime;
 }
 
 function checkReferer() {
@@ -222,7 +222,7 @@ function initUserById($userid) {
     $_SESSION['timezone']           = $user_row['timezone'];
     $_SESSION['is_runner']          = intval($user_row['is_runner']);
     $_SESSION['is_payer']           = intval($user_row['is_payer']);
-    
+
     // set the session variable for the inline message for new users before last seen is updated
     if ($user_row['last_seen'] === null) {
         $_SESSION['inlineHide'] = 0;
@@ -268,7 +268,7 @@ function countLove($username, $fromUsername="") {
     defineSendLoveAPI();
     //Wires off countLove to 0, ignores API (api working 5/24)
     //return array('status'=>SL_OK,'error'=>SL_NO_ERROR,array('count'=>0));
-    
+
     if($fromUsername != "") {
         $params = array (
                 'action' => 'getcount',
@@ -302,7 +302,7 @@ function getUserLove($username, $fromUsername="") {
     defineSendLoveAPI();
     //Wires off getUserLove to 0, ignores API (api working 5/24)
     //return array('status'=>SL_OK,'error'=>SL_NO_ERROR,array('count'=>0));
-	
+
     if($fromUsername != "") {
 		$params = array (
 		        'action' => 'getlove',
@@ -319,7 +319,7 @@ function getUserLove($username, $fromUsername="") {
     }
 	$referer = (empty($_SERVER['HTTPS'])?'http://':'https://').$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
     $retval = json_decode(postRequest (SENDLOVE_API_URL, $params, array(CURLOPT_REFERER => $referer)), true);
-    
+
     if ($retval['status'] == "ok") {
         return $retval['data'];
     } else {
@@ -403,7 +403,7 @@ function postRequest($url, $post_data, $options = array(), $curlopt_timeout = 30
     if (count($options)) {
         curl_setopt_array($ch, $options);
     }
-    
+
     $result = curl_exec($ch);
     curl_close($ch);
 
@@ -516,9 +516,9 @@ function AddTip($itemid, $tip_amount, $tip_desc, $mechanic_id) {
 
     // validate
     $query = "
-        SELECT * FROM " . FEES . " 
-        WHERE 
-            `worklist_id` = $itemid 
+        SELECT * FROM " . FEES . "
+        WHERE
+            `worklist_id` = $itemid
             AND `user_id` = " . getSessionUserId() . "
             AND `desc` = 'Accepted Bid'
             AND `withdrawn` = 0";
@@ -684,7 +684,7 @@ function sendJournalNotification($message) {
 function withdrawBid($bid_id, $withdraw_reason) {
     $res = mysql_query('SELECT * FROM `' . BIDS . '` WHERE `id`='.$bid_id);
     $bid = mysql_fetch_object($res);
-    
+
     // checking if is bidder or runner
     if (is_runner() || ($bid->bidder_id == $_SESSION['userid'])) {
         // getting the job
@@ -717,7 +717,7 @@ function withdrawBid($bid_id, $withdraw_reason) {
         }
 
         // additional changes if status is WORKING, SVNHOLD, FUNCTIONAL or REVIEW
-        if (($job['status'] == 'Working' || $job['status'] == 'SVNHold' || $job['status'] == 'Review' || $job['status'] == 'Functional') 
+        if (($job['status'] == 'Working' || $job['status'] == 'SVNHold' || $job['status'] == 'Review' || $job['status'] == 'Functional')
         && ($bid->accepted == 1) && (is_runner() || ($bid->bidder_id == $_SESSION['userid']))) {
             // change status of worklist item
             mysql_unbuffered_query("UPDATE `" . WORKLIST . "`
@@ -730,7 +730,7 @@ function withdrawBid($bid_id, $withdraw_reason) {
         // set back to suggested if swb and is only bid
         $res = mysql_query('SELECT count(*) AS count_bids FROM `' . BIDS . '` WHERE `worklist_id` = ' . $job['id'] . ' AND `withdrawn` = 0');
         $bidCount = mysql_fetch_assoc($res);
-        
+
         if ($bidCount['count_bids'] == 1 && $job['status'] == 'SuggestedWithBid') {
         mysql_unbuffered_query("UPDATE `" . WORKLIST . "` SET `status` = 'Suggested' WHERE `id` = $bid->worklist_id LIMIT 1 ;");
         }
@@ -758,7 +758,7 @@ function withdrawBid($bid_id, $withdraw_reason) {
 
         // Sending email to the bidder or runner
         $subject = "Bid: " . $job['id'] . " (" . $job['summary']. ")";
-        
+
         if(is_runner()){
         	// Send to bidder
         	$recipient=$user;
@@ -768,31 +768,31 @@ function withdrawBid($bid_id, $withdraw_reason) {
         	$recipient=getUserById($job['runner_id']);
         	$body = "<p>A bid has been deleted from item #" . $job['id'] . " by: ".$_SESSION['nickname']."</p>";
         }
-        	
+
         if(strlen($withdraw_reason)>0) {
 		    // nl2br is added for proper formatting in email alert 12-MAR-2011 <webdev>
         	$body .= "<p>Reason: " .nl2br($withdraw_reason)."</p>";
         }
-        
+
         // Continue adding text to email body
         $item_link = SERVER_URL . $bid->worklist_id;
         $body .= "<p><a href='${item_link}'>View Item</a></p>";
         $body .= "<p>If you think this has been done in error, please contact the job Runner.</p>";
         if (!send_email($recipient->username, $subject, $body)) { error_log("withdrawBid: send_email failed"); }
-        
+
         // Check if there are any active bids remaining
         $res = mysql_query("SELECT count(*) AS active_bids FROM `" . BIDS . "` WHERE `worklist_id` = " . $job['id'] . " AND `withdrawn` = 0 AND (NOW() < `bid_expires` OR `bid_expires`='0000-00-00 00:00:00')");
         $bids = mysql_fetch_assoc($res);
 
-        
+
         if ($bids['active_bids'] < 1) {
         	// There are no active bids, so resend notifications
         	$workitem = new WorkItem();
         	$workitem->loadById($job['id']);
-        	
+
         	Notification::massStatusNotify($workitem);
         }
-        
+
     }
 }
 
@@ -808,7 +808,7 @@ function deleteFee($fee_id) {
 
         // Get worklist item summary
         $summary = getWorkItemSummary($fee->worklist_id);
-        
+
 
         // Get user
         $user = getUserById($fee->user_id);
@@ -817,7 +817,7 @@ function deleteFee($fee_id) {
             // Journal message
             $message  = '@' . $_SESSION['nickname'] . ' deleted a fee from @';
             $message .= $user->nickname . ' on #' . $fee->worklist_id;
-    
+
             // Journal notification
             sendJournalNotification($message);
 
@@ -828,13 +828,13 @@ function deleteFee($fee_id) {
             $options['workitem']->loadById($fee->worklist_id);
             $options['type'] = "fee_deleted";
             Notification::workitemNotify($options);
-            
+
             $data = array(
                 'nick' => $_SESSION['nickname'],
                 'fee_nick' => $user->nickname
             );
             Notification::workitemNotifyHipchat($options, $data);
-            
+
         }
     }
 }
@@ -999,7 +999,7 @@ function checkLogin() {
 function linkify($url, $author = null, $bot = false, $process = true)
 {
     $original = $url;
-    
+
     if(!$process) {
         if (mb_detect_encoding($url, 'UTF-8', true) === FALSE) {
             $url = utf8_encode($url);
@@ -1040,9 +1040,9 @@ function linkify($url, $author = null, $bot = false, $process = true)
             $job_id = (int) $matches[1];
             if ($job_id < 99999 && WorkItem::idExists($job_id)) {
                 return
-                    DELIMITER . 
-                    '<a href="' . WORKLIST_URL . $job_id . '"' . 
-                    ' class="worklist-item" id="worklist-' . $job_id . '" >#' . $job_id . '</a>' . 
+                    DELIMITER .
+                    '<a href="' . WORKLIST_URL . $job_id . '"' .
+                    ' class="worklist-item" id="worklist-' . $job_id . '" >#' . $job_id . '</a>' .
                     DELIMITER . $matches[2];
             } else {
                 return $matches[0];
@@ -1056,7 +1056,7 @@ function linkify($url, $author = null, $bot = false, $process = true)
     $regexp = "/\#\#([A-Za-z0-9_ ]+)\#\#/";
     $link = DELIMITER . '<a href="' . WORKLIST_URL . '$1">$1</a>' . DELIMITER;
     $url = preg_replace($regexp,  $link, $url);
-    
+
     // Replace '##<projectName>' with a link to the worklist project with the same name
     // This is used in situations where the first space encountered is assumed to
     // be the end of the project name. Left mainly for backward compatibility.
@@ -1067,27 +1067,27 @@ function linkify($url, $author = null, $bot = false, $process = true)
     // Replace '#<nick>/<url>' with a link to the author sandbox
     $regexp="/\#([A-Za-z]+)\/(\S*)/i";
     $url = preg_replace(
-        $regexp, DELIMITER . 
+        $regexp, DELIMITER .
         '<a href="https://' . SANDBOX_SERVER . '/~$1/$2" class="sandbox-item" id="sandbox-$1">$1 : $2</a>' . DELIMITER,
         $url
     );
-    
+
 	// Replace '<repo> v####' with a link to the SVN server
     $regexp = '/([a-zA-Z0-9]+)\s[v]([0-9_]+)/i';
     $link = DELIMITER . '<a href="' . SVN_REV_URL . '$1&rev=$2">$1 v$2</a>' . DELIMITER;
     $url = preg_replace($regexp,  $link, $url);
-	
+
     // Replace '#/<url>' with a link to the author sandbox
     $regexp="/\#\/(\S*)/i";
     if (strpos(SERVER_BASE, '~') === false) {
         $url = preg_replace(
-            $regexp, DELIMITER . 
+            $regexp, DELIMITER .
             '<a href="' . SERVER_BASE . '~' . $author . '/$1" class="sandbox-item" id="sandbox-$1">'.$author.' : $1</a>' . DELIMITER,
             $url
         );
     } else { // link on a sand box :
         $url = preg_replace(
-            $regexp, DELIMITER . 
+            $regexp, DELIMITER .
             '<a href="' . SERVER_BASE . '/../~' . $author . '/$1" class="sandbox-item" id="sandbox-$1" >'.$author.' : $1</a>' . DELIMITER,
             $url
         );
@@ -1120,7 +1120,7 @@ function linkify($url, $author = null, $bot = false, $process = true)
     $url = preg_replace(
         '/(^|[^a-z0-9_])@([a-z0-9_]+)/i',
         '$1<a href="' . WORKLIST_URL . 'user/$2">@$2</a>',
-    $url);    
+    $url);
 
     return $url;
 }
@@ -1178,7 +1178,7 @@ function outputForJS($var, $rep = "''") {
 function isSpammer($ip) {
     $sql = 'SELECT `ipv4` FROM `' . BLOCKED_IP . '` WHERE (`blocktime` + `duration`) > UNIX_TIMESTAMP(NOW());';
     $result = mysql_query($sql);
-    
+
     if ($result && (mysql_num_rows($result) > 0)) {
         while ($row = mysql_fetch_array($result)) {
             if ($row['ipv4'] == $ip) {
@@ -1194,7 +1194,7 @@ function sendReviewNotification($reviewee_id, $type, $oReview) {
     $reviewee = new User();
     $reviewee->findUserById($reviewee_id);
     $worklist_link = WORKLIST_URL;
-    
+
     $to = $reviewee->getNickname() . ' <' . $reviewee->getUsername() . '>';
     $body  = "<p>" . $review . "</p>";
     $nickname = $reviewee->getNickname();
@@ -1216,9 +1216,9 @@ function sendReviewNotification($reviewee_id, $type, $oReview) {
         $subject = "One of your reviews has been deleted";
         $journal = "One review of @" . $nickname . " has been deleted: ". $review;
     }
-    
-    if (!send_email($to, $subject, $body, null, $headers)) { 
-        error_log("sendReviewNotification: send_email failed"); 
+
+    if (!send_email($to, $subject, $body, null, $headers)) {
+        error_log("sendReviewNotification: send_email failed");
     }
     sendJournalNotification($journal);
 }
@@ -1233,7 +1233,7 @@ function truncateText($text, $chars = 200, $lines = 5) {
     $text = nl2br($text);
     $textArray = explode('<br/>', $text);
     $textArraySize = count($textArray);
- 
+
     // Remove extra lines
     if ($textArraySize > $lines) {
         $count = $textArraySize - $lines;
@@ -1242,7 +1242,7 @@ function truncateText($text, $chars = 200, $lines = 5) {
         }
         $truncated = true;
     }
-    
+
     $text = implode('<br/>', $textArray);
     if ($truncated == true) {
         $text = $text . " (...)";
@@ -1266,7 +1266,7 @@ function getRelated($input) {
                 }
             }
         }
-    }   
+    }
     if ($related != "") {
         $related .= ")";
         if ($twoIds == true) {
@@ -1355,15 +1355,15 @@ function rewardUser($giverId, $receiverId, $points) {
     } else {
         return -1;
     }
-}  
+}
 
 /*******************************************************
     PPHttpPost: NVP post function for masspay.
     Author: Jason (jkofoed@gmail.com)
     Date: 2010-04-01 [Happy April Fool's!]
-********************************************************/    
+********************************************************/
 function PPHttpPost($methodName_, $nvpStr_, $credentials) {
-    $environment = PAYPAL_ENVIRONMENT; 
+    $environment = PAYPAL_ENVIRONMENT;
     $pp_user = $credentials['pp_api_username'];
     $pp_pass = $credentials['pp_api_password'];
     $pp_signature = $credentials['pp_api_signature'];
@@ -1431,10 +1431,10 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
         error_log("attempted to send an empty or misconfigured message");
         return false;
     }
-    
+
     $nameAndAddressRegex = '/(.*)<(.*)>/';
     $toIncludesNameAndAddress = preg_match($nameAndAddressRegex, $to, $toDetails);
-    
+
     if ($toIncludesNameAndAddress) {
         $toName = $toDetails[1];
         $toAddress = $toDetails[2];
@@ -1457,7 +1457,7 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
             $fromAddress = str_replace(' ', '-', $headers['From']);
         }
     }
-    
+
     if (!empty($html)) {
         if (empty($plain)) {
             $h2t = new Html2Text(html_entity_decode($html, ENT_QUOTES), 75);
@@ -1482,7 +1482,7 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
         'api_user' => SENDGRID_API_USER,
         'api_key' => SENDGRID_API_KEY
     );
-    
+
     if (!empty($headers['Reply-To'])) {
         $replyToIncludesNameAndAddress = preg_match($nameAndAddressRegex, $headers['Reply-To'], $replyToDetails);
         if ($replyToIncludesNameAndAddress) {
@@ -1491,7 +1491,7 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
             $postArray['replyto'] = $headers['Reply-To'];
         }
     }
-// check for copy, using bcc since cc is not present in Sendgrid api 
+// check for copy, using bcc since cc is not present in Sendgrid api
     if (!empty($headers['Cc'])) {
         $ccIncludesNameAndAddress = preg_match($nameAndAddressRegex, $headers['Cc'], $ccDetails);
         if ($ccIncludesNameAndAddress) {
@@ -1500,14 +1500,14 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
             $postArray['bcc'] = $headers['Cc'];
         }
     }
-    
+
     try {
         $result = CURLHandler::Get(SENDGRID_API_URL, $postArray);
     } catch(Exception $e) {
         error_log("[ERROR] Unable to send message through SendGrid API - Exception: " . $e->getMessage());
         return false;
     }
-    
+
     return true;
 }
 
@@ -1584,10 +1584,10 @@ function getStats($req = 'table', $interval = 30) {
         $count_b = mysql_num_rows( $query_b );
         $count_w = mysql_num_rows( $query_w );
         return array(
-                            'count_b' => $count_b, 
+                            'count_b' => $count_b,
                             'count_w' => $count_w
                             );
-        
+
     } else if( $req == 'Bidding' ) {
         $query_b = mysql_query("SELECT id FROM ".WORKLIST." WHERE status = 'Bidding'");
         $results_b = array();
@@ -1603,7 +1603,7 @@ function getStats($req = 'table', $interval = 30) {
         $count_w = mysql_num_rows( $query_w );
         $res = array( $count_b, $count_w );
         return $res;
-    
+
     } else if( $req == 'fees' ) {
         // Get Average Fees in last 7 days
         $query = mysql_query( "SELECT AVG(amount) FROM ".FEES." LEFT JOIN ".WORKLIST." ON
@@ -1612,7 +1612,7 @@ function getStats($req = 'table', $interval = 30) {
 
         $rt = mysql_fetch_assoc( $query );
         return $rt;
-    
+
     } else if( $req == 'feeslist' ) {
         // Get Fees by person in last X days
         $interval = $interval ? $interval : 30;
@@ -1667,7 +1667,7 @@ function getStats($req = 'table', $interval = 30) {
         }
 
         return $fees;
-        
+
     } else if( $req == 'runners' )  {
         // Get Top 10 runners
         $info_q = mysql_query( "SELECT nickname AS nick, (SELECT COUNT(*) FROM ".FEES." LEFT JOIN ".USERS." ON
@@ -1687,13 +1687,13 @@ function getStats($req = 'table', $interval = 30) {
             }
         }
         return $info;
-    
+
     } else if( $req == 'mechanics' ) {
         // Get Top 10 mechanics
         $info_q = mysql_query( "SELECT nickname AS nick, (SELECT COUNT(*) FROM ".BIDS." LEFT JOIN ".USERS." ON
                     ".USERS.".id = ".BIDS.".bidder_id WHERE ".USERS.".nickname=nick
                     AND `".BIDS."`.`accepted`='1') AS bid_no,
-                    (SELECT COUNT(*) FROM ".WORKLIST." LEFT JOIN ".USERS." ON 
+                    (SELECT COUNT(*) FROM ".WORKLIST." LEFT JOIN ".USERS." ON
                     ".WORKLIST.".mechanic_id=".USERS.".id WHERE ".USERS.".nickname=nick AND
                     ".WORKLIST.".status='Working') AS work_no FROM ".USERS." ORDER BY work_no DESC" );
 
@@ -1707,7 +1707,7 @@ function getStats($req = 'table', $interval = 30) {
             }
         }
         return $info;
-    
+
     } else if( $req == 'feeadders' ) {
         // Get the top 10 fee adders
         $info_q = mysql_query( "SELECT nickname AS nick,(SELECT COUNT(*) FROM ".FEES." LEFT JOIN ".USERS." ON
@@ -1763,7 +1763,7 @@ function saveAdmin($pass, $oldpass = '') {
 }
 
 function checkAdmin($pass) {
-    //checks admin login.  
+    //checks admin login.
     $sql = "SELECT * FROM ".PAYPAL_ADMINS." WHERE `password` = '".md5($pass)."'";
     $result = mysql_query($sql);
     //if successful, this will be 1, otherwise 0

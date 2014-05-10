@@ -11,7 +11,7 @@ function TablePaginator(tableid, numberofrowstodisplayperpage, animationspeed) {
     this.count = 1;
     var self = this;
 
-    this.resetRows = function(start, end) { 
+    this.resetRows = function(start, end) {
        $("#" + tableid + " tr, #" + tableid + "pagenumholder").not("tr:first").hide();
        this.displayRows(start, end);
     }
@@ -31,8 +31,8 @@ function TablePaginator(tableid, numberofrowstodisplayperpage, animationspeed) {
     this.createPagesandPageholder = function() {
         var beginning,
             ending,
-            current; 
-        
+            current;
+
         if(this.sizeoftable <= numberofrowstodisplayperpage) {
             beginning = 1;
             end = this.sizeoftable;

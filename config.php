@@ -171,14 +171,14 @@ if (!defined("JOURNAL_PICTURE_EMAIL_DOMAIN")) define("JOURNAL_PICTURE_EMAIL_DOMA
 
 //<kordero>
 if(!defined("ADMINS_EMAILS"))
-  define("ADMINS_EMAILS", 
-    "ryan@lovemachineinc.com " . 
-    "garth.johnson@gmail.com " . 
-    "philip@lovemachineinc.com " . 
-    "tj@coffeeandpower.com " . 
-    "danbrown@php.net " . 
-    "heiberger@earthlink.net " . 
-    "fred@lovemachineinc.com " . 
+  define("ADMINS_EMAILS",
+    "ryan@lovemachineinc.com " .
+    "garth.johnson@gmail.com " .
+    "philip@lovemachineinc.com " .
+    "tj@coffeeandpower.com " .
+    "danbrown@php.net " .
+    "heiberger@earthlink.net " .
+    "fred@lovemachineinc.com " .
     "alexi@kostibas.com"
   );
 
@@ -400,7 +400,7 @@ defineOnce('GOOGLE_ANALYTICS_TOKEN', '1/kTlFYUDNtShl_ejOORk1v8fAKhmj3FmIam1i-NTM
 defineOnce('GOOGLE_ANALYTICS_PROFILE_ID', '46390018');
 
 $countryurllist = array(
-    'AF'=>'Afghanistan',                                                        
+    'AF'=>'Afghanistan',
     'AL'=>'Albania',
     'ag'=>'Algeria',
     'Aq'=>'American Samoa',

@@ -16,7 +16,7 @@ class AuthView extends View {
           Now you're just a step closer.
         </p>
         <p>
-          Please let us know whether you are a new user in the Worklist 
+          Please let us know whether you are a new user in the Worklist
           or an existing one by providing your e-mail address.
         </p>";
 

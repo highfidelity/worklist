@@ -11,18 +11,18 @@ class Review extends DataObject {
     public $reviewee_id;
     public $review;
     public $journal_notified;
-    
+
     public $table_name;
-    
+
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct();
-        
+
         $this->table_name = REVIEWS;
     }
-    
+
     /**
      * Destructor
      */
@@ -30,7 +30,7 @@ class Review extends DataObject {
         parent::__destruct();
     }
 
-    
+
     /**
      * Load a review by id
      */
@@ -48,21 +48,21 @@ class Review extends DataObject {
         if (!$objectData && is_array($objectData)) {
             return null;
         }
-        
+
         return $objectData;
     }
     /**
      * get list of offers for given user id
      */
-    public function getReviews($reviewee_id,$reviewer_id,$filter=''){        
+    public function getReviews($reviewee_id,$reviewer_id,$filter=''){
         $sql = "SELECT r.review,IF(r.reviewer_id = ".$reviewer_id .
-            ",'y','n') AS me, COUNT(f.id) as nbFees, CASE WHEN COUNT(f.id) < 10 THEN '1+' WHEN COUNT(f.id) < 100 THEN '10+' WHEN COUNT(f.id) < 1000 THEN '100+' ELSE '1000+' END  AS feeRange FROM " 
-            . REVIEWS . " AS r 
-            INNER JOIN " . FEES . " AS f ON r.reviewer_id = f.user_id AND f.paid = 1 
+            ",'y','n') AS me, COUNT(f.id) as nbFees, CASE WHEN COUNT(f.id) < 10 THEN '1+' WHEN COUNT(f.id) < 100 THEN '10+' WHEN COUNT(f.id) < 1000 THEN '100+' ELSE '1000+' END  AS feeRange FROM "
+            . REVIEWS . " AS r
+            INNER JOIN " . FEES . " AS f ON r.reviewer_id = f.user_id AND f.paid = 1
             WHERE reviewee_id = $reviewee_id $filter
             GROUP BY r.review,r.reviewer_id
             ORDER BY nbFees DESC ";
-        
+
         $objectData = array();
         if($result = $this->link->query($sql)){
             $countSup10 = 0;
@@ -83,7 +83,7 @@ class Review extends DataObject {
             error_log("Review:getReviews mysql error: " . $sql . " * " . $this->link->error);
             $objectData = null;
         }
-        return $objectData;        
+        return $objectData;
     }
 
 
@@ -116,7 +116,7 @@ class Review extends DataObject {
     public function insertNew($values) {
         return $this->dbInsert($values);
     }
-    
+
     public function updateReview($sql) {
         return $this->dbUpdate($sql);
     }

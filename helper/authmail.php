@@ -1,6 +1,6 @@
 <?php
 //  Copyright (c) 2009-2011, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 //
 
@@ -98,7 +98,7 @@ if (!isset($headers['Content-Type'])) {
   $oldheaders.="Content-Type: ".$headers['Content-Type']."\n";;
 }
 
-  
+
 
 
 if (isset($auth['server']) && isset($mail_auth[$auth['server']])) {
@@ -118,7 +118,7 @@ error_log("smtp by sendmail - this should probably be fixed");
 
 //  error_log("debug send_auth: ".json_encode(array('config'=>$smtpauth,'auth'=>$auth,'to'=>$to,'subject'=>$subject,'headers'=>$headers)));
 
-    if (class_exists('Mail')) {   
+    if (class_exists('Mail')) {
         $smtp = Mail::factory('smtp',$smtpauth);
         $mail = $smtp->send($to, $headers, $body);
         //@$smtp->send($to, $headers, $body);
@@ -129,7 +129,7 @@ error_log("smtp by sendmail - this should probably be fixed");
             error_log($mail->getMessage());
             //error_log("false");
             return false;
-         }  
+         }
             //error_log("mail: true".$mail);
        return true;
     } else { error_log("authsmtp.php: Mail class does not existi - email is failing");

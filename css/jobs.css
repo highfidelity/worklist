@@ -145,7 +145,7 @@ color:#98AAB2;
 #ui-datepicker-div,
 #ui-timepicker-div
 {
-    z-index: 1100; 
+    z-index: 1100;
 }
 
 #sharethis_0    {
@@ -301,7 +301,7 @@ td.textAlignReport {
 }
 
 .table-worklist td:nth-child(n+2):before {
-    float: left;    
+    float: left;
 }
 
 .table-worklist tbody tr:after {
@@ -490,7 +490,7 @@ td.textAlignReport {
     max-width: 60px;
 }
 .table-worklist tr > td:nth-child(2) {
-    max-width: 350px; 
+    max-width: 350px;
 }
 .table-worklist tr > td:nth-child(3) {
     max-width: 60px;
@@ -505,14 +505,14 @@ td.textAlignReport {
     .table-worklist tr > td:nth-child(1),
     .table-worklist tr > td:nth-child(2),
     .table-worklist tr > td:nth-child(3) {
-        max-width: auto; 
+        max-width: auto;
     }
     .table-worklist tr > td:nth-child(1),
     .table-worklist tr > td:nth-child(3) {
-        min-width: 50px; 
+        min-width: 50px;
     }
     .table-worklist tr > td:nth-child(2) {
-        min-width: 100px; 
+        min-width: 100px;
     }
     .table-worklist tr > th:nth-child(4),
     .table-worklist tr > td:nth-child(4) {
@@ -695,7 +695,7 @@ input.button-disabled ,
     width: 420px;
     height: 180px;
 }
-#login-form .LV_validation_message, 
+#login-form .LV_validation_message,
 #phone-confirm-form .LV_validation_message {
     text-align: left;
 }
@@ -800,115 +800,115 @@ table.table-worklist > tbody > tr.worklist-pagination-row > td {
     color: #888888;
 }
 #bid_amount_conatiner {
-    width: 100%; 
-    margin-bottom: 4px; 
+    width: 100%;
+    margin-bottom: 4px;
     margin-top: 23px;
 }
 .bid_amount_p {
     padding-right: 28px;
 }
 #bid_notes .bid_amount_heading, .bid_amount_heading {
-    font-weight: bold; 
-    font-size:18px !important; 
+    font-weight: bold;
+    font-size:18px !important;
     color: #666666 !important;
-    font-family: proxima-nova,sans-serif; 
+    font-family: proxima-nova,sans-serif;
 }
 .bid_amount_textfield {
-    width: 73px !important; 
-    margin-top: 6px; 
+    width: 73px !important;
+    margin-top: 6px;
 }
 #place_bid_usd {
-    float: left; 
+    float: left;
     margin-top: 26px;
     position: relative;
 }
 #bid_amount_description {
-    padding-top: 6px; 
-    width: 401px; 
-    float: left; 
+    padding-top: 6px;
+    width: 401px;
+    float: left;
     font-family: proxima-nova;
     padding-left: 25px;
     color: #666666;
 }
 .place_bid_divider {
-    width: 109%; 
-    height: 5px; 
-    background-color: #E8EFF0; 
-    position: relative; 
+    width: 109%;
+    height: 5px;
+    background-color: #E8EFF0;
+    position: relative;
     left: -22px;
 }
 #bid_notes {
-    width: 100%; 
-    padding-top: 17px; 
-    margin-bottom: 19px; 
+    width: 100%;
+    padding-top: 17px;
+    margin-bottom: 19px;
 }
 .bid_notes_required {
     color: #999999;
 }
 .bid_notes_textarea {
-    font-family: proxima-nova !important; 
-    width: 415px !important; 
-    float: left; 
-    margin-right: 19px; 
-    height: 180px !important; 
+    font-family: proxima-nova !important;
+    width: 415px !important;
+    float: left;
+    margin-right: 19px;
+    height: 180px !important;
     margin-top: 0;
 }
 #bid_notes_decsription {
-    font-family: proxima-nova; 
+    font-family: proxima-nova;
     color: #666666;
 }
 #bid_done_container {
-    width: 100%; 
+    width: 100%;
     margin-bottom: 22px;
 }
 #bidDone {
     width: 100%;
 }
 #bid_done_description {
-    width: 247px; 
-    float: left; 
+    width: 247px;
+    float: left;
     margin-right: 44px;
 }
 #bid_done_explanation {
-    margin-top: 3px; 
+    margin-top: 3px;
     font-family: proxima-nova;
     width: 247px;
     color: #666666;
 }
 #time_slider_container {
-    float: left; 
+    float: left;
     padding-top: 12px;
 }
 #right_border {
-    width: 281px; 
-    height: 12px; 
-    position: relative; 
-    top: 12px; 
-    border-left: 1px solid grey; 
+    width: 281px;
+    height: 12px;
+    position: relative;
+    top: 12px;
+    border-left: 1px solid grey;
     border-right: 1px solid grey
 }
 #submit_bid_button {
-    padding-top: 9px; 
-    padding-bottom: 19px; 
-    width: 109%; 
-    background-color: #E8EFF0; 
-    position: relative; 
+    padding-top: 9px;
+    padding-bottom: 19px;
+    width: 109%;
+    background-color: #E8EFF0;
+    position: relative;
     left: -22px
 }
 #submit_bid_btn_holder {
-    padding-left: 22px; 
-    padding-right: 14px; 
-    float: left; 
+    padding-left: 22px;
+    padding-right: 14px;
+    float: left;
 }
 .place_bid_button {
-    height: 44px !important; 
+    height: 44px !important;
     font-size: 18px !important;
 }
 
 #submit_bid_description {
-    padding-top: 17px; 
-    width: 435px; 
-    float: left; 
+    padding-top: 17px;
+    width: 435px;
+    float: left;
     font-family: proxima-nova;
     color: #666666;
 }
@@ -922,8 +922,8 @@ table.table-worklist > tbody > tr.worklist-pagination-row > td {
     position: relative;
 }
 
-select + div, 
-select, 
+select + div,
+select,
 input {
     font-size: 1em;
 }
@@ -937,7 +937,7 @@ input {
     #search {
         position: relative;
         padding-bottom: 5px;
-    } 
+    }
 }
 
 #search select + div,
@@ -1043,7 +1043,7 @@ input {
 #query fieldset > input[type="checkbox"] + label {
     display: inline-block;
     background: url('../images/primaryIcons-WL.png') no-repeat scroll 3px -359px transparent;
-    border-width: 1px 1px 1px 0; 
+    border-width: 1px 1px 1px 0;
     border-style: solid;
     border-color: #ccc;
     width: 62px;
@@ -1070,7 +1070,7 @@ input {
 #query fieldset > input[type="checkbox"] + label:after {
     content: '\00a0';
     width: 22px;
-    border-radius: 5px;    
+    border-radius: 5px;
     font-family: FontAwesome;
     display: inline-block;
     float: right;
@@ -1218,7 +1218,7 @@ input {
 }
 
 
-#addJobButton { 
+#addJobButton {
     background-color: #608e96;
     padding: 8px 10px 7px;
     color: #fff;
@@ -1243,7 +1243,7 @@ input {
     #buttons {
         float: right;
         padding-right: 15px;
-    } 
+    }
 }
 
 @media (max-width: 480px) {

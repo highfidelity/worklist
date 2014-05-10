@@ -1,6 +1,6 @@
 <?php
 
-class NewWorklistLayout extends Layout {	
+class NewWorklistLayout extends Layout {
     public $stylesheets = array(
         'css/legacy/common.css',
         'css/legacy/smoothness/lm.ui.css',

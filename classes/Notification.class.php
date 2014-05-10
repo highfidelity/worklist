@@ -9,7 +9,7 @@ class Notification {
     const BIDDING_EMAIL_NOTIFICATIONS = 256;
     const REVIEW_EMAIL_NOTIFICATIONS = 512;
     const MY_AUTOTEST_NOTIFICATIONS = 1024;
- 
+
     /**
      *  Sets flags using list of integers passed as arguments
      *
@@ -43,16 +43,16 @@ class Notification {
      * @return list of users with given flag
      */
     public static function getNotificationEmails($flag = self::REVIEW_EMAIL_NOTIFICATIONS, $workitem = 0) {
-         
+
         $result = array();
-        
+
         switch($flag) {
         case self::REVIEW_EMAIL_NOTIFICATIONS :
         case self::BIDDING_EMAIL_NOTIFICATIONS :
             $uid = getSessionUserId();
-            $sql = "SELECT u.username 
-                FROM `" . USERS . "` u 
-                WHERE ((u.notifications & " . self::REVIEW_EMAIL_NOTIFICATIONS . " != 0 && u.id != " . $uid . ") 
+            $sql = "SELECT u.username
+                FROM `" . USERS . "` u
+                WHERE ((u.notifications & " . self::REVIEW_EMAIL_NOTIFICATIONS . " != 0 && u.id != " . $uid . ")
                       OR ((u.notifications & " . self::BIDDING_EMAIL_NOTIFICATIONS . " != 0 && u.id != " . $uid . ") AND (u.notifications & " . self::SELF_EMAIL_NOTIFICATIONS . ") != 0 && u.id = " . $uid . "))
                   AND u.is_active = 1";
             $res = mysql_query($sql);
@@ -65,9 +65,9 @@ class Notification {
 
         case self::MY_AUTOTEST_NOTIFICATIONS:
             $users=implode(",", array($workitem->getCreatorId(), $workitem->getRunnerId(), $workitem->getMechanicId()));
-            $sql = "SELECT u.username 
-                FROM `" . USERS . "` u 
-                WHERE u.id IN({$users}) 
+            $sql = "SELECT u.username
+                FROM `" . USERS . "` u
+                WHERE u.id IN({$users})
                   AND u.is_active = 1";
             $res = mysql_query($sql);
             if($res) {
@@ -75,7 +75,7 @@ class Notification {
                     $result[] = $row[0];
                 }
             }
-            break;         
+            break;
         }
         return $result;
     }
@@ -105,9 +105,9 @@ class Notification {
     }
 
     /**
-     * Async wrapper to Notification::statusNotify to avoid big delays 
+     * Async wrapper to Notification::statusNotify to avoid big delays
      * on massive notifications.
-     * 
+     *
      * @param object $workitem instance of a Workitem class
      */
     function massStatusNotify($workitem) {
@@ -146,7 +146,7 @@ class Notification {
 
         $workitem = $options['workitem'];
         $userstats = isset($options['userstats']) ? $options['userstats'] : null;
-       
+
         if (isset($options['project_name'])) {
             $project_name = $options['project_name'];
         } else {
@@ -158,11 +158,11 @@ class Notification {
                 error_log($e->getMessage() . " Workitem: #" . $workitem->getId() . " " . " has an invalid project id:" . $workitem->getProjectId());
                 $project_name = "";
             }
-            
+
         }
 
         $revision = isset($options['revision']) ? $options['revision'] : null;
-        
+
         $itemId = $workitem -> getId();
         $itemLink = '<a href="' . WORKLIST_URL . $itemId . '"">#' . $itemId . '</a>';
         $itemTitle = '#' . $itemId  . ' (' . $workitem -> getSummary() . ')';
@@ -190,7 +190,7 @@ class Notification {
                 . 'You can view the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />'
                 . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;
             break;
-            
+
             case 'fee_added':
                 if ($workitem->getStatus() != 'Draft') {
                 $headers['From'] = '"' . $project_name . '-fee added" ' . $from_address;
@@ -211,7 +211,7 @@ class Notification {
                 . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;
                 }
             break;
-            
+
             case 'fee_deleted':
                 if ($workitem->getStatus() != 'Draft') {
                     $headers['From'] = '"' . $project_name . '-fee deleted" ' . $from_address;
@@ -296,13 +296,13 @@ class Notification {
             	if (!$jobs){
             		$jobs = 'None <br />';
             	}
-      
+
             	//now get total jobs and total jobs and create links
             	$totalJobs = $workItemUrl;
             	$totalJobs .= $workitem->getId() . '?action=view&userinfotoshow=' . $_SESSION['userid'] . '">' . $userstats->getTotalJobsCount() . '</a><br />';
             	$totalActiveJobs = $workItemUrl;
             	$totalActiveJobs .= $workitem->getId() . '?action=view&userinfotoshow=' . $_SESSION['userid'] . '">' . $userstats->getActiveJobsCount() . '</a><br />';
-                
+
             	$headers['From'] = '"' . $project_name . '-new bid" ' . $from_address;
                 $body =  'New bid was placed for ' . $itemLink . '<br /><br />'
                     . 'Amount: $' . number_format($data['bid_amount'], 2) . '<br />'
@@ -398,7 +398,7 @@ class Notification {
                     . 'You can view the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />'
                     . '<a href="' . SERVER_URL . '">www.worklist.net</a>';
             break;
-            
+
             case 'modified':
                 if ($workitem->getStatus() != 'Draft') {
                     $from_changes = "";
@@ -463,7 +463,7 @@ class Notification {
                 $body .= 'Notes: ' . $workitem->getNotes() . '<br /><br />'
                 . 'You can view the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />'
                 . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;
-                
+
             break;
             case 'new_functional':
                 $body = "New item is available for functional: " . $itemLink ;
@@ -479,11 +479,11 @@ class Notification {
                 $body.= '<br><br>Notes:<br>' .$workitem->getNotes();
                 $body.= '<br><br>You can view the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />';
                 $body.= '<br><br><a href="' . SERVER_URL . '">www.worklist.net</a>';
-                
+
             break;
             case 'bug_found':
                 $headers['From'] = '"' . $project_name . '-bug" ' . $from_address;
-                
+
                 $body = "<p>A bug has been reported related to item #".
                 $workitem->getBugJobId().
                             " : ".$workitem->getBugJobSummary()."</p>";
@@ -527,7 +527,7 @@ class Notification {
                 }
                 $body .= 'Notes: ' . $workitem->getNotes() . '<br /><br />'
                 . 'You are welcome to bid the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />'
-                . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;                       
+                . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;
             break;
             case 'autotestsuccess':
                 $reusableString = $project_name . '(v' . $revision . ')';
@@ -546,7 +546,7 @@ class Notification {
                 $body .= '">here</a>';
                 $body .= ' to see the webSVN commit notes.';
                 $body .= '<br/><br/><a href="http://www.worklist.net">www.worklist.net</a>';
-            break; 
+            break;
             case 'autotestfailure':
                 $reusableString = $project_name . '(v' . $revision . ')';
                 $reusableString .= '#';
@@ -563,7 +563,7 @@ class Notification {
                 $body .= 'You can type "@faq CommitTests" in the Journal for more information.';
                 $body .= '<br/><br/><a href="http://www.worklist.net">www.worklist.net</a>';
             break;
-            
+
             case 'invite-user':
                 $headers['From'] = '"' . $project_name . '-invited" ' . $from_address;
                 $body = "<p>Hello you!</p>";
@@ -571,7 +571,7 @@ class Notification {
                     $body .= "<p>You have been invited by " . $_SESSION['nickname'] . " at the Worklist to bid on ";
                 } else {
                     $body .= "<p>You have been invited at the Worklist to bid on ";
-                }                
+                }
                 $body .= "<a href='" . WORKLIST_URL . $itemId . "'>#" . $itemId . ': ' . $workitem->getSummary() . "</a>.</p>\n";
                 $body .= "<p>Description:</p>";
                 $body .= "<p>------------------------------</p>\n";
@@ -614,7 +614,7 @@ class Notification {
                 $body .= '<p>You can view the job <a href="'. WORKLIST_URL . $itemId . '">here</a>.' . '<br /></p>';
                 $body .= '<p><a href="' . SERVER_URL . '">www.worklist.net</a></p>';
             break;
-            
+
             case 'expired_bid':
                 $headers['From'] = '"' . $project_name . '-expired bid" ' . $from_address;
                 $body = "<p>Job " . $itemLink . "<br />";
@@ -646,7 +646,7 @@ class Notification {
                     . 'You can view the job <a href="' . WORKLIST_URL . $itemId . '">here</a>.' . '<br /><br />'
                     . '<a href="' . SERVER_URL . '">www.worklist.net</a>' ;
             break;
-            
+
             case 'virus-found':
                 $headers['From'] = '"' . $project_name . '-upload error" ' . $from_address;
                 $body  = '<p>Hello, <br /><br /> The file ' . $options['file_name'] . ' (' . $options['file_title'] . ') ' .
@@ -690,7 +690,7 @@ class Notification {
                 break;
         }
 
-    
+
         $current_user = new User();
         $current_user->findUserById(getSessionUserId());
         if($recipients) {
@@ -711,8 +711,8 @@ class Notification {
                         $rUser = new User();
                         $rUser->findUserById($recipientUser);
                         if(($username = $rUser->getUsername())){
-                            // Check to see if user doesn't want to be notified 
-                            // If user is recipient, doesn't have check on settings and not forced to receive then exclude), 
+                            // Check to see if user doesn't want to be notified
+                            // If user is recipient, doesn't have check on settings and not forced to receive then exclude),
                             // except for followers
                             if ( !strcmp($current_user->getUsername(), $username) && strcmp(ucfirst($recipient), 'Followers') ) {
                                 if ( ! Notification::isNotified($current_user->getNotifications(), Notification::SELF_EMAIL_NOTIFICATIONS)
@@ -744,8 +744,8 @@ class Notification {
             }
         }
     }
-    
-    
+
+
     /**
      *  This function sends notification to HipChat about updates of workitems
      *
@@ -756,7 +756,7 @@ class Notification {
      */
     public static function workitemNotifyHipchat($options, $data = null) {
         $workitem = $options['workitem'];
-        
+
         try {
             $project = new Project();
             $project->loadById($workitem->getProjectId());
@@ -765,36 +765,36 @@ class Notification {
             error_log($e->getMessage()." Workitem: #".$workitem->getId()." has an invalid project id:".$workitem->getProjectId());
             return;
         }
-        
+
         if (!$project->getHipchatEnabled()) {
             return;
         }
-        
+
         $bugJournalMessage = '';
         if (array_key_exists('bug_journal_message', $data)) {
             $bugJournalMessage = $data['bug_journal_message'];
         }
-        
+
         $itemId = $workitem->getId();
         $itemLinkShort = '<a href="' . WORKLIST_URL . $itemId . "'>#{$itemId}</a>";
         $itemLink = "{$itemLinkShort}{$bugJournalMessage}";
-        
+
         $message = null;
         $message_format = 'html';
         $notify = 0;
-        
+
         switch ($options['type']) {
             case 'comment':
                 $nick = $data['who'];
                 $related = $data['related'];
                 $message = "{$nick} posted a comment on issue {$itemLink}{$related}";
             break;
-            
+
             case 'fee_added':
                 $mechanic_id = $data['mechanic_id'];
                 $fee_amount = $data['fee_amount'];
                 $nick = $data['nick'];
-                
+
                 if ($mechanic_id == $_SESSION['userid']) {
                     $message = "{$nick} added a fee of \${$fee_amount} to item {$itemLink}";
                 } else {
@@ -806,92 +806,92 @@ class Notification {
                     } else {
                         $nickname = "unknown-{$mechanic_id}";
                     }
-                    
+
                     $message = "{$nick} on behalf of {$nickname} added a fee of \${$fee_amount} to item {$itemLink}";
                 }
             break;
-            
+
             case 'fee_deleted':
                 $nick = $data['nick'];
                 $fee_nick = $data['fee_nick'];
                 $message = "{$nick} deleted a fee from {$fee_nick} on item {$itemLink}";
             break;
-            
+
             case 'tip_added':
                 $nick = $data['nick'];
                 $tipped_nickname = $data['tipped_nickname'];
                 $message = "{$nick} tipped {$tipped_nickname} on job {$itemLink}";
             break;
-            
+
             case 'bid_accepted':
                 $nick = $data['nick'];
                 $bid_amount = $data['bid_amount'];
                 $nickname = $data['nickname'];
                 $message = "{$nick} accepted {$bid_amount} from {$nickname} on item {$itemLink}. Status set to Working.";
             break;
-            
+
             case 'bid_placed':
                 $message = "A bid was placed on item {$itemLink}.";
-                
+
                 $new_update_message = $data['new_update_message'];
                 if ($new_update_message) {
                     $message .= " {$new_update_message}";
                 }
             break;
-            
+
             case 'bid_updated':
                 $message = "Bid updated on item {$itemLink}";
             break;
-            
+
             case 'workitem-add':
                 $nick = $data['nick'];
                 $status = $data['status'];
                 $message = "{$nick} added job {$itemLink}. Status set to {$status}";
             break;
-            
+
             case 'code-review-completed':
                 $nick = $data['nick'];
                 $message = "{$nick} has completed their code review for {$itemLink}";
             break;
-            
+
             case 'workitem-update':
                 $nickname = $data['nick'];
                 $new_update_message = $data['new_update_message'];
                 $related = $data['related'];
-                
+
                 $message = "{$nickname} updated item {$itemLink}.{$new_update_message}{$related}";
             break;
-            
+
             case 'status-notify':
                 $nick = $data['nick'];
                 $status = $data['status'];
                 $message = "{$nick} updated item {$itemLink}. Status set to {$status}";
             break;
-            
+
             case 'code-review-started':
                 $nick = $data['nick'];
                 $message = "{$nick} has started a code review for {$itemLink}";
             break;
-            
+
             case 'code-review-canceled':
                 $nick = $data['nick'];
                 $message = "{$nick} has canceled their code review for {$itemLink}";
             break;
-            
+
             case 'ping':
                 $nickname = $data['nick'];
                 $receiver_nick = $data['receiver_nick'];
                 $msg = $data['msg'];
-                
+
                 $message = "{$nickname} sent a ping to {$receiver_nick} about item {$itemLink}: {$msg}";
             break;
         }
-        
+
         if ($message) {
             $project->sendHipchat_notification($message, $message_format, $notify);
         }
     }
-     
+
     // HOME PAGE CONTACT/ADD PROJECT FORM EMAIL
     public function emailContactForm($name, $email, $phone, $proj_name, $proj_desc, $website){
         $subject = "Worklist - Add Project Contact Form";
@@ -909,7 +909,7 @@ class Notification {
         }
         return false;
     }
-    
+
     public static function autoTestNofications($workItemId,$result,$revision) {
         $workItem = new WorkItem;
         $workItem->loadById($workItemId);
@@ -965,7 +965,7 @@ class Notification {
         $subject = "Worklist - Budget Funds Added!";
         $html = "<html><head><title>Worklist - Budget Funds Added!</title></head><body>";
         $html .= "<h2>You've Got Budget Funds!</h2>";
-        $html .= "<p>Hello " . $receiver->getNickname() . ",<br />Your Budget grant from " . 
+        $html .= "<p>Hello " . $receiver->getNickname() . ",<br />Your Budget grant from " .
             $grantor->getNickname() . " has been increased by $" . number_format($amount, 2) .
             " (add funds by " . $giver->getNickname() . ").</p>";
         $html .= "<p>Budget id: " . $add_funds_to_budget->id . "</p>";
@@ -1005,8 +1005,8 @@ class Notification {
         $subject = "Seed Budget Granted";
         $html = "<html><head><title>Seed Budget Granted</title></head><body>";
         $html .= "<h2>Seed Budget Granted by " . $giver->getNickname() . "</h2>";
-        $html .= "<p>To: " . $receiver->getNickname() . 
-                "<br />From: " . $giver->getNickname() . 
+        $html .= "<p>To: " . $receiver->getNickname() .
+                "<br />From: " . $giver->getNickname() .
                 "<br />Amount: $" . number_format($amount, 2) .
                 "<br />For: " . $reason  .
                 "<br />Source: " . $source . "</p>";
@@ -1014,13 +1014,13 @@ class Notification {
 
         $emailReceiver = new User();
         $emailReceiverArray = explode(",", BUDGET_AUTHORIZED_USERS);
-        for ($i = 1 ; $i < sizeof($emailReceiverArray) - 1 ; $i++) { 
+        for ($i = 1 ; $i < sizeof($emailReceiverArray) - 1 ; $i++) {
             if ($emailReceiver->findUserById($emailReceiverArray[$i])) {
                 if (!send_email($emailReceiver->getUsername(), $subject, $html)) {
                     error_log("Notification:workitem: send_email failed " . json_encode(error_get_last()));
                 }
             } else {
-                error_log("Notification:workitem: send_email failed, invalid receiver id " . 
+                error_log("Notification:workitem: send_email failed, invalid receiver id " .
                     $emailReceiverArray[$i]);
             }
         }
@@ -1050,9 +1050,9 @@ class Notification {
                 $options['workitem']->loadById($row['worklist_id']);
                 $options['type'] = "expired_bid";
                 $data = array('bid_amount' => $row['bid_amount'], 'bidder_nickname' => $row['bidder_nickname']);
-                
+
                 self::workitemNotify($options, $data);
-                
+
                 $bquery = "UPDATE " . BIDS . " SET expired_notify = 1 WHERE id = " . $row['bid_id'];
                 mysql_query($bquery);
             }

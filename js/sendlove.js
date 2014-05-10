@@ -1,5 +1,5 @@
-//  Copyright (c) 2009, LoveMachine Inc.  
-//  All Rights Reserved.  
+//  Copyright (c) 2009, LoveMachine Inc.
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 var smsCountry = '';
 var smsProvider = '';
@@ -21,7 +21,7 @@ function smsAddressVisibility(e)
         } else {
             $("#sms-other").show();
             $("#sms-other p").show();
-            $("#smsaddr").show();    
+            $("#smsaddr").show();
             $("#phone").attr('disabled', 'disabled');
             $("#send-test").hide()
               .after('<p id="countrynotsupported" class="LV_invalid">Sorry, this country is not currently supported for SMS. Enter an e-mail address below to receive text messages.</p>');
@@ -82,7 +82,7 @@ function get_timezone()
     } else {
         value += '00';
     }
-    
+
     return value;
 }
 
@@ -116,25 +116,25 @@ function isTwilioSupported(country_code) {
 }
 
 $(document).ready(function(){
-    
+
     $("#phone").blur(function() { smsUpdatePhone(true); });
     $("#phone").keypress(function() { smsUpdatePhone(false); });
     $("#phone").watermark('Number (4155551212, e.g.)', {useNative: false});
-    $("#country, #provider, #smsaddr").change(function() { 
-        smsRefreshIntCode(); 
-        smsAddressVisibility(); 
+    $("#country, #provider, #smsaddr").change(function() {
+        smsRefreshIntCode();
+        smsAddressVisibility();
     });
-    
+
     loadTwilioCountriesList(function() {
-        $("#int_code").change(function() { 
-            smsAddressVisibility(); 
+        $("#int_code").change(function() {
+            smsAddressVisibility();
         });
         smsRefreshIntCode(true);
         smsAddressVisibility();
     });
-    
+
     if (!$('#timezone option[selected = "selected"]').length) {
         $('#timezone option[value = "' + get_timezone() + '"]').attr('selected','selected');
     }
-    
+
 });

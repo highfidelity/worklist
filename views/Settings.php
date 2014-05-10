@@ -60,7 +60,7 @@ class SettingsView extends View {
         return APP_IMAGE_URL . $userInfo['picture'];
 
     }
-    
+
     public function receivesBiddingJobsAlerts() {
         $userInfo = $this->read('userInfo');
         $notifications = $userInfo['notifications'];

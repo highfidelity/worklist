@@ -7,7 +7,7 @@ jQuery.fn.center = function () {
 
 
 var favoriteUsers = [];
-function getFavoriteUsers() 
+function getFavoriteUsers()
 {
     $.ajax({
         url: 'api.php',
@@ -36,24 +36,24 @@ jQuery.fn.centerDialog = function() {
 
 function RelativeTime(x, shortMode) {
     var plural = '';
-    var mins = 60, 
-        hour = mins * 60; 
+    var mins = 60,
+        hour = mins * 60;
         day = hour * 24,
-        week = day * 7, 
-        month = week * 4, 
+        week = day * 7,
+        month = week * 4,
         year = day * 365;
     var negative = (x < 0);
     if (negative) {
         x = x * -1;
     }
-    if (x >= year) { 
-        x = (x / year) | 0; 
-        dformat = shortMode ? "yr" : "year"; 
+    if (x >= year) {
+        x = (x / year) | 0;
+        dformat = shortMode ? "yr" : "year";
     } else if (x >= month) {
         x = (x / month) | 0;
         dformat = shortMode ? "mnth" : "month";
     } else if (x >= day * 4) {
-        x = (x / day) | 0; 
+        x = (x / day) | 0;
         dformat = "day";
     } else if (x >= hour) {
         x = (x / hour) | 0;
@@ -71,7 +71,7 @@ function RelativeTime(x, shortMode) {
     if (x < 0) {
         x = 0;
     }
-    
+
     return (negative ? '-' : '') + x + ' ' + dformat + plural;
 }
 
@@ -104,10 +104,10 @@ jQuery.fn.DefaultValue = function(text){
     //Make sure we're dealing with text-based form fields
     if(this.type != 'text' && this.type != 'password' && this.type != 'textarea')
       return;
-    
+
     //Store field reference
     var fld_current=this;
-    
+
     //Set value initially if none are specified
         if(this.value=='' || this.value == text) {
       this.value=text;
@@ -115,19 +115,19 @@ jQuery.fn.DefaultValue = function(text){
       //Other value exists - ignore
       return;
     }
-    
+
     //Remove values on focus
     $(this).focus(function() {
       if(this.value==text || this.value=='')
         this.value='';
     });
-    
+
     //Place values back on blur
     $(this).blur(function() {
       if(this.value==text || this.value=='')
         this.value=text;
     });
-    
+
     //Capture parent form submission
     //Remove field values that are still default
     $(this).parents("form").each(function() {
@@ -143,7 +143,7 @@ jQuery.fn.DefaultValue = function(text){
 
 /**
  * Use this function to create multiple html messages for
- * openNotifyOverlay function. Pass all messages in in a string array 
+ * openNotifyOverlay function. Pass all messages in in a string array
  * Retunrs html
  */
 function createMultipleNotifyHtmlMessages(arrayOfMessages) {
@@ -162,7 +162,7 @@ function openNotifyOverlay(html, autohide, button, displayRedBorder) {
 
     $('#sent-notify').html(html);
     $('#sent-notify').attr('autohide', autohide);
-    
+
     /**
      *  'Got it' button is shown by default, unless autohide is true
      */
@@ -177,7 +177,7 @@ function openNotifyOverlay(html, autohide, button, displayRedBorder) {
     $('#sent-notify').dialog({
         dialogClass:'white-theme'
     });
-    
+
     if (button) {
         $('#sent-notify').dialog('option', 'buttons', [{
             text: 'Got it',
@@ -186,15 +186,15 @@ function openNotifyOverlay(html, autohide, button, displayRedBorder) {
             }
         }]);
     }
-    
+
     $('#sent-notify').dialog('open');
-    
+
     /**
      * we need to remove the height so that the element automatically readjusts to
      * a proper height based on the mesages to display.
      */
     $('#sent-notify').css("height", "");
- 
+
     var sentNotifyParent = $('#sent-notify').parent();
     $(sentNotifyParent).attr('id', ''); // We remove the id to default back to blue border
     if(displayRedBorder) {
@@ -301,7 +301,7 @@ $(function() {
     });
 });
 
-/* We replaced the jquery.autocomplete.js because it was obsolete and unsupported. 
+/* We replaced the jquery.autocomplete.js because it was obsolete and unsupported.
  * Please refer to #19214 for details. Teddy 1/Apr/2013
  */
 function autocompleteSplit( val ) {
@@ -318,7 +318,7 @@ var autocompleteUserSource = function(request, response) {
         }, response );
 };
 /**
- * 
+ *
  * @param status
  * @param datasource - pass null if unused.
  * @returns object autocomplete arguments
@@ -327,13 +327,13 @@ function autocompleteMultiple(status, datasource) {
     var autocompleteArguments;
     autocompleteArguments = {
         bind: function( event ) {
-            if (event.keyCode === $.ui.keyCode.TAB && 
-                $(this).data("ui-autocomplete") && 
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).data("ui-autocomplete") &&
                 $(this).data("ui-autocomplete").menu.active
             ) {
                 event.preventDefault();
             }
-   
+
         },
         minLength: 0,
         focus: function(event, ui) {
@@ -350,10 +350,10 @@ function autocompleteMultiple(status, datasource) {
             this.value = terms.join( ", " );
             return false;
         }
-        
+
     };
-    
-    if (status == 'getuserslist') {       
+
+    if (status == 'getuserslist') {
             autocompleteArguments.source = autocompleteUserSource;
             autocompleteArguments.search = function() {
                 // custom minLength
@@ -362,7 +362,7 @@ function autocompleteMultiple(status, datasource) {
                   return false;
                 }
             };
-            
+
     } else if (status == 'getskills') {
         autocompleteArguments.source = function( request, response ) {
          // delegate back to autocomplete, but extract the last term
@@ -371,7 +371,7 @@ function autocompleteMultiple(status, datasource) {
             };
     }
     return autocompleteArguments;
-    
+
 }
 
 //Code for Add Project
@@ -545,7 +545,7 @@ $(function() {
         $("nav a.budget").click(function(){
             $("#budgetPopup").dialog("open");
         });
-    }    
+    }
 });
 
 /* get analytics info for this page */

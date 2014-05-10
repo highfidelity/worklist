@@ -8,7 +8,7 @@ class VisitQueryTools {
         $ids        = "ga:$ids";
         $metrics    = 'ga:visits,ga:pageViews';
         $segment    = "dynamic%3A%3Aga%3ApagePath%3D~workitem.php.*%3Fjob_id%3D$jobid.*";
-        
+
         $query = "ids=$ids&metrics=$metrics&segment=$segment&start-date=2009-01-01&end-date=2100-01-01";
         return self::getResults($query, $token, $ids);
     }
@@ -25,7 +25,7 @@ class VisitQueryTools {
         $start      = date('Y-m-d', strtotime("-30 days"));
         $end        = date('Y-m-d');
         $results    = 150;
-        
+
         $query = "ids=$ids&dimensions=$dimensions&metrics=$metrics&filters=$filter&sort=$sort&start-date=$start&end-date=$end&max-results=$results";
         return self::getResults($query, $token, $ids);
     }
@@ -55,11 +55,11 @@ class VisitQueryTools {
 
         //no post
         curl_setopt($ch, CURLOPT_POST, FALSE);
-        
+
         $return = Array();
-        
+
         $return['result'] = curl_exec($ch);  /* Execute the HTTP request. */
-        
+
         if(curl_errno($ch))
         {
           $return['error'] = curl_error($ch);
@@ -78,7 +78,7 @@ class VisitQueryTools {
      * parses the singlejob XML and returns the required values
      */
     function parseItem($result) {
-     
+
         $data = Array();
         /* We only need the two values, so lets get and return them */
         /* no need to do anything more complex with xml parsing at this stage*/
@@ -94,18 +94,18 @@ class VisitQueryTools {
      * parses the multijob XML and returns the required values
      */
     function parseItems($result) {
-     
+
         $data = Array();
-        
+
         /* all this is doing is pulling out the pagePath and pageviews */
         preg_match_all('/\'ga:pagePath\'.*?value=\'([^\']+)\'.+?\'ga:pageviews\'.*?value=\'([0-9]+)\'/',$result, $matches);
-        
+
         $total = count($matches[1]);
-        
+
         for($i=0;$i<$total;$i++) {
             preg_match('/job_id=([0-9]+)/', $matches[1][$i], $jobmatch);
             $data[] = array('url' => $matches[1][$i], 'visits' => $matches[2][$i], 'job' => $jobmatch[1]);
-            
+
         }
         return($data);
 

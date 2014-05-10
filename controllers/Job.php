@@ -270,7 +270,7 @@ class JobController extends Controller {
                                                     'recipients' => array('runner', 'usersWithFeesBug')));
                 }
             }
-            
+
             //if job is a bug, notify to journal
             if($bug_job_id > 0) {
                 $workitem->setIs_bug(1);
@@ -282,7 +282,7 @@ class JobController extends Controller {
             } else {
                 $bugJournalMessage= "";
             }
-            
+
             if (empty($new_update_message)) {
                 $new_update_message = " No changes.";
             } else {
@@ -309,7 +309,7 @@ class JobController extends Controller {
                 $journal_message .= '\\#' . $worklist_id . ' updated by @' . $_SESSION['nickname'] .
                                     $bugJournalMessage .
                                     $new_update_message . $related;
-                
+
                 $options = array(
                     'type' => 'workitem-update',
                     'workitem' => $workitem
@@ -328,7 +328,7 @@ class JobController extends Controller {
             if ((isset($_REQUEST['worklist_id']) && !empty($_REQUEST['worklist_id'])) &&
                 (isset($_REQUEST['user_id'])     && !empty($_REQUEST['user_id']))     &&
                 (isset($_REQUEST['comment'])     && !empty($_REQUEST['comment']))) {
-                
+
                 if (isset($_REQUEST['comment_id']) && !empty($_REQUEST['comment_id'])) {
                     $parent_comment = (int) $_REQUEST['comment_id'];
                 } else {
@@ -346,7 +346,7 @@ class JobController extends Controller {
                 if ($workitem->getStatus() != 'Draft') {
                     $related = getRelated($comment);
                     $journal_message .= '@' . $_SESSION['nickname'] . ' posted a comment on #' . $worklist_id . $related;
-                    
+
                     $options = array(
                         'type' => 'comment',
                         'workitem' => $workitem,
@@ -359,7 +359,7 @@ class JobController extends Controller {
                         'comment' => $comment,
                         'related' => $related
                     );
-                    
+
                     Notification::workitemNotify($options, $data, false);
                     Notification::workitemNotifyHipchat($options, $data);
 
@@ -414,7 +414,7 @@ class JobController extends Controller {
         }
 
         if($action =='invite-people') {
-           
+
             // Send invitation
             $people = explode(',', $_REQUEST['invite']);
             $nonExistingPeople = invitePeople($people, $workitem);
@@ -422,7 +422,7 @@ class JobController extends Controller {
             $this->view = null;
             echo $json;
             exit;
-           
+
         }
         if($action == 'start_codereview') {
             if(!($user->isEligible() && $userId == $workitem->getMechanicId())) {
@@ -431,7 +431,7 @@ class JobController extends Controller {
                 $workitem->setCRStarted(1);
                 $workitem->save();
                 $journal_message = '@' . $_SESSION['nickname'] . ' has started a code review for #' . $worklist_id;
-                
+
                 $options = array(
                     'type' => 'code-review-started',
                     'workitem' => $workitem
@@ -458,7 +458,7 @@ class JobController extends Controller {
                     } else {
                         $$arg = '';
                     }
-                } 
+                }
                 if($crfee_desc == '') {
                     $crfee_desc = 'Code Review';
                 } else {
@@ -474,14 +474,14 @@ class JobController extends Controller {
                 $myRunner->updateBudget(-$crfee_amount, $workitem->getBudget_id());
 
                 $journal_message = '@' . $_SESSION['nickname'] . ' has completed their code review for #' . $worklist_id;
-                
+
                 $options = array(
                     'type' => 'code-review-completed',
                     'workitem' => $workitem,
                     'recipients' => array('runner', 'mechanic', 'followers')
                 );
                 Notification::workitemNotify($options);
-                
+
                 $data = array(
                     'nick' => $_SESSION['nickname']
                 );
@@ -500,7 +500,7 @@ class JobController extends Controller {
                 $workitem->setCRStarted(0);
                 $workitem->save();
                 $journal_message = '@' . $_SESSION['nickname'] . ' has canceled their code review for #' . $worklist_id;
-                
+
                 $options = array(
                     'type' => 'code-review-canceled',
                     'workitem' => $workitem,
@@ -509,18 +509,18 @@ class JobController extends Controller {
                     'nick' => $_SESSION['nickname'],
                 );
                 Notification::workitemNotifyHipchat($options, $data);
-            }    
+            }
         }
 
         if($action =='save-review-url') {
-            if(!($is_project_runner || 
+            if(!($is_project_runner ||
             ($mechanic_id == $user_id) &&
             ($worklist['status'] != 'Done'))) {
                 error_log("Input forgery detected for user $userId: attempting to $action.");
             } else {
                 $sandbox = (!empty($_REQUEST['sandbox-url'])) ? $_REQUEST['sandbox-url'] : $workitem->getSandbox();
                 $notes = (!empty($_REQUEST['review-notes'])) ? $_REQUEST['review-notes'] : null;
-                
+
                 $status_review = $_REQUEST['quick-status-review'];
                 $status_error = '';
 
@@ -605,7 +605,7 @@ class JobController extends Controller {
                         if ($status == 'Done') {
                             $displayDialogAfterDone = true;
                         }
-                        
+
                         if($status == 'Code Review') {
                             Notification::massStatusNotify($workitem);
                         }
@@ -700,7 +700,7 @@ class JobController extends Controller {
                     $summary = $row['summary'];
                     $username = $row['username'];
                 }
-                
+
                 $options = array(
                      'type' => 'bid_placed',
                      'workitem' => $workitem,
@@ -714,7 +714,7 @@ class JobController extends Controller {
                      'notes' => replaceEncodedNewLinesWithBr($notes),
                      'bid_id' => $bid_id,
                 );
-                
+
                 // notify runner of new bid
                 Notification::workitemNotify($options, $data);
 
@@ -726,10 +726,10 @@ class JobController extends Controller {
                         $journal_message .= $new_update_message;
                     }
                 }
-                
+
                 $data['new_update_message'] = $new_update_message;
                 Notification::workitemNotifyHipchat($options, $data);
-                
+
                 if(!$notifyEmpty) {
                     $options = array(
                         'type' => 'suggestedwithbid',
@@ -777,7 +777,7 @@ class JobController extends Controller {
                     $summary = $row['summary'];
                     $username = $row['username'];
                 }
-                
+
                 $options = array(
                     'type' => 'bid_updated',
                     'workitem' => $workitem,
@@ -790,11 +790,11 @@ class JobController extends Controller {
                     'notes' => replaceEncodedNewLinesWithBr($notes),
                     'bid_id' => $bid_id
                 );
-                
+
                 // notify runner of new bid
                 Notification::workitemNotify($options, $data);
                 Notification::workitemNotifyHipchat($options, $data);
-              
+
             }
             $redirectToDefaultView = true;
         }
@@ -830,9 +830,9 @@ class JobController extends Controller {
                         'fee_desc' => $fee_desc,
                         'mechanic_id' => $mechanic_id,
                     );
-                    
+
                     Notification::workitemNotify($options, $data);
-                    
+
                     $data['nick'] = $_SESSION['nickname'];
                     Notification::workitemNotifyHipchat($options, $data);
 
@@ -840,7 +840,7 @@ class JobController extends Controller {
                     $runner = new User();
                     $runner->findUserById($workitem->getRunnerId());
                     $runner->updateBudget(-$fee_amount, $workitem->getBudget_id());
-                   
+
                 }
                 $redirectToDefaultView = true;
             }
@@ -867,7 +867,7 @@ class JobController extends Controller {
                 // notify recipient of new tip
                 $recipient = new User();
                 $recipient->findUserById($mechanic_id);
-                
+
                 $options = array(
                     'type' => 'tip_added',
                     'workitem' => $workitem,
@@ -878,9 +878,9 @@ class JobController extends Controller {
                     'tip_desc' => $tip_desc,
                     'tip_amount' => $tip_amount
                 );
-                
+
                 Notification::workitemNotify($options, $data);
-                
+
                 $data['nick'] = $_SESSION['nickname'];
                 $data['tipped_nickname'] = $recipient->getNickname();
                 Notification::workitemNotifyHipchat($options, $data);
@@ -897,12 +897,12 @@ class JobController extends Controller {
             } else {
                 $bid_id = intval($_REQUEST['bid_id']);
                 $budget_id = intval($_REQUEST['budget_id']);
-                
+
                 $budget = new Budget();
                 if (!$budget->loadById($budget_id) ) {
                     $_SESSION['workitem_error'] = "Invalid budget!";
                 }
-                // only runners can accept bids        
+                // only runners can accept bids
                 if (($is_project_runner || $workitem->getRunnerId() == $_SESSION['userid'] || ($user->getIs_admin() == 1
                      && $is_runner) && !$workitem->hasAcceptedBids() &&
                     $workitem->getStatus() == "Bidding" || $workitem->getStatus() == "SuggestedWithBid")) {
@@ -923,33 +923,33 @@ class JobController extends Controller {
                         if($bid_amount <= $remainingFunds) {
                             $bid_info = $workitem->acceptBid($bid_id, $budget_id);
                             $budget->recalculateBudgetRemaining();
-                            
+
                             // Journal notification
                             $journal_message .= '@' . $_SESSION['nickname'] .
                                 " accepted {$bid_info['bid_amount']} from ".
                                 $bid_info['nickname'] . " on #" .$bid_info['worklist_id'] ." Status set to Working";
-                            
+
                             $options = array(
                                 'type' => 'bid_accepted',
                                 'workitem' => $workitem,
                                 'recipients' => array('mechanic', 'followers')
                             );
-                            
+
                             // mail notification - including any data returned from acceptBid
                             Notification::workitemNotify($options, $bid_info);
-                            
+
                             $data = $bid_info;
                             $data['nick'] = $_SESSION['nickname'];
                             Notification::workitemNotifyHipchat($options, $data);
 
                             $bidder = new User();
                             $bidder->findUserById($bid_info['bidder_id']);
-                            
+
                             // Update Budget
                             $runner = new User();
                             $runner->findUserById($workitem->getRunnerId());
                             $runner->updateBudget(-$bid_amount, $workitem->getBudget_id());
-                           
+
                             // Send email to not accepted bidders
                             $this->sendMailToDiscardedBids($worklist_id);
                         } else {
@@ -1000,7 +1000,7 @@ class JobController extends Controller {
                             $currentBid->findBidById($bid);
                             $total = $total + $currentBid->getBid_amount();
                         }
-                        
+
                         $remainingFunds = $budget->getRemainingFunds();
                         if ($total <= $remainingFunds) {
                             foreach ($bid_id as $bid) {
@@ -1020,8 +1020,8 @@ class JobController extends Controller {
                                 if ($exists) {
                                     $bid_info = $workitem->acceptBid($bid, $budget_id, $is_mechanic);
                                     // Journal notification
-                                    $journal_message .= '@' . $_SESSION['nickname'] . " accepted {$bid_info['bid_amount']} from ". 
-                                        $bid_info['nickname'] . " " . ($is_mechanic ? ' as Developer ' : '') . 
+                                    $journal_message .= '@' . $_SESSION['nickname'] . " accepted {$bid_info['bid_amount']} from ".
+                                        $bid_info['nickname'] . " " . ($is_mechanic ? ' as Developer ' : '') .
                                         "on #".$bid_info['worklist_id']. " Status set to Working";
                                     // mail notification
                                     Notification::workitemNotify(array('type' => 'bid_accepted',
@@ -1133,7 +1133,7 @@ class JobController extends Controller {
                     //break;
                 }
 
-                if (!($user->getId() == $bid['bidder_id'] 
+                if (!($user->getId() == $bid['bidder_id']
                  || $user->isRunnerOfWorkitem($workitem) || ($worklist['status'] == 'SuggestedWithBid' && $workitem->getIsRelRunner())))  {
                     if ($user->getIs_admin() == 0) {
                         $bid['nickname'] = '*name hidden*';
@@ -1184,7 +1184,7 @@ class JobController extends Controller {
         $accepted_bid_amount = 0;
         foreach ($fees as $fee){
             if ($fee['desc'] == 'Accepted Bid') {
-                $accepted_bid_amount = $fee['amount'];  
+                $accepted_bid_amount = $fee['amount'];
             }
         }
 
@@ -1197,7 +1197,7 @@ class JobController extends Controller {
             if ($crRole['percentage'] !== null && $crRole['min_amount'] !== null) {
                 $crFee = ($crRole['percentage'] / 100) * $accepted_bid_amount;
                 if ((float) $crFee < $crRole['min_amount']) {
-                   $crFee = $crRole['min_amount']; 
+                   $crFee = $crRole['min_amount'];
                 }
             }
         }
@@ -1271,7 +1271,7 @@ class JobController extends Controller {
         $this->write('currentUserHasBid', $currentUserHasBid);
         $this->write('has_budget', $has_budget);
         $this->write('promptForReviewUrl', $promptForReviewUrl);
-        $this->write('status_error', $status_error);        
+        $this->write('status_error', $status_error);
         $this->write('{{userinfotoshow}}', (isset($_REQUEST['userinfotoshow']) && isset($_SESSION['userid'])) ? $_REQUEST['userinfotoshow'] : 0);
 
         parent::run();
@@ -1281,7 +1281,7 @@ class JobController extends Controller {
         $project = new Project();
         $project->loadById($workitem->getProjectId());
         $users_favorite = new Users_Favorite();
-        
+
         if($project->getCrUsersSpecified()) { // if only specified users are allowed
             if($project->isProjectCodeReviewer($userId)){
                 return true;
@@ -1347,7 +1347,7 @@ class JobController extends Controller {
                 $workitem->setRunnerId($user->getId());
             }
         }
-        
+
         if ($newStatus == 'Done' && $workitem->getProjectId() == 0) {
             return false;
         }
@@ -1363,7 +1363,7 @@ class JobController extends Controller {
         $projectId = $workitem->getProjectId();
         $thisProject = new Project($projectId);
         $repoType = $thisProject->getRepo_type();
-        
+
         // Generate diff and send to pastebin if we're in REVIEW
         if ($newStatus == "Code Review") {
             //reset code_review flags
@@ -1397,17 +1397,17 @@ class JobController extends Controller {
                     $codeReviewURL = $pullResults['data']['html_url'] . '/files';
                     $comment = "Code Review available here:\n" . $codeReviewURL;
                 } else {
-                    $comment = $pullResults['error'] 
-                        ? "We had problems making your request to GitHub\n" 
+                    $comment = $pullResults['error']
+                        ? "We had problems making your request to GitHub\n"
                         : "The following error was returned when making your pull request:\n";
-                    $comment .= isset($pullResults['data']['errors']) 
-                        ? $pullResults['data']['errors'][0]['message'] 
-                        : "Unknown error"; 
+                    $comment .= isset($pullResults['data']['errors'])
+                        ? $pullResults['data']['errors'][0]['message']
+                        : "Unknown error";
                 }
                 $rt = $this->addComment($workitem->getId(), $user->getId(), $comment);
-            } 
+            }
         }
-        
+
         if ($newStatus == 'Functional' && $repoType == 'git') {
             $runner = $workitem->getRunnerId();
             $GitHubUser = new User($runner);
@@ -1428,7 +1428,7 @@ class JobController extends Controller {
             sendTemplateEmail($runnerEmail, $emailTemplate, $data, $senderEmail);
         } else if ($newStatus =='Functional' && ! ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 ))) {
             return true;
-        } 
+        }
 
         if ($newStatus == 'Working') {
             $thisProject->setActive(1);
@@ -1437,7 +1437,7 @@ class JobController extends Controller {
 
         // notifications for subscribed users
         Notification::massStatusNotify($workitem);
-        
+
         if ($newStatus != 'SuggestedWithBid') {
             $options = array(
                 'type' => 'status-notify',
@@ -1449,7 +1449,7 @@ class JobController extends Controller {
             );
             Notification::workitemNotifyHipchat($options, $data);
         }
-        
+
         return true;
     }
 
@@ -1463,7 +1463,7 @@ class JobController extends Controller {
 
         if (isset($parent_comment_id)) {
             $comment->setComment_id((int) $parent_comment_id);
-            $originalComment = new Comment(); 
+            $originalComment = new Comment();
             $originalComment->findCommentById((int) $parent_comment_id);
             $cuser = new User();
             $cuser->findUserById($originalComment->getUser_id());
@@ -1476,14 +1476,14 @@ class JobController extends Controller {
                 $correspondent = array();
             }
         }
-        
+
         $comment->setComment($comment_text);
 
         try {
             $id = $comment->save();
         } catch(Exception $e) {
-            error_log("Failure saving comment:\n".$e); 
-        }  
+            error_log("Failure saving comment:\n".$e);
+        }
         $redirectToDefaultView = true;
         $result = array('correspondent' => $correspondent, 'id' => $id);
         return $result;

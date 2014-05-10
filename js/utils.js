@@ -8,7 +8,7 @@ var Utils = {
     mustaches: [],
 
     /**
-     * Returns true when the passed mustache has already loaded, 
+     * Returns true when the passed mustache has already loaded,
      * false otherwise
      */
     mustacheLoaded: function(mustacheTemplate) {
@@ -19,9 +19,9 @@ var Utils = {
         }
         return false;
     },
-    
+
     /**
-     * Loads the mustache from the server and stores it locally 
+     * Loads the mustache from the server and stores it locally
      */
     loadMustache: function(mustacheTemplate, fAfter) {
         if (Utils.mustacheLoaded(mustacheTemplate)) {
@@ -35,9 +35,9 @@ var Utils = {
             }
         }, 'html');
     },
-    
+
     /**
-     * Returns the mustache template if it's loaded, 
+     * Returns the mustache template if it's loaded,
      * otherwise will return an empty string
      */
     getMustache: function(mustacheTemplate) {
@@ -48,9 +48,9 @@ var Utils = {
         }
         return '';
     },
-    
+
     /**
-     * Parses a mustache and calls to a specified callback 
+     * Parses a mustache and calls to a specified callback
      * onced parsed if present
      */
     parseMustache: function(mustacheTemplate, data, fAfter) {
@@ -99,7 +99,7 @@ var Utils = {
                 if (typeof settings.open == 'function') {
                     settings.open(this);
                 }
-            });            
+            });
             $('#' + id).on('hidden.bs.modal', function() {
                 if (typeof settings.close == 'function') {
                     settings.close(this);
@@ -123,10 +123,10 @@ var Utils = {
      * Shows a info dialog with @message
      */
     infoDialog: function(title, message) {
-        
+
         if ($("#dialog-info").length == 0) {
-            $("<div id='dialog-info'><div class='content'></div></div>").appendTo("body");            
-            $('#dialog-info').dialog({ 
+            $("<div id='dialog-info'><div class='content'></div></div>").appendTo("body");
+            $('#dialog-info').dialog({
                 autoOpen: false,
                 closeOnEscape: true,
                 resizable: false,
@@ -137,13 +137,13 @@ var Utils = {
                 buttons: [
                     {
                         text: 'Ok',
-                        click: function() { 
-                            $(this).dialog("close"); 
+                        click: function() {
+                            $(this).dialog("close");
                         }
                     }
                 ]
             });
-        }        
+        }
 
         $("#dialog-info").dialog({
             title: title
@@ -151,7 +151,7 @@ var Utils = {
         $("#dialog-info .content").html(message)
         $('#dialog-info').dialog('open');
     },
-    
+
     /**
      * Shows a error dialog with @message
      */
@@ -160,11 +160,11 @@ var Utils = {
         $('#errorOkBtn').click(function() {
             Utils.closeDialog('error');
         });
-        
+
         // Set message text
         $('#errorMsg').html(message);
-        
-        $('#dialog-error').dialog({ 
+
+        $('#dialog-error').dialog({
                                        autoOpen:false,
                                        closeOnEscape:true,
                                        resizable:false,
@@ -173,7 +173,7 @@ var Utils = {
                                       });
         $('#dialog-error').dialog('open');
     },
-    
+
     /**
      * Opens @dialog
      */
@@ -186,7 +186,7 @@ var Utils = {
                                       });
         $('#dialog-' + dialog).dialog('open');
     },
-    
+
     /**
      * Closes @dialog
      */
@@ -194,7 +194,7 @@ var Utils = {
         $('#dialog-' + dialog).dialog('close');
         $('#' + dialog + 'OkBtn').unbind('click');
     },
-    
+
     /**
      * Validate json returned from an ajax call,
      * returns true if succeded, or false plus a dialog
@@ -215,7 +215,7 @@ var Utils = {
         }
         return true;
     },
-    
+
     /**
      * Calculates the relative time
      */
@@ -235,7 +235,7 @@ var Utils = {
         var min = (minutesRound == 1) ? " minute" : " minutes";
         var hr = (hoursRound == 1) ? " hour and " : " hours and ";
         var dy = (daysRound == 1)  ? " day " : " days, "
-        
+
         var dateFormated;
         if (daysRound < 0) {
             dateFormated = "<span class='overdue'>Overdue</span>";
@@ -245,10 +245,10 @@ var Utils = {
         if (daysRound > 0) dateFormated += daysRound + dy;
         if (hoursRound > 0) dateFormated += hoursRound + hr;
         if (minutesRound > 0) dateFormated += minutesRound + min;
-        
+
         return dateFormated;
     },
-    
+
     /**
      * Calculates the relative time
      */
@@ -268,18 +268,18 @@ var Utils = {
         var min = (minutesRound == 1) ? " minute" : " minutes";
         var hr = (hoursRound == 1) ? " hour" : " hours";
         var dy = (daysRound == 1)  ? " day" : " days"
-        
+
         var dateFormated = " ";
         var sep = ", ";
-        
+
         if (daysRound > 0) dateFormated += daysRound + dy;
         if (hoursRound > 0) dateFormated += sep + hoursRound + hr;
         if (minutesRound > 0) dateFormated += sep + minutesRound + min;
         if (secondsRound > 0) dateFormated += sep + secondsRound + sec;
-        
+
         return dateFormated;
     },
-    
+
     /**
      * International phone number validation
      */
@@ -291,7 +291,7 @@ var Utils = {
         var match = number.match('^[0-9]{6}[0-9]+$');
         return (match != null);
     },
-    
+
     /**
      * E-mail address validation
      */
@@ -299,7 +299,7 @@ var Utils = {
         var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
     },
-    
+
     /**
      * Returns whether browser is in a mobile device
      */

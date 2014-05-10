@@ -16,14 +16,14 @@ class StatusController extends Controller {
             );
             $this->client->authenticate($this->token, '', Github\Client::AUTH_HTTP_TOKEN);
 
-            // first: request github for 3 pages with 30 events data each 
+            // first: request github for 3 pages with 30 events data each
             $gh_events = array_merge(
                 $this->listGithubEvents(GITHUB_ORGANIZATION, 1),
                 $this->listGithubEvents(GITHUB_ORGANIZATION, 2),
                 $this->listGithubEvents(GITHUB_ORGANIZATION, 3)
             );
 
-            // then: find out $seconds_ago based on the last event in order to 
+            // then: find out $seconds_ago based on the last event in order to
             // use as date limit when looking for worklist entries
             $fromTime = strtotime(self::olderGithubEventDate($gh_events));
             $toTime = strtotime(Model::now());
@@ -51,7 +51,7 @@ class StatusController extends Controller {
         $ret = array();
         try {
             if (!isset($_REQUEST['action'])) {
-                throw new Exception("Invalid action", 1);                
+                throw new Exception("Invalid action", 1);
             }
             $action = $_REQUEST['action'];
             switch($action) {
@@ -82,7 +82,7 @@ class StatusController extends Controller {
         $ret = array();
 
         // this is a 30 seconds timeout long poll, so let's loop up to 25 times
-        // with 1 sec delays at the end of each iteration 
+        // with 1 sec delays at the end of each iteration
         $fromTime = (int) $since;
         for ($i = 0; $i < 25; $i++) {
             $toTime = strtotime(Model::now());
@@ -122,7 +122,7 @@ class StatusController extends Controller {
     }
 
     /**
-     * returns the older date from the latest status-renderable github event, used 
+     * returns the older date from the latest status-renderable github event, used
      * when requesting for worklist entries (when setting a $seconds_ago date limit)
      */
     static function olderGithubEventDate($events) {

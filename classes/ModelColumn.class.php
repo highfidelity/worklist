@@ -6,7 +6,7 @@ class ModelColumn extends AppObject {
 	public $touched = false;
 	protected $value = null;
 
-	public function __construct($name, $type) 
+	public function __construct($name, $type)
 	{
 		//parent::__construct();
 		$this->name = $name;
@@ -14,7 +14,7 @@ class ModelColumn extends AppObject {
 		$this->touched = false;
 	}
 
-	public function __get($name) 
+	public function __get($name)
 	{
 		if ($name == 'value') {
 			return $this->value;

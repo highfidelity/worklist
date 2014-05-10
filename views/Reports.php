@@ -2,7 +2,7 @@
 
 class ReportsView extends View {
     public $layout = 'NewWorklist';
-    
+
     public $title = 'Reports - Worklist';
 
     public $stylesheets = array(
@@ -88,7 +88,7 @@ class ReportsView extends View {
 
     public function filterTypeExpense() {
         $filter = $this->read('filter');
-        return $filter->getType() == 'Expense';        
+        return $filter->getType() == 'Expense';
     }
 
     public function filterOrderedByName() {

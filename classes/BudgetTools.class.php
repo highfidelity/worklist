@@ -1,10 +1,10 @@
 <?php
 
 class BudgetTools {
-    function exportCSV($data) {    
+    function exportCSV($data) {
         // Create with headers
         $csv = "Worklist ID,Budget,Summary,Who,Amount,Status,Created,Paid\n";
-        
+
         foreach ($data as $item) {
             $csv .= $item->id.",";
             $csv .= $item->budget_id.",";
@@ -15,17 +15,17 @@ class BudgetTools {
             $csv .= $item->created.",";
             $csv .= $item->paid."\n";
         }
-        
+
         // Output headers to force download
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="Report.csv"');
         echo $csv;
     }
 
-    function exportCSV_Transferred($data) {    
+    function exportCSV_Transferred($data) {
         // Create with headers
         $csv = "Budget ID, Budget, Notes, Who, Amount, Created\n";
-        
+
         foreach ($data as $item) {
             $csv .= $item->id . ",";
             $csv .= str_replace(",", "", $item->budget_title) . ",";
@@ -34,7 +34,7 @@ class BudgetTools {
             $csv .= $item->amount . ",";
             $csv .= $item->created . "\n";
         }
-        
+
         // Output headers to force download
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="Report.csv"');
@@ -54,21 +54,21 @@ class BudgetTools {
 
         $sql_q = mysql_query($sql) or die(mysql_error());
         $items = array();
-        
+
         while ($row = mysql_fetch_assoc($sql_q)) {
             // Get fees
             $fees = self::getFees($row['id']);
-            
+
             // Get people working there
             $who = self::getWho($row['id']);
             $ids = self::getWho($row['id'], true);
-            
+
             // Get Date of Working
             $created = self::getDateWorking($row['id']);
-            
+
             // Get payment status
             $paid = self::getPaymentStatus($row['id']);
-            
+
             if ($paid['paid'] == 1) {
                 // Get paid date
                 $paid_date = self::getPaidDate($row['id']);
@@ -78,8 +78,8 @@ class BudgetTools {
             } else {
                 $paid_date = array('paid_date'=>"Not Paid");
             }
-        
-                $items[] = array('id'=>$row['id'], 'budget_id'=>$row['budget_id'], 'budget_title'=>$row['reason'], 
+
+                $items[] = array('id'=>$row['id'], 'budget_id'=>$row['budget_id'], 'budget_title'=>$row['reason'],
                                 'summary'=>$row['summary'], 'who'=>$who, 'ids'=>$ids, 'amount'=>$fees['amount'],
                                 'status'=>$row['status'], 'created'=>$created['date'], 'paid'=>$paid_date['paid_date']);
         }
@@ -104,21 +104,21 @@ class BudgetTools {
 
         $sql_q = mysql_query($sql) or die(mysql_error());
         $items = array();
-        
+
         while ($row = mysql_fetch_assoc($sql_q)) {
             // Get fees
             $fees = self::getFees($row['id']);
-            
+
             // Get people working there
             $who = self::getWho($row['id']);
             $ids = self::getWho($row['id'], true);
-            
+
             // Get Date of Working
             $created = self::getDateWorking($row['id']);
-            
+
             // Get payment status
-            $paid = self::getPaymentStatus($row['id']);     
-            
+            $paid = self::getPaymentStatus($row['id']);
+
             if ($paid['paid'] != 1) {
                 if ($fees['amount'] > 0) {
                     $paid_date = array('paid_date'=>"Not Paid");
@@ -149,28 +149,28 @@ class BudgetTools {
 
         $sql_q = mysql_query($sql) or die(mysql_error());
         $items = array();
-        
+
         while ($row = mysql_fetch_assoc($sql_q)) {
             // Get fees
             $fees = self::getFees($row['id']);
-            
+
             // Get people working there
             $who = self::getWho($row['id']);
             $ids = self::getWho($row['id'], true);
-            
+
             // Get Date of Working
             $created = self::getDateWorking($row['id']);
-            
+
             // Get payment status
             $paid = self::getPaymentStatus($row['id']);
-            
+
             if ($paid['paid'] == 1) {
                 // Get Paid date
                 $paid_date = self::getPaidDate($row['id']);
                 if (!$paid_date['paid_date']) {
                     $paid_date['paid_date'] = "No Data";
                 }
-                
+
                 $items[] = array('id'=>$row['id'], 'budget_id'=>$row['budget_id'], 'budget_title'=>$row['reason'],
                                 'summary'=>$row['summary'], 'who'=>$who, 'ids'=>$ids, 'amount'=>$fees['amount'],
                                 'status'=>$row['status'], 'created'=>$created['date'], 'paid'=>$paid_date['paid_date']);
@@ -218,7 +218,7 @@ class BudgetTools {
         $sql = "SELECT SUM(".FEES.".`amount`) AS `amount` ".
                "FROM ".FEES.
                " WHERE ".FEES.".`worklist_id`={$id} AND ".FEES.".`withdrawn`!=1";
-        $sql_q = mysql_query($sql) or die(mysql_error()); 
+        $sql_q = mysql_query($sql) or die(mysql_error());
         return mysql_fetch_array($sql_q);
     }
 
@@ -227,9 +227,9 @@ class BudgetTools {
         $sql = "SELECT ".USERS.".`id`,`nickname` FROM ".FEES.
                " LEFT JOIN ".USERS." ON ".USERS.".`id`=".FEES.".`user_id`".
                " WHERE ".FEES.".`worklist_id` = {$id} AND ".FEES.".`withdrawn`=0 GROUP BY `nickname`";
-                
+
         $sql_q = mysql_query($sql) or die(mysql_error());
-        
+
         if ($getIds) {
             $ids = array();
             while($row = mysql_fetch_assoc($sql_q)) {
@@ -249,14 +249,14 @@ class BudgetTools {
                "FROM ".FEES." LEFT JOIN ".WORKLIST." ON ".WORKLIST.".`id`=".FEES.".`worklist_id` ".
                "WHERE ".FEES.".`user_id`=".WORKLIST.".`mechanic_id` AND ".WORKLIST.".`id`={$id} LIMIT 1";
         $sql_q = mysql_query($sql) or die(mysql_error());
-        
+
         $data = mysql_fetch_array($sql_q);
         if ($data['date']) {
            return $data;
         } else {
            $data['date'] = "No Data";
            return $data;
-        } 
+        }
     }
 
     function getPaymentStatus($id) {

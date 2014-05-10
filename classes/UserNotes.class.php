@@ -3,10 +3,10 @@
 require_once('models/Note.php');
 
 class UserNotes {
-    
+
     public function __construct() {
     }
-    
+
     /**
      * Get the note
      */
@@ -26,8 +26,8 @@ class UserNotes {
             echo '<textarea class="form-control userNotes">' . $note->note . '</textarea>';
         }else{
             echo '<textarea class="form-control userNotes"></textarea>';
-        }       
-        
+        }
+
         echo '<script type="text/javascript">$(".userNotes").autogrow();</script>';
         exit(0);
     }
@@ -43,7 +43,7 @@ class UserNotes {
         if ($authorId > 0) {
             $reqUser->findUserById($authorId);
         } else {
-            $this->respond(false, "You have to be logged in to access user info!",''); 
+            $this->respond(false, "You have to be logged in to access user info!",'');
         }
 
         $userNotes = $_REQUEST['userNotes'];
@@ -57,8 +57,8 @@ class UserNotes {
             if ($note->save('id')) {
                 $this->respond(true, "Note saved.",'');
             } else {
-                $this->respond(false, "Cannot update note! Please retry later.",''); 
-            }           
+                $this->respond(false, "Cannot update note! Please retry later.",'');
+            }
         } else {
             if ($userNotes != "") {
                 $values = array(
@@ -66,11 +66,11 @@ class UserNotes {
                     'user_id' => $userId,
                     'note' => $userNotes
                 );
-                        
-                if ($note->insertNew($values)) {    
+
+                if ($note->insertNew($values)) {
                     $this->respond(true, "Note saved.",'');
                 } else {
-                    $this->respond(false, "Cannot create new note! Please retry later.",''); 
+                    $this->respond(false, "Cannot create new note! Please retry later.",'');
                 }
             } else {
                     $this->respond(true, "New empty note is not saved.",'');
@@ -78,11 +78,11 @@ class UserNotes {
         }
      }
 
-  
+
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.
-     * 
+     *
      * @fields has to be an array of strings
      */
     public function validateRequest($fields, $return=false) {
@@ -90,7 +90,7 @@ class UserNotes {
         if (!is_array($fields)) {
             return false;
         }
-        
+
         foreach ($fields as $field) {
             if (!isset($_REQUEST[$field])) {
                 // If we specified that the function must return do so
@@ -103,7 +103,7 @@ class UserNotes {
         }
     }
 
-    
+
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

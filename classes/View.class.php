@@ -1,11 +1,11 @@
 <?php
 /**
  * This class should do the messaging part between logic and views.
- * Common used values as header/footer location or page title should 
- * use a public static variable, and view-specific values should be 
+ * Common used values as header/footer location or page title should
+ * use a public static variable, and view-specific values should be
  * stored through read/write methods
- * 
- *  
+ *
+ *
  */
 use \Mustache\Mustache;
 
@@ -56,10 +56,10 @@ class View extends AppObject {
     public $config = array(
         'ajaxRefresh' => AJAX_REFRESH
     );
-    
+
     public $stylesheets = array();
     public $scripts = array();
-    
+
     /**
      * Constructor method
      */
@@ -100,7 +100,7 @@ class View extends AppObject {
         $this->currentUser['is_payer'] = empty($_SESSION['is_payer']) ? false : true;
         $this->currentUser['is_admin'] = empty($_SESSION['is_admin']) ? false : true;
     }
-    
+
     /**
      * Add a css stylesheet to be used in the view
      */
@@ -163,7 +163,7 @@ class View extends AppObject {
             $ret .= sprintf('<script type="text/javascript" src="%s"></script>', $path);
         }
         return $ret;
-    }    
+    }
 
     /**
      * Removes an existing script from the view
@@ -175,7 +175,7 @@ class View extends AppObject {
         unset($this->scripts[$path]);
         return true;
     }
-        
+
     public function render() {
         $this->loadGlobals();
 

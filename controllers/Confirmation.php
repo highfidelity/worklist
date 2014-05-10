@@ -28,11 +28,11 @@ class ConfirmationController extends Controller {
                 sendTemplateEmail($user->getUsername(), 'welcome', array('nickname' => $user->getNickname()), 'Worklist <contact@worklist.net>');
                 User::login($user, false); //Optionally can login with confirm URL
                 $jobs = new JobsController();
-                $jobs->view->jumbotron = 
+                $jobs->view->jumbotron =
                     "<h2>Welcome to Worklist!</h2>
                     <p>
-                      Click on a job and add your bid, or come join us in our 
-                      <a href='https://gitter.im/highfidelity/worklist' target='_blank'>public chat room</a>. 
+                      Click on a job and add your bid, or come join us in our
+                      <a href='https://gitter.im/highfidelity/worklist' target='_blank'>public chat room</a>.
                       Questions? Check out the <a href='./help'>help tab</a>.
                     </p>
                     ";
@@ -64,9 +64,9 @@ class ConfirmationController extends Controller {
                 Utils::redirect('login'); //we are not logged in
             }
             //save new email
-            $user->setUsername($new_email); 
+            $user->setUsername($new_email);
             $user->save();
-            $_SESSION['username'] = $new_email; 
+            $_SESSION['username'] = $new_email;
             Utils::redirect('./settings?emconfirmed');
         }
 

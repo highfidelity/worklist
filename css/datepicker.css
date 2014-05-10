@@ -1,6 +1,6 @@
-/*  
+/*
 	Copyright (c) 2009-2010, LoveMachine Inc.
-    All Rights Reserved. 
+    All Rights Reserved.
     http://www.lovemachineinc.com
 */
 /* the div that holds the date picker calendar */
@@ -118,7 +118,7 @@
 	}
 
 
-/* additional style information for the cell that holds a highlighted day (usually either today's date or the current date field value) */ 
+/* additional style information for the cell that holds a highlighted day (usually either today's date or the current date field value) */
 .dpDayHighlight {
 	background-color: #ebe8f2;
 	color: #6541B8;
@@ -131,7 +131,7 @@
 /*	font-family: helvetica, arial, sans-serif;
 	font-size: 10px;
 	color: gray;
-	
+
 	font-weight: bold;
 	padding: 0px; */
 	background: #816faa;
@@ -153,5 +153,5 @@
 	font-weight: bold;
 	cursor: pointer;
 	}
-	
-.dpButtonCal {padding:7px 0 0 8px; border:none;}	
+
+.dpButtonCal {padding:7px 0 0 8px; border:none;}

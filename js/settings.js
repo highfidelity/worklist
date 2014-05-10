@@ -143,7 +143,7 @@ function saveSettings() {
             } else {
                 openNotifyOverlay(message);
             }
-            
+
         },
         error: function(xhdr, status, err) {
             $('#msg-'+type).text('We were unable to save your settings. Please try again.');
@@ -184,9 +184,9 @@ $(function () {
     var uploadOptions = {
         action: 'api.php',
         name: 'profile',
-        data: { 
-            action: 'uploadProfilePicture', 
-            api_key: uploadApiKey, 
+        data: {
+            action: 'uploadProfilePicture',
+            api_key: uploadApiKey,
             userid: user_id
         },
         autoSubmit: true,
@@ -252,7 +252,7 @@ $(function () {
     nickname.add(Validate.Length, { minimum: 0, maximum: 25 } );
     nickname.add(Validate.Format, { pattern: /^[a-zA-Z0-9][a-zA-Z0-9_\-]*$/, failureMessage: "Must consist only of alphanumerics, underscores, or dash characters!" });
     nickname.add(Validate.Exclusion, { within: [ 'Nickname' ], failureMessage: "You must set your Nickname!" });
-    
+
     username = new LiveValidation('username');
     username.add( Validate.Email );
     username.add(Validate.Length, { minimum: 4, maximum: 50 } );

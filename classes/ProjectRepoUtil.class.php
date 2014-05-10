@@ -1,6 +1,6 @@
-<?php 
+<?php
 // Class to work with sandbox
-// 
+//
 //  vim:ts=4:et
 
 

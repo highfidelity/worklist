@@ -1,6 +1,6 @@
 <?php
 
-class DefaultLayout extends Layout {	
+class DefaultLayout extends Layout {
     public $stylesheets = array(
         'css/legacy/common.css',
         'css/legacy/smoothness/lm.ui.css',
@@ -32,5 +32,5 @@ class DefaultLayout extends Layout {
         'js/userstats.js',
         'js/worklist.js',
         'js/budget.js'
-    );	
+    );
 }

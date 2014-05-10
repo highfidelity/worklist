@@ -30,13 +30,13 @@ var WReview = {
             oElement = $("#settingsDialog").parent();
         }
         if (bBlock) {
-            oElement.block({ 
+            oElement.block({
                 message: sMess,
                 css: {
                     width:'50%'
                 }
             });
-            setTimeout(function(){oElement.unblock();}, 30000); 
+            setTimeout(function(){oElement.unblock();}, 30000);
         } else {
              oElement.unblock();
         }
@@ -47,7 +47,7 @@ var WReview = {
         $.ajax({
             type: 'POST',
             url: 'api.php',
-            data: { 
+            data: {
                 action: 'userReview',
                 userReview: $("textarea.userReview").val(),
                 reviewee_id: $("#reviewDialog").data("reviewee_id"),
@@ -91,34 +91,34 @@ var WReview = {
                     }
                 }
                 $("#infoMessageReviews").append("<div class='infoMessageSaveReviews'>"+json.message+"</div>");
-                $.blockUI({ 
-                    message: $('#infoMessageReviews'), 
-                    fadeIn: 700, 
-                    fadeOut: 700, 
-                    timeout: 3000, 
-                    showOverlay: false, 
-                    centerY: true, 
-                    css: { 
-                        width: '350px', 
-                        left: '50%', 
-                        border: 'none', 
-                        padding: '5px', 
-                        backgroundColor: '#000', 
-                        '-webkit-border-radius': '10px', 
-                        '-moz-border-radius': '10px', 
-                        opacity: .6, 
+                $.blockUI({
+                    message: $('#infoMessageReviews'),
+                    fadeIn: 700,
+                    fadeOut: 700,
+                    timeout: 3000,
+                    showOverlay: false,
+                    centerY: true,
+                    css: {
+                        width: '350px',
+                        left: '50%',
+                        border: 'none',
+                        padding: '5px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .6,
                         color: '#fff' ,
                         'z-index': 4000
                     } ,
                     onUnblock: function() {
                         $(".infoMessageSaveReviews").remove();
                     }
-                }); 
+                });
                 if (fAfter) {
                     fAfter(true);
                 }
             }
-                                     
+
         });
     },
     clickSaveButton: function(fAfter) {
@@ -146,18 +146,18 @@ var WReview = {
                 dialogClass: 'white-theme',
                 buttons: [{
                     text: "Update Review",
-                    click: function() { 
+                    click: function() {
                         WReview.clickSaveButton();
                         return;
                     },
                     "class": "updateReviewButton"
                 },{
                     text: "No Changes",
-                    click: function() { 
+                    click: function() {
                         $("#reviewDialog").dialog("close");
                         return;
                     }
-                }],            
+                }],
                 modal: true,
                 title: title,
                 autoOpen: false,
@@ -174,7 +174,7 @@ var WReview = {
                             withTrust: (options.withTrust) ? 1 : 0,
                             reviewee_id: $("#reviewDialog").data("reviewee_id")
                         },
-                        function(response, status, xhr){    
+                        function(response, status, xhr){
                         if (status == "error") {
                             var msg = "Sorry but there was an error: ";
                                 $("#error").html(msg + xhr.status + " " + xhr.statusText);
@@ -182,7 +182,7 @@ var WReview = {
                             $(".userReview").keyup(function() {
                                 $(".updateReviewButton", $("#reviewDialog").parent()).removeAttr("disabled").removeClass('ui-state-disabled')
                             });
-                            if (options.withTrust) {                               
+                            if (options.withTrust) {
                                 $(".userReview").height("80%");
                                 WLFavorites.init( "profileInfoFavoriteInReview", options.user_id, options.nickname);
                                 // setup the variables needed to call the getFavoriteText function
@@ -191,21 +191,21 @@ var WReview = {
                                 if ($('.profileInfoFavorite .favorite_user').hasClass('myfavorite')) {
                                     isMyFav = true;
                                 }
-                                
+
                                 // set the favText with the getFavoriteText function
                                 var favText = WLFavorites.getFavoriteText(favCount, isMyFav, 'trusted ');
-                                
+
                                 $('.profileInfoFavorite span').html(favText);
                             }
                             $(".reviewee_nickname").text(options.nickname);
-                            
+
                             WReview.init({
                                 fAfter: function() {
                                     $("#reviewSave").click(function(){
                                         WReview.clickSaveButton();
                                     });
                                 }
-                            });                 
+                            });
                         }
                     });
                 },
@@ -219,7 +219,7 @@ var WReview = {
             $("#reviewDialog").data("reviewee_id", options.user_id);
             $("#reviewDialog .content").html("");
             $("#reviewDialog").dialog("open");
-        }    
+        }
     }
 };
 

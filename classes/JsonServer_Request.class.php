@@ -1,6 +1,6 @@
-<?php 
+<?php
 //  Copyright (c) 2010, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 
 //  This class handles a Json Requests if you need more functionality don't hesitate to add it.

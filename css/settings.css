@@ -86,7 +86,7 @@
     content: '\00a0';
     width: 23px;
     line-height: 1em;
-    border-radius: 5px;    
+    border-radius: 5px;
     font-family: FontAwesome;
     display: inline-block;
     border: 1px solid #ccc;
@@ -110,7 +110,7 @@
 
 
 /**
- * validation messages 
+ * validation messages
  */
 .LV_validation_message {
     position: absolute;

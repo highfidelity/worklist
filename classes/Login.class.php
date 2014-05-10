@@ -5,7 +5,7 @@ class Login {
      * @var array
      */
     private $params;
-    /** 
+    /**
      * @var Response
      */
     protected $response;
@@ -13,7 +13,7 @@ class Login {
      * @var Database
      */
     protected $database;
-    
+
     public function __construct(){
         $this->params = array("app" => SERVICE_NAME, "key" => API_KEY);
     }
@@ -46,7 +46,7 @@ class Login {
     public function checkToken($token){
         $res = $this->getDatabase()->query("SELECT completed FROM ".TOKENS." WHERE token = '" . sprintf('%s', $token) . "'");
         $ret = mysql_fetch_object($res);
-        
+
         $found = mysql_num_rows($res);
         if($found > 0 && $ret->completed == 0){
             return true;
@@ -71,7 +71,7 @@ class Login {
             }
             $this->params["token"] = $token;
             $this->params["confirm_string"] = $_REQUEST["confirm_string"];
-            
+
             ob_start();
             // send the request
             echo  CURLHandler::Post(LOGIN_APP_URL . 'create', $this->params, false, true);
@@ -202,7 +202,7 @@ class Login {
                 foreach($user_data as $key=>$value){
                     $this->params["user_data"][$key] = $value;
                 }
-                $this->params["user_data"]["userid"] = $_SESSION["userid"]; 
+                $this->params["user_data"]["userid"] = $_SESSION["userid"];
                 $this->params["token"] = $token;
                 ob_start();
                 // send the request
@@ -223,7 +223,7 @@ class Login {
             }
         }
     }
-    
+
     public function resetUserPassword(){
         if(!isset($_REQUEST["user_id"])){
             $this->getResponse()->getError()->setError("No user id set.");
@@ -232,7 +232,7 @@ class Login {
         } else {
             $user_id = (int)$_REQUEST["user_id"];
             $admin_id = (int)$_SESSION["userid"];
-            $token = uniqid(); 
+            $token = uniqid();
             $this->saveToken($token);
             $this->params["user_id"] = $user_id;
             $this->params["admin_id"] = $admin_id;
@@ -258,7 +258,7 @@ class Login {
             }
         }
     }
-    
+
     public function notify($user_id, $session_id){
         $token = uniqid();
         $this->saveToken($token);

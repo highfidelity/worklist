@@ -14,7 +14,7 @@ $(function() {
     }
 
     if (status_error) {
-        openNotifyOverlay(status_error, false);    
+        openNotifyOverlay(status_error, false);
     }
     applyPopupBehavior();
 
@@ -27,12 +27,12 @@ $(function() {
         hide: 'fade',
         width: 'auto',
         height: 'auto',
-        open: function() {  
+        open: function() {
             var autoArgs = autocompleteMultiple('getuserslist');
             $("#invite").bind("keydown", autoArgs.bind);
-            $("#invite").autocomplete(autoArgs, null);               
+            $("#invite").autocomplete(autoArgs, null);
         }
-            
+
     });
     $("#invite-link").click(function() {
         $('#invite-people').dialog('open');
@@ -52,7 +52,7 @@ $(function() {
             var skillsData = eval(data);
             var autoArgsSkills = autocompleteMultiple('getskills', skillsData);
             $("#skills-edit").bind("keydown", autoArgsSkills.bind);
-            $("#skills-edit").autocomplete(autoArgsSkills);               
+            $("#skills-edit").autocomplete(autoArgsSkills);
         });
     }
     makeWorkitemTooltip(".worklist-item");
@@ -109,7 +109,7 @@ $(function() {
 var Workitem = {
 
     sandbox_url: '',
-    
+
     init: function() {
         $("#view-sandbox").click(function() {
             if (repo_type == 'git') {
@@ -120,12 +120,12 @@ var Workitem = {
                     workitem_id: workitem_id
                 });
             }
-        });       
+        });
     },
-    
+
     openDiffPopup: function(options) {
         if ($("#diffUrlDialog").length == 0) {
-            $("<div id='diffUrlDialog' class='popup-body'><div class='content'>Loading ...</div></div>").appendTo("body"); 
+            $("<div id='diffUrlDialog' class='popup-body'><div class='content'>Loading ...</div></div>").appendTo("body");
             $("#diffUrlDialog").data("options", options);
             $('#diffUrlDialog').dialog({
                 dialogClass: 'white-theme',
@@ -148,7 +148,7 @@ var Workitem = {
                                 Workitem.fillDiffPopup();
                             } else {
                                 $(this).dialog("close");
-                            }                           
+                            }
                         }
                     }
                 ],
@@ -161,11 +161,11 @@ var Workitem = {
             });
         } else {
             $("#diffUrlDialog").data("options", options);
-            $("#diffUrlDialog .content").html("");                       
+            $("#diffUrlDialog .content").html("");
         }
         $("#diffUrlDialog").dialog("open");
     },
-    
+
     fillDiffPopup: function() {
         var options = $("#diffUrlDialog").data("options");
         $("#diffUrlDialog .content").load("api.php #urlContent", {
@@ -173,10 +173,10 @@ var Workitem = {
             method: 'getDiffUrlView',
             sandbox_url: options.sandbox_url,
             workitem_id: options.workitem_id
-        });        
+        });
     }
-    
-    
+
+
 }
 
 function reply(id) {
@@ -576,7 +576,7 @@ $(document).ready(function(){
         event.preventDefault();
         postComment();
     });
-    
+
     $('#commentform input[name=cancel]').addClass('hidden');
 
     $("#switchmode_edit").click(function(event) {
@@ -660,11 +660,11 @@ $(document).ready(function(){
         }, 500);
         if (user_id) {
             setFollowingText(isFollowing);
-        } else {  
+        } else {
             $('#followingLogin').html('<a href="./github/login">Login to follow this task.</a>');
         }
     })(jQuery);
-    
+
     SimplePopup('#popup-bid', 'Place Bid', workitem_id, [['input', 'itemid', 'keyId', 'eval']]);
     $('.popup-body form input[type="submit"]').click(function(){
         var name = $(this).attr('name');
@@ -809,7 +809,7 @@ $(document).ready(function(){
                 }
                 // change user id to current bidder id
                 stats.setUserId(bidData.bidder_id);
-                
+
                 // filling and appending user stats table
                 $('.loader').show();
 
@@ -831,7 +831,7 @@ $(document).ready(function(){
                             for (var i = 0; i < jobCount; i++) {
                                 job = json.joblist[i];
                                 html += urlBase;
-                                html += job.id + '" id="worklist-' + job.id + '">#' +job.id + 
+                                html += job.id + '" id="worklist-' + job.id + '">#' +job.id +
                                     '</a> - ' + job.summary + '<br />';
                             }
 
@@ -1002,7 +1002,7 @@ function ConfirmEditBid(){
 function showConfirmForm(i) {
     if (GitHub.validate()) {
         Utils.emptyModal({
-            content: 
+            content:
                 "<p>" +
                 "  <strong>I agree that</strong> by adding either a bid or a fee, I accept that" +
                 "  I will not be paid for this work unless " + project_owner +
@@ -1031,7 +1031,7 @@ function showConfirmForm(i) {
                         showPlaceBidForm();
                     } else if (i == 'fee') {
                         showFeeForm();
-                    }                
+                    }
                 });
             }
         });
@@ -1044,7 +1044,7 @@ function showConfirmForm(i) {
 function showIneligible(problem) {
     Utils.emptyModal({
         title: 'Your account is ineligible',
-        content: 
+        content:
             '<p>' +
             '    <strong>You are not eligible</strong> to bid or place ' + problem + 's on this item. ' +
             '    Please check your settings and make sure you have:' +
@@ -1237,7 +1237,7 @@ function saveWorkitem() {
             failureMessage: "Invalid item Id"
         });
     }
-    
+
     var summary = new LiveValidation('summary');
     summary.add( Validate.Presence, {
         failureMessage: "Summary field can't be empty!"
@@ -1250,19 +1250,19 @@ function saveWorkitem() {
         failureMessage: "You have to choose a project!"
     });
 
-    if($('#is_bug').is(':checked')) { 
+    if($('#is_bug').is(':checked')) {
         massValidation = LiveValidation.massValidate([editProject, summary, bugJobId],true);
     } else {
         massValidation = LiveValidation.massValidate([editProject,summary],true);
     }
-                
+
     if (!massValidation) {
         // Validation failed. We use openNotifyOverlay to display messages
         var errorHtml = createMultipleNotifyHtmlMessages(LiveValidation.massValidateErrors);
         openNotifyOverlay(errorHtml, null, null, true);
         return false;
     }
-    
+
 }
 
 function AcceptMultipleBidOpen(){
@@ -1346,12 +1346,12 @@ $(function() {
         var cc = $('#copy-me').is(':checked') ? 1 : 0;
         var data = {
             'action': 'pingTask',
-            'id' : workitem_id, 
-            'who' : ping_who, 
-            'bid_id': ping_bid_id, 
-            'msg' : msg, 
-            'mail' : mail, 
-            'journal' : journal, 
+            'id' : workitem_id,
+            'who' : ping_who,
+            'bid_id': ping_bid_id,
+            'msg' : msg,
+            'mail' : mail,
+            'journal' : journal,
             'cc' : cc
         };
         $.ajax({
@@ -1388,13 +1388,13 @@ $(function() {
         return false;
 
     });
-    
+
     $('#popup-pingtask').bind('dialogclose', function(event) {
         $("#echo-journal-span").css("display", "block");
         $("#send-ping-btn").val('Send ping');
         $('#echo-journal').prop('checked', true);
     });
-    
+
     $('#pingMechanic').click(function() {
         if (!$.loggedin) {
             sendToLogin();
@@ -1523,16 +1523,16 @@ function sendInviteForm(){
     data: "invite=" + name + "&invite-people=Invite",
     dataType: "json",
     success: function(json) {
- 
+
         if (!json.length) {
             $("#sent-notify").html("<span>invite sent to <strong>"+name+"</strong></span>");
             $('input[name="invite"]').val('');
             $('#invite-people').dialog('close');
             $("#sent-notify").dialog("open");
             setTimeout(function() {
-                $("#sent-notify").dialog("close"); 
+                $("#sent-notify").dialog("close");
             }, 2000);
-            
+
         } else {
             alert("Some of the users you sent do not exist. Please correct those shown and try again.");
             $('#invite').val('');
@@ -1543,10 +1543,10 @@ function sendInviteForm(){
                 } else {
                     $('#invite').val($('#invite').val() + json[i]);
                 }
-                
+
             }
         }
-        
+
     },
     error: function(xhdr, status, err) {
       $("#sent-notify").html("<span>Error sending invitation</span>");

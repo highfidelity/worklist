@@ -2,7 +2,7 @@
 class Timeline extends DataObject {
     public function getHistoricalData($project = false) {
         $sql = "
-            SELECT 
+            SELECT
                 w.id as job_id,
                 w.creator_id as creator,
                 w.mechanic_id as mechanic,
@@ -17,7 +17,7 @@ class Timeline extends DataObject {
                 CONCAT((SELECT city FROM " . USERS . " WHERE id = w.code_reviewer_id), \", \", (SELECT country FROM " . USERS . " WHERE id = w.code_reviewer_id)) as reviewer_address,
                 (SELECT SUM(amount) FROM " . FEES . " WHERE worklist_id = w.id AND user_id = w.code_reviewer_id) as reviewer_fee
             FROM " . WORKLIST . " w
-            WHERE w.status = 'Done' 
+            WHERE w.status = 'Done'
             AND DATE(created) > '2011-01-01'
             ORDER BY created ASC
         ";
@@ -35,13 +35,13 @@ class Timeline extends DataObject {
             return false;
         }
     }
-    
+
     public function getDistinctLocations() {
         $sql = '
             SELECT DISTINCT CONCAT(city, ", ", country) as address
-            FROM ' . USERS . ' 
-            WHERE 
-                city != "" AND 
+            FROM ' . USERS . '
+            WHERE
+                city != "" AND
                 country != "";
         ';
         $objectData = array();
@@ -55,7 +55,7 @@ class Timeline extends DataObject {
             return false;
         }
     }
-    
+
     public function insertLocationData($location, $latlong) {
         $sql = "INSERT INTO location_latlong (location, latlong) VALUES ('{$location}','{$latlong}')";
         $result = $this->link->query($sql);
@@ -65,7 +65,7 @@ class Timeline extends DataObject {
             return false;
         }
     }
-    
+
     public function getLocationData() {
         $sql = "SELECT location, latlong FROM location_latlong";
         $objectData = array();
@@ -79,29 +79,29 @@ class Timeline extends DataObject {
             return false;
         }
     }
-    
+
     public function getListOfMonths() {
         $sql = "
-            (SELECT DISTINCT 
-                YEAR(created) as yearValue, 
-                MONTH(created) as monthValue 
-            FROM worklist 
-            WHERE 
-                status = 'Done' 
-            ORDER BY 
-                yearValue ASC, 
-                monthValue ASC 
-            LIMIT 1) 
+            (SELECT DISTINCT
+                YEAR(created) as yearValue,
+                MONTH(created) as monthValue
+            FROM worklist
+            WHERE
+                status = 'Done'
+            ORDER BY
+                yearValue ASC,
+                monthValue ASC
+            LIMIT 1)
             UNION
-            (SELECT DISTINCT 
-                YEAR(created) as yearValue, 
-                MONTH(created) as monthValue 
-            FROM worklist 
-            WHERE 
-                status = 'Done' 
-            ORDER BY 
-            yearValue DESC, 
-            monthValue DESC 
+            (SELECT DISTINCT
+                YEAR(created) as yearValue,
+                MONTH(created) as monthValue
+            FROM worklist
+            WHERE
+                status = 'Done'
+            ORDER BY
+            yearValue DESC,
+            monthValue DESC
             LIMIT 1)
         ";
         $result = $this->link->query($sql);

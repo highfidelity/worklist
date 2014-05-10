@@ -12,13 +12,13 @@ function toggleCBGroup(classname, check) {
     var checklist = document.getElementsByTagName("input");
     for (i = 0; i < checklist.length; i++) {
         if ( (checklist[i].getAttribute("type") == 'checkbox') && (checklist[i].className == classname) ) {
-           //if (checklist[i].checked) {   
-        if (!check.checked) {   
+           //if (checklist[i].checked) {
+        if (!check.checked) {
                 checklist[i].checked = false;
             } else {
                 checklist[i].checked = true;
             }
-        } 
+        }
     }
     //update Fees Total
     updateTotalFees('1');
@@ -36,10 +36,10 @@ function toggleCBChild(classname, check) {
     for (i = 0; i < checklist.length; i++) {
         if ( (checklist[i].getAttribute("type") == 'checkbox') && (checklist[i].className == classname) ) {
             childCount++;
-            if (checklist[i].checked) {   
+            if (checklist[i].checked) {
                 checkedCount++;
             }
-        } 
+        }
     }
     if (checkedCount == childCount || checkedCount == 0) {
         toggleCBParent(classname, check);
@@ -53,19 +53,19 @@ function toggleCBs(option) {
         var element = $(this)[0];
         element.checked = (option=='select' ? true : (option=='unselect' ? false : !element.checked));
     });
-    
+
     //update Fees Total
     updateTotalFees('1');
 }
 
 function toggleBox(box) {
     cbox = document.getElementById(box);
-    if (cbox.checked) {   
+    if (cbox.checked) {
         cbox.checked = false;
     } else {
         cbox.checked = true;
     }
-    
+
     //update Fees Total
     updateTotalFees('1');
 }
@@ -78,7 +78,7 @@ function updateTotalFees(resA) {
     $('#paymentForm tbody[id] input[type="checkbox"]').each(function() {
         var element = $(this)[0];
         if (element.checked) {
-            var fee = parseFloat(element.getAttribute("rel")); 
+            var fee = parseFloat(element.getAttribute("rel"));
             totalFees = totalFees + fee;
         }
     });
@@ -107,13 +107,13 @@ $(document).ready(function() {
     });
 
     $('#invertSelection').click(function() {
-        toggleCBs('toggle');        
+        toggleCBs('toggle');
     });
     $('#selectAll').click(function() {
-        toggleCBs('select');        
+        toggleCBs('select');
     });
     $('#selectNone').click(function() {
-        toggleCBs('unselect');        
+        toggleCBs('unselect');
     });
 
     updateTotalFees('0');

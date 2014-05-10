@@ -1,16 +1,16 @@
 <?php
 /**
- *    Payments:  
- *        List of users receiving payments for the 
- *        period defined, Toggle-able view under each user 
- *        that will show the individual jobs and payments 
- *        for each / or just a one line summary with total 
- *        amount.  All payments can be checked to pay, or 
+ *    Payments:
+ *        List of users receiving payments for the
+ *        period defined, Toggle-able view under each user
+ *        that will show the individual jobs and payments
+ *        for each / or just a one line summary with total
+ *        amount.  All payments can be checked to pay, or
  *        to not pay, with a way to check all and clear all.
- *        Job Task_IDs can be moused over, as in the journal, 
- *        to see the info, as well as clicked to open in a 
- *        separate tab, if needed.  Pay Now button needed.  
- *        Clicking pay now gives a confirm popup. 
+ *        Job Task_IDs can be moused over, as in the journal,
+ *        to see the info, as well as clicked to open in a
+ *        separate tab, if needed.  Pay Now button needed.
+ *        Clicking pay now gives a confirm popup.
  */
 
 class PaymentsController extends Controller {
@@ -109,7 +109,7 @@ class PaymentsController extends Controller {
                 WHERE
                     b.paid = 0
                     AND b.withdrawn = 0
-                    AND u.paypal_verified = '1' 
+                    AND u.paypal_verified = '1'
                     AND b.bonus = 1
                     AND u.has_W2 = 0
                GROUP BY b.user_id
@@ -135,19 +135,19 @@ class PaymentsController extends Controller {
                 //pull list of payees from db based on the time span
                 $payee_totals = $this->getUserTotalsArray();
 
-            break; 
-            
+            break;
+
             case 'pay':
                 //collect confirmed payees and run paypal transaction
                 //include_once("../paypal-password.php");
-                if (checkAdmin($_POST['password']) == '1') { 
+                if (checkAdmin($_POST['password']) == '1') {
                     error_log("Made it Admin!");
                     if(empty($_POST['pp_api_username']) || empty($_POST['pp_api_password']) || empty($_POST['pp_api_signature'])){
                         $alert_msg = "You need to provide all credentials!";
                         break;
                     }
 
-                    //Get fee information for paypal transaction 
+                    //Get fee information for paypal transaction
                     $num_fees = count($_POST["payfee"]);
                     $fee_id_csv = implode(',', $_POST["payfee"]);
                     $fees_info_sql = 'SELECT
@@ -157,7 +157,7 @@ class PaymentsController extends Controller {
                             u.id AS mechanic_id,
                             u.nickname AS mechanic_nick,
                             u.paypal_email AS mechanic_paypal_email,
-                            wl.summary AS worklist_item  
+                            wl.summary AS worklist_item
                         FROM
                             ('.FEES.' f LEFT JOIN '.USERS.' u ON f.user_id = u.id)
                             LEFT JOIN '.WORKLIST.' wl ON f.worklist_id = wl.id
@@ -250,7 +250,7 @@ class PaymentsController extends Controller {
                         }
 
                     } else  {
-                        $alert_msg = "MassPay Failure"; 
+                        $alert_msg = "MassPay Failure";
                         $pp_message = '<p>MassPay failed:</p><p><pre>' . print_r($httpParsedResponseAr, true).'</pre></p>';
                         if(!send_email('finance@lovemachineinc.com', 'Masspay Fail', $pp_message)) {
                             error_log("view-payments:MassPayFailure: send_email failed");
@@ -264,16 +264,16 @@ class PaymentsController extends Controller {
                     if (!send_email("finance@lovemachineinc.com", "Masspay Invalid Auth Attempt", $error_msg)) {
                         error_log("view-payments:MassPayAuth: send_email failed");
                     }
-                    $alert_msg = "Invalid Authentication"; 
+                    $alert_msg = "Invalid Authentication";
                 }
-                break; 
-            
+                break;
+
             default:
                 //pull list of payees from db based on the time span
                 $payee_totals = $this->getUserTotalsArray();
             break;
         }
-        
+
         $this->write('fund_id', $fund_id);
         $this->write('message', $message);
         $this->write('pp_message', $pp_message);
@@ -296,14 +296,14 @@ class PaymentsController extends Controller {
         // so I'm combining it in PHP. -Alexi 2011-03-03
         $sql_get_fee_totals = $this->sql_get_fee_totals;
         $sql_get_bonus_totals = $this->sql_get_bonus_totals;
-        
+
         $fee_totals_query   = mysql_query($sql_get_fee_totals);
 
         $totals_array = array();
         while ($fees_array = mysql_fetch_array($fee_totals_query, MYSQL_ASSOC)) {
             $totals_array[] = $fees_array;
         }
-        
+
         if ($sql_get_bonus_totals) {
             $bonus_totals_query = mysql_query($sql_get_bonus_totals);
 
@@ -317,7 +317,7 @@ class PaymentsController extends Controller {
                 foreach ($totals_array as $t_id => $fee_payee) {
                     // Loop through payee fees to try to add the bonus total there
                     if ($bonus_array['mechanic_id'] == $fee_payee['mechanic_id']) {
-                        $totals_array[$t_id]['total_amount'] = sprintf("%01.2f", 
+                        $totals_array[$t_id]['total_amount'] = sprintf("%01.2f",
                             $totals_array[$t_id]['total_amount'] + $bonus_array['total_amount']);
                         $bonus_applied = true;
                     }

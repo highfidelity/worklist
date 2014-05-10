@@ -98,18 +98,18 @@ function AppendPagination(page, cPages, table)    {
         }
         $('#pages-dialog').prepend(selector);
     }
-    
-    var previousLink = page > 1 
-            ? '<a class="previous" href="' + selfLink + (page-1) + '">Previous</a> ' 
+
+    var previousLink = page > 1
+            ? '<a class="previous" href="' + selfLink + (page-1) + '">Previous</a> '
             : '<span class="previous inactive">Previous</span>',
-        nextLink = page < cPages 
-            ? '<a class="next" href="' + selfLink + (page+1) + '">Next</a> ' 
+        nextLink = page < cPages
+            ? '<a class="next" href="' + selfLink + (page+1) + '">Next</a> '
             : '<span class="next inactive">Next</span>';
-    
-    var pagination = 
+
+    var pagination =
         '<tr bgcolor="#FFFFFF" class="row-' + table + '-live ' + table + '-pagination-row nodrag nodrop">' +
         '<td class="not-workitem" colspan="6" style="text-align:center;"><span>' + previousLink;
-        
+
     var fromPage = 1;
     if (cPages > 10 && page > 6) {
         if (page + 4 <= cPages) {
@@ -118,7 +118,7 @@ function AppendPagination(page, cPages, table)    {
             fromPage = cPages - 10;
         }
     }
-    
+
     for (var i = fromPage; (i <= (fromPage +10) && i <= cPages); i++) {
         if (i == page) {
             pagination += '<span class="page current">' + i + "</span> ";
@@ -173,10 +173,10 @@ function AppendRow (json, prepend, moreJson, idx) {
     // Displays the ID of the task in the first row
     // 26-APR-2010 <Yani>
     var workitemId = 'workitem-' + json[0];
-    row += 
-        '<td>' + 
-            '<a href="./' + json[0] + '">#' + json[0] + '</a> ' + 
-            '<h4>' + json[1] + '</h4>' + extraStringBug + 
+    row +=
+        '<td>' +
+            '<a href="./' + json[0] + '">#' + json[0] + '</a> ' +
+            '<h4>' + json[1] + '</h4>' + extraStringBug +
         '</td>';
 
     var bidCount = '';
@@ -201,12 +201,12 @@ function AppendRow (json, prepend, moreJson, idx) {
         who += ', ' + createTagWho(json[14], json[5]);
     }
 
-    row += '<td class="who not-workitem who-col">' + 
-               who + 
+    row += '<td class="who not-workitem who-col">' +
+               who +
            '</td>';
-    
+
     if (json[2] == 'Working' && json[11] != null) {
-        var pastDuePre = '', 
+        var pastDuePre = '',
             pastDuePost = '',
             strAge = RelativeTime(json[11], true);
         if (strAge.substr(0, 1) == '-') {
@@ -234,7 +234,7 @@ function AppendRow (json, prepend, moreJson, idx) {
 
     // Comments
     comments = (json[12] == 0) ? "" : json[12];
-    row += '<td class="age-col">' + 
+    row += '<td class="age-col">' +
              comments +
            '</td>';
 
@@ -314,11 +314,11 @@ function GetWorklist(npage, update, reload) {
         search_project = '0',
         save_filter = true,
         mobile_filter = false;
-    
+
     search_project = $('select[name="project"]').val();
     search_user = $('select[name="user"]').val();
 
-    search_status = '';    
+    search_status = '';
     if (search_status == 'Review' && only_needs_review_jobs) {
         reload = undefined;
         save_filter = false;
@@ -382,7 +382,7 @@ function GetWorklist(npage, update, reload) {
                 // lastId has disappeared from the list during an update.. avoid copious animations by reverting lastFirst
                 lastFirst = 1;
             }
-            
+
             // Output the worklist rows.
             for (var i = lastFirst; i < json.length; i++) {
                 AppendRow(json[i]);
@@ -466,7 +466,7 @@ function validateCodeReviews() {
         $('#edit_cr_error').delay(2000).fadeOut();
         return false;
     };
-    
+
 };
 
 
