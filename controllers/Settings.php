@@ -21,8 +21,6 @@ class SettingsController extends Controller {
         $settings_link = SECURE_SERVER_URL . "settings";
         $worklist_link = SECURE_SERVER_URL . "jobs";
         $returned_json = array();
-
-
         // process updates to user's settings
         if (isset($_POST['save']) && $_POST['save']) {
 
@@ -70,8 +68,6 @@ class SettingsController extends Controller {
                         'message' => "Update failed, nickname already exists!"
                     )));
                 }
-
-
                 $sql = "
                     UPDATE " . USERS . "
                     SET nickname = '" . mysql_real_escape_string($nickname) . "' WHERE id ='" . $_SESSION['userid'] . "'";
@@ -124,8 +120,6 @@ class SettingsController extends Controller {
                 $body .= '<p><a href=' . $link . '>Click here to confirm your email address</a></p>';
                 $body .= '<p><br/>You can view your settings <a href=' . $settings_link . '>here</a></p>';
                 $body .= '<p><a href=' . $worklist_link . '>www.worklist.net</a></p>';
-
-
                 $plain  = 'Dear ' . $user->getNickname() . ',' . "\n\n";
                 $plain .= 'Please confirm your new email address in the Worklist.' . "\n\n";
                 $plain .= $link . "\n\n";
@@ -278,8 +272,6 @@ class SettingsController extends Controller {
 
                     $msg="Account updated successfully!";
                 }
-
-
                 if (isset($_POST['timezone'])) {
                   $_SESSION['timezone'] = trim($_POST['timezone']);
                 }

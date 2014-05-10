@@ -158,8 +158,6 @@ class WorkItem {
     public function getBugJobId() {
         return $this->bugJobId;
     }
-
-
     public function setCreatorId($creatorId)
     {
         $this->creatorId = (int)$creatorId;
@@ -359,8 +357,6 @@ class WorkItem {
         }
         return $this->budget_id;
     }
-
-
     public function setSandbox($sandbox)
     {
         $this->sandbox = $sandbox;
@@ -586,8 +582,6 @@ class WorkItem {
         $connection->post('statuses/update', array('status' => $message));
         */
     }
-
-
     public function save() {
         if(isset($this->id)){
             if ($this->idExists($this->getId())) {
@@ -890,8 +884,6 @@ class WorkItem {
         /*if ($this->hasAcceptedBids()) {
             throw new Exception('Can not accept an already accepted bid.');
         }*/
-
-
         $user_id = isset($_SESSION['userid']) ? (int)$_SESSION['userid'] : 0;
         $is_runner = isset($_SESSION['is_runner']) ? (int)$_SESSION['is_runner'] : 0;
 
@@ -905,8 +897,6 @@ class WorkItem {
         $bid_info = mysql_fetch_assoc($res);
         $workitem_info = $this->getWorkItem($bid_info['worklist_id']);
 
-
-
         // Get bidder information
         $bidder = new User;
         if (! $bidder->findUserById($bid_info['bidder_id'])) {
@@ -916,8 +906,6 @@ class WorkItem {
         }
 
         $bid_info['nickname'] = $bidder->getNickname();
-
-
         $project = new Project($this->getProjectId());
 
         // Get the repo for this project
@@ -1329,8 +1317,6 @@ class WorkItem {
             $reviewer_fee = 0;
             $reviewer_fee_desc = '/^Code Review - comment/';
             $reviewer_fee_added = false;
-
-
             $fees = $this->getFees($this->getId());
             foreach ($fees as $fee) {
                 // find the accepted bid amount

@@ -347,8 +347,6 @@ class BudgetInfo {
             }
         }
     }
-
-
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

@@ -2,8 +2,6 @@
 // Class to work with sandbox
 //
 //  vim:ts=4:et
-
-
 class ProjectRepoUtil {
 
     public function __construct() {

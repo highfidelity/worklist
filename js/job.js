@@ -175,8 +175,6 @@ var Workitem = {
             workitem_id: options.workitem_id
         });
     }
-
-
 }
 
 function reply(id) {
@@ -928,8 +926,6 @@ $(document).ready(function(){
         });
     }
 });
-
-
 function ResetPopup() {
     $('#for_edit').show();
     $('#for_view').hide();
@@ -1081,8 +1077,6 @@ function showWithdrawBidReason() {
             'Withdraw Bid',
              bid_id,
              [['input', 'bid_id', 'keyId', 'eval']]);
-
-
     $('#popup-withdraw-bid').dialog('open');
     return false;
 }
@@ -1095,8 +1089,6 @@ function showDeclineBidReason() {
             'Decline Bid',
              bid_id,
              [['input', 'bid_id', 'keyId', 'eval']]);
-
-
     $('#popup-decline-bid').dialog({
         dialogClass: 'white-theme',
         autoOpen: true,

@@ -37,8 +37,6 @@ class VisitQueryTools {
 
         /* The items feed URL, used for queries, insertions and batch commands. */
         $url = "https://www.google.com/analytics/feeds/data";
-
-
         $ch = curl_init();    /* Create a CURL handle. */
         /* Set cURL options. */
         curl_setopt($ch, CURLOPT_URL, "$url?$query");
@@ -72,8 +70,6 @@ class VisitQueryTools {
 
         return $return;
     }
-
-
     /**
      * parses the singlejob XML and returns the required values
      */

@@ -35,8 +35,6 @@ class thumber {
       * @var string
       */
      var $updated;
-
-
      /**
       * This is the requested width
       * @var int
@@ -363,8 +361,6 @@ class thumber {
                $cmp_y = $height / $this->height;
 
                // calculate x or y coordinate and width or height of source
-
-
                if ($cmp_x > $cmp_y) {
 
                     $src_w = round(($width / $cmp_x * $cmp_y));

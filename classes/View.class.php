@@ -133,8 +133,6 @@ class View extends AppObject {
         $this->scripts[] = $path;
         return true;
     }
-
-
     /**
      * Outputs stylesheets references to the view/layout
      */

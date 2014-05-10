@@ -113,8 +113,6 @@ function AjaxPopup(popupId,
         }
             }
     });
-
-
 }
 
 /*
@@ -212,8 +210,6 @@ $(function() {
     }
 
 });
-
-
 // function to bind hide and show events for the active only divs
 // bind to the showing and hiding of project and user lists
 $(function() {

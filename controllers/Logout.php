@@ -20,5 +20,3 @@ class LogoutController extends Controller {
 		Utils::redirect($url);
 	}
 }
-
-

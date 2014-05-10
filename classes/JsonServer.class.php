@@ -404,8 +404,6 @@ class JsonServer
                 error_log(__FILE__.": Error uploading images to S3:\n$e");
             }
         }
-
-
         return $this->setOutput(array(
             'success' => $success,
             'error'   => isset($error) ? $error : '',
@@ -414,8 +412,6 @@ class JsonServer
             'icon'    => $icon
         ));
     }
-
-
     protected function actionChangeFileTitle()
     {
         if(isset($_SESSION['userid']) && $_SESSION['userid'] > 0) {
@@ -1012,8 +1008,6 @@ class JsonServer
             ));
         }
     }
-
-
     /**
      * This method handles the upload of the W9 form
      *
@@ -1094,8 +1088,6 @@ class JsonServer
                 'message' => 'An error occured while uploading the file, please try again!'
             ));
         }
-
-
     }
 
     protected function actionChangeUserStatus()

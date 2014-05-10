@@ -233,8 +233,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     left: 4px;
     top: 0;
 }
-
-
 #for_view > ul {
     list-style:none!important;
     width:100%;
@@ -329,8 +327,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 .filesDescription h3:hover, .filesDescription p:hover {
     background: #FFFFFF;
 }
-
-
 #uploadPanel .fileimagecontainer, .filedocumentcontainer{
     border-top: 2px solid #e1e8ea;
     margin: 4px 0 20px 0;
@@ -934,8 +930,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 .depth-6 {
     margin-left: 185px;
 }
-
-
 .desc {
     margin-top:0px !important;
     margin-bottom:2px !important;
@@ -1005,8 +999,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
    font-size: 18px;
    margin: 0 0 5px 0;
 }
-
-
 .feesum {
     cursor: pointer;
 }
@@ -1394,8 +1386,6 @@ h1.newProject {
 #popup-multiple-bid-form #accept_bid_select_budget {
     width: 165px;
 }
-
-
 #popup-form-endreview,
 #popup-endreview .field,
 #popup-reviewurl .field {
@@ -1412,8 +1402,6 @@ h1.newProject {
     text-decoration:none !important;
     color: #000 !important;
 }
-
-
 #bid_amount_conatiner {
     width: 100%;
     margin-bottom: 4px;

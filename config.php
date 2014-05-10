@@ -90,8 +90,6 @@ if (!defined('DB_SERVER'))      define('DB_SERVER', 'dev-db.worklist.net');
 if (!defined('DB_USER'))        define('DB_USER', 'dev_worklist');
 if (!defined('DB_PASSWORD'))    define('DB_PASSWORD', 'unsecure');
 if (!defined('DB_NAME'))        define('DB_NAME', 'dev_worklist');
-
-
 //worklist tables
 if (!defined('BIDS'))           define('BIDS', 'bids');
 if (!defined('BUDGETS'))        define('BUDGETS', 'budgets');

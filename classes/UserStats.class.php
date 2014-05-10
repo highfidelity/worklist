@@ -86,8 +86,6 @@ class UserStats{
             }
             return false;
     }
-
-
     public function getRunnerTotalJobsCount(){
         $sql = "SELECT COUNT(*) FROM `" . WORKLIST . "` "
                 ."WHERE (`runner_id` = {$this->userId})"
@@ -464,8 +462,6 @@ class UserStats{
         }
         return false;
     }
-
-
     // get total love received by user using sendlove api
     public function getTotalLove($page = 1){
         $data = $this->sendloveApiRequest('getlove', $page);

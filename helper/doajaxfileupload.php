@@ -98,8 +98,6 @@ if(!empty($_SESSION['username']) && empty($_SESSION['nickname']))
 				    $files = new Files();
 				    $result = $files->add($ext,$data);
 
-
-
 				    if($result) {
 				      $image_id = $result;
 

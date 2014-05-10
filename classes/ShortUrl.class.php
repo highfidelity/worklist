@@ -41,8 +41,6 @@ class ShortUrl {
             if (strlen($this->shortUrl) > 0) {
                 return $this->shortUrl;
             }
-
-
             $params = http_build_query (array(
                 'version'   => $this->version,
                 'login'     => $this->login,

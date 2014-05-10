@@ -74,6 +74,4 @@ var Workitem = {
             workitem_id: options.workitem_id
         });
     }
-
-
 }

@@ -468,8 +468,6 @@ function validateCodeReviews() {
     };
 
 };
-
-
 function reattachAutoUpdate() {
     $("select[name=user], select[name=status], select[name=project]").change(function(){
         if ($("#search-filter").val() == 'UNPAID') {

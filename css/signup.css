@@ -17,8 +17,6 @@
     font-size: .8em;
     color: #ff5582;
 }
-
-
 @media (max-width: 480px) {
     select {
         width: 100% !important;

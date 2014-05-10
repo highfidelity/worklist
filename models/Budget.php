@@ -37,8 +37,6 @@ class Budget extends DataObject {
     public function __destructor() {
         parent::__destruct();
     }
-
-
     /**
      * Load a review by id
      */

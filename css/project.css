@@ -43,8 +43,6 @@ td.noroles {
 #projectCodeReviewers .codeReviewerLastActivity {
     width: 50%;
 }
-
-
 #add-reviewer-submit {
     margin-top: 0px !important;
 }
@@ -130,8 +128,6 @@ td.noroles {
     border-top: 2px solid #E1E8EA;
     border-bottom: 2px solid #E1E8EA;
 }
-
-
 #contactInfo {
     display: inline-block;
 }
@@ -234,8 +230,6 @@ textarea#description {
     top: 6px;
     width: auto !important;
 }
-
-
 #projectDescription p {
     font-size: 1.5em;
     padding: 10px 0 5px 0;
@@ -347,8 +341,6 @@ a#projectRepositoryUrl:hover {
     font-family: proxima-nova, sans-serif;
     font-weight: bold;
 }
-
-
 #projectTotalJobs h3,
 #projectAverageBid h3,
 #projectAverageJobTime h3 {
@@ -435,8 +427,6 @@ li#projectAverageBid {
 #projectActiveJobs h3 {
     border-bottom: none;
 }
-
-
 #projectCodeReviewRights h3 > span {
     color: #999999;
 }

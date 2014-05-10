@@ -45,8 +45,6 @@ class Fee
         //Wired REWARDER out of process while API is being rebuilt (and we are using a different process for determining rewarder now)
         $query = "SELECT `user_id`, `worklist_id`, `amount`, `paid`, `expense`, '0' as `rewarder` FROM `".FEES."` WHERE `id`=$fee_id AND `bonus` = 0";
         $rt = mysql_query($query) or error_log("failed to select fees: $query : " . mysql_error());
-
-
         if ($rt && ($row = mysql_fetch_assoc($rt))) {
             $query = "
                 UPDATE

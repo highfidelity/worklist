@@ -437,8 +437,6 @@ class Agency_Worklist_Filter {
 
         return $box;
     }
-
-
     /**
      * Gets the manager user selection box with style
      */

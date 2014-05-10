@@ -160,8 +160,6 @@ class SandBoxUtil {
         if (! defined("SANDBOX_SERVER_API_KEY")) {
             throw new Exception('Unable to communicate to sandbox server, not authorized');
         }
-
-
         $command ='command=userexists&';
         $command.='key='.SANDBOX_SERVER_API_KEY.'&';
         if ($result = postRequest(SANDBOX_SERVER_API,$command.'username='.$name)) {

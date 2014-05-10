@@ -29,8 +29,6 @@ class Note extends DataObject {
     public function __destructor() {
         parent::__destruct();
     }
-
-
     /**
      * Load a note by id
      */

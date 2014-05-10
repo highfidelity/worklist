@@ -492,8 +492,6 @@ class File {
         }
         return false;
     }
-
-
     /**
      * This method fetches all files for a workitem
      *

@@ -77,8 +77,6 @@ class UserNotes {
             }
         }
      }
-
-
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.
@@ -102,8 +100,6 @@ class UserNotes {
             }
         }
     }
-
-
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

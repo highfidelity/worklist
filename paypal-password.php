@@ -50,5 +50,3 @@ if (basename($_SERVER['PHP_SELF'])=='paypal-password.php') {
 </body>
 </html>
 <?php } ?>
-
-

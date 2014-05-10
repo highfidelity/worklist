@@ -40,8 +40,6 @@ $(document).ready(function() {
             });
         }
     });
-
-
 });
 
 $(function () {
@@ -97,8 +95,6 @@ $(function () {
         });
     }
 });
-
-
 var UserInfo = {
     init: function() {
         userNotes.init();

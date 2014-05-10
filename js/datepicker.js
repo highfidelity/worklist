@@ -96,8 +96,6 @@ function displayDatePicker(dateFieldName, displayBelowThisObject, dtFormat, dtSe
 
   drawDatePicker(targetDateField, x, y);
 }
-
-
 /**
 Draw the datepicker object (which is just a table with calendar elements) at the
 specified x and y coordinates, using the targetDateField object as the input tag
@@ -135,8 +133,6 @@ function drawDatePicker(targetDateField, x, y)
   // draw the datepicker table
   refreshDatePicker(targetDateField.name, dt.getFullYear(), dt.getMonth(), dt.getDate());
 }
-
-
 /**
 This is the function that actually draws the datepicker calendar.
 */
@@ -239,8 +235,6 @@ function refreshDatePicker(dateFieldName, year, month, day)
   // add an "iFrame shim" to allow the datepicker to display above selection lists
   adjustiFrame();
 }
-
-
 /**
 Convenience function for writing the code for the buttons that bring us back or forward
 a month.
@@ -256,8 +250,6 @@ function getButtonCode(dateFieldName, dateVal, adjust, label)
 
   return "<button class='dpTodayButton' onClick='refreshDatePicker(\"" + dateFieldName + "\", " + newYear + ", " + newMonth + ");'>" + label + "</button>";
 }
-
-
 /**
 Convert a JavaScript Date object to a string, based on the dateFormat and dateSeparator
 variables at the beginning of this script library.
@@ -279,8 +271,6 @@ function getDateString(dateVal)
       return monthString + dateSeparator + dayString + dateSeparator + dateVal.getFullYear();
   }
 }
-
-
 /**
 Convert a string to a JavaScript Date object.
 */
@@ -323,8 +313,6 @@ function getFieldDate(dateString)
 
   return dateVal;
 }
-
-
 /**
 Try to split a date string into an array of elements, using common date separators.
 If the date is split, an array is returned; otherwise, we just return false.
@@ -399,8 +387,6 @@ function updateDateField(dateFieldName, dateString)
   if ((dateString) && (typeof(datePickerClosed) == "function"))
     datePickerClosed(targetDateField);
 }
-
-
 /**
 Use an "iFrame shim" to deal with problems where the datepicker shows up behind
 selection list elements, if they're below the datepicker. The problem and solution are

@@ -961,8 +961,6 @@ class User {
         $this->is_runner = $is_runner;
         return $this;
     }
-
-
     /**
      * @return the $is_admin
      */
@@ -1232,8 +1230,6 @@ class User {
         }
         return false;
     }
-
-
     /**
      * @return the $projects_checkedout
      */
@@ -1863,5 +1859,3 @@ class User {
         }
     }
 }
-
-

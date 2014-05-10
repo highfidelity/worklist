@@ -251,8 +251,6 @@ jQuery.tableDnD = {
                 window.scrollBy(0, config.scrollAmount);
             }
         }
-
-
         if (y != jQuery.tableDnD.oldY) {
             // work out if we're going up or down...
             var movingDown = y > jQuery.tableDnD.oldY;

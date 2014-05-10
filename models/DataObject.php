@@ -15,8 +15,6 @@ if (!defined('USERS_SKILLS'))   define('USERS_SKILLS', 'rel_users_skills');
 if (!defined('MISSIONS_SKILLS'))   define('MISSIONS_SKILLS', 'rel_missions_skills');
 if (!defined('MISSIONS_TRANSACTIONS'))   define('MISSIONS_TRANSACTIONS', 'rel_missions_transactions');
 
-
-
 class DataObject {
     public $link;
     private $lastID;

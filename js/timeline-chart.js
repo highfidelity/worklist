@@ -417,8 +417,6 @@ TimelineChart.prototype.updateAxisMax = function (seriesData, targetSeriesData) 
 	}
 	return normalizedData;
 };
-
-
 TimelineChart.prototype.setBottomLabels = function (attrs, labels) {
     this.setAxisLabelsAreaHeight(labels.length * 10 + 10);
 
@@ -549,8 +547,6 @@ LoveChart = {
             }, 500);
         };
     },
-
-
     load:function (from, to, username) {
         this.getData(from, to, username, function (data) {
 	   var leftMax = LoveChart.chart.getSeriesMax(data.messages,5);

@@ -4,8 +4,6 @@ jQuery.fn.center = function () {
     this.css("left", (( $(window).width() - this.outerWidth() ) / 2 ) + "px");
     return this;
 }
-
-
 var favoriteUsers = [];
 function getFavoriteUsers()
 {

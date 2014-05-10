@@ -134,8 +134,6 @@ class UserReview {
             }
         }
      }
-
-
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.
@@ -159,8 +157,6 @@ class UserReview {
             }
         }
     }
-
-
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

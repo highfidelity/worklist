@@ -383,8 +383,6 @@ function uploadProfilePicture() {
             'message' => 'An error occured while uploading the file, please try again!'
         ));
     }
-
-
 }
 
 function updateuser(){
@@ -700,8 +698,6 @@ function resetCronFile() {
     file_put_contents(REVIEW_NOTIFICATIONS_CRON_FILE, $newHour);
     chmod (REVIEW_NOTIFICATIONS_CRON_FILE, 0755);
 }
-
-
 // Prune Journal entries by deleting all entries except the latest 100
 function pruneJournalEntries() {
     $sql = " SELECT MAX(id) AS maxId FROM " . ENTRIES;
@@ -1225,8 +1221,6 @@ function addWorkitem() {
         // do not set as bug
         $bug_job_id = 0;
     }
-
-
     //If this item is a bug add original item id
     $workitem->setBugJobId($bug_job_id);
     // not every runner might want to be assigned to the item he created - only if he sets status to 'BIDDING'
@@ -1932,8 +1926,6 @@ function getReport() {
         }
     }
 
-
-
     if ($type == 'Fee') {
         $where .= " AND `".FEES."`.expense = 0 AND `".FEES."`.rewarder = 0 AND `".FEES. "`.bonus = 0";
     } else if ($type == 'Expense') {
@@ -2041,8 +2033,6 @@ function getReport() {
             $grandSum = 0;
         }
         $report = array(array($items, $page, $cPages, $pageSum, $grandSum));
-
-
         // Construct json for history
         $rtQuery = mysql_query("$qsel $qbody $qorder");
         for ($i = 1; $rtQuery && $row = mysql_fetch_assoc($rtQuery); $i++) {
@@ -2330,8 +2320,6 @@ function getUsersList() {
     $query .= " order by nickname limit 0,10";
 
     $result = mysql_query($query);
-
-
     $data = array();
     while ($result && $row=mysql_fetch_assoc($result)) {
         if ($_REQUEST['getNicknameOnly']) {
@@ -3312,8 +3300,6 @@ function updateBudget() {
             return;
         }
     }
-
-
     if ($budget_seed == 1 ||
         ($amount <=  $budget->getRemainingFunds())) {
         $receiver->setBudget($receiver->getBudget() + $amount)->save();

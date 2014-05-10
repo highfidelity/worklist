@@ -166,8 +166,6 @@ a[href="https://gitter.im/highfidelity/hifi"]:hover {
 #entries {
     margin-top: 50px;
 }
-
-
 /* won't display the footer on status */
 section#footer {
     display: none;

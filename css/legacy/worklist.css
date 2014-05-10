@@ -262,8 +262,6 @@ color:#98AAB2;
 #search-filter-section  td.textAlignReport div div{
     text-align: left;
 }
-
-
 td.textAlignReport {
     text-align: right;
     padding-top:4px;
@@ -606,8 +604,6 @@ input.button-disabled ,
 #more-panel.ui-widget-content {
     background-image: none;
 }
-
-
 #w2checkbox {
     padding-top:5px;
 }

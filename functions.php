@@ -255,8 +255,6 @@ function isSuperAdmin() {
     }
 }
 
-
-
 /*  Function: countLoveToUser
  *
  *  Purpose: Gets the count of love sent to a user.
@@ -560,8 +558,6 @@ function payBonusToUser($user_id, $amount, $notes, $budget_id) {
         return false;
     }
 }
-
-
 function formatableRelativeTime($timestamp, $detailLevel = 1) {
 	$periods = array("sec", "min", "hr", "day", "week", "mnth", "yr", "decade");
 	$lengths = array("60", "60", "24", "7", "4.357", "12", "10");
@@ -783,8 +779,6 @@ function withdrawBid($bid_id, $withdraw_reason) {
         // Check if there are any active bids remaining
         $res = mysql_query("SELECT count(*) AS active_bids FROM `" . BIDS . "` WHERE `worklist_id` = " . $job['id'] . " AND `withdrawn` = 0 AND (NOW() < `bid_expires` OR `bid_expires`='0000-00-00 00:00:00')");
         $bids = mysql_fetch_assoc($res);
-
-
         if ($bids['active_bids'] < 1) {
         	// There are no active bids, so resend notifications
         	$workitem = new WorkItem();
@@ -808,8 +802,6 @@ function deleteFee($fee_id) {
 
         // Get worklist item summary
         $summary = getWorkItemSummary($fee->worklist_id);
-
-
         // Get user
         $user = getUserById($fee->user_id);
 
@@ -1312,8 +1304,6 @@ function addRewarderBalance($userId, $points, $worklist_id = 0, $fee_id = 0) {
 */
 function getRewardedPoints($giverId, $receiverId) {
     defineSendLoveAPI();
-
-
     $params = array (
             'action' => 'get_points',
             'api_key' => REWARDER_API_KEY,
@@ -1510,14 +1500,10 @@ function send_email($to, $subject, $html, $plain = null, $headers = array()) {
 
     return true;
 }
-
-
 /*  sendTemplateEmail - send email using email template
  *  $template - name of the template to use, for example 'confirmation'
  *  $data - array of key-value replacements for template
  */
-
-
 // TODO - Marco - Include headers argument to allow ,eg, sending bcc copies
 function sendTemplateEmail($to, $template, $data = array(), $from = false){
     include (dirname(__FILE__) . "/email/en.php");

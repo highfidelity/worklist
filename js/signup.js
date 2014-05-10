@@ -27,8 +27,6 @@ $(function() {
             }
         });
     }
-
-
     $('#signupForm input[type="submit"]').submit(function(event) {
         console.log('a');
         if (!LiveValidation.massValidate([username, password, confirmpassword, nickname, about])) {

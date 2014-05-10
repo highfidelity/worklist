@@ -4,8 +4,6 @@
 //  Copyright (c) 2011, LoveMachine Inc.
 //  All Rights Reserved.
 //  http://www.lovemachineinc.com
-
-
 /*******************************************************
     Page: pp_ipn_notify.php
     Features: Paypal IPN Handler
@@ -17,8 +15,6 @@
 ********************************************************/
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-
 //ob_start();
 
 include("config.php");
@@ -76,8 +72,6 @@ if ($fp) {
     //open db connection
     $db = @mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die ('I cannot connect to the database because: ' . mysql_error());
     $db = @mysql_select_db(DB_NAME);
-
-
     fputs($fp, $header . $rqstr);
     $message = "";
     while (!feof($fp)) {
@@ -112,8 +106,6 @@ if ($fp) {
                     *   Processed: A payment has been accepted.
                     *   Voided: This auth has been voided and returned to the payer
                     */
-
-
                     // set counter, using dynamic variables to parse POST vars
                     $n = 1;
                     $fee_id = 'unique_id_'.$n;
@@ -215,6 +207,4 @@ if ($fp) {
             //This is not using the mail mechanism and may not work in all installations
     mail($to, $subject, $message, $email_headers);
 }
-
-
 ?>

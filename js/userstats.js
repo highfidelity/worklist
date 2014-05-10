@@ -78,10 +78,6 @@ $(function(){
     });
 
 });
-
-
-
-
 var stats = {
 
     stats_page: 1,

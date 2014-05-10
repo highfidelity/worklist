@@ -6,8 +6,6 @@
  * plugins directory before you commit as that's what ends up being used
  * to create the jscode.min.js
  * */
-
-
 /* jQuery ui.toaster.js - 0.2
  *
  * (c) Maxime Haineault <haineault@gmail.com>
@@ -1365,8 +1363,6 @@ $.fn.extend({
         return this.unbind("mousewheel", fn);
     }
 });
-
-
 function handler(event) {
     var orgEvent = event || window.event, args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true, deltaX = 0, deltaY = 0;
     event = $.event.fix(orgEvent);
@@ -1542,8 +1538,6 @@ if(jQuery) (function(){
     and set the image properties using css
 
 */
-
-
 (function($){
     $.fn.tabSlideOut = function(callerSettings) {
         var settings = $.extend({
@@ -1574,8 +1568,6 @@ if(jQuery) (function(){
             settings.positioning = 'absolute';
         }
 
-
-
         //set initial tabHandle css
 
         if (settings.pathToTabImage != null) {
@@ -1597,8 +1589,6 @@ if(jQuery) (function(){
             'line-height' : '1',
             'position' : settings.positioning
         });
-
-
         var properties = {
                     containerWidth: parseInt(obj.outerWidth(), 10) + 'px',
                     containerHeight: parseInt(obj.outerHeight(), 10) + 'px',

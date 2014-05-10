@@ -114,8 +114,6 @@ table thead tr:hover {
     );
 }
 
-
-
 .table-worklist th, .table-worklist td, .table-popup th, .table-popup td {
     border: none;
 }
@@ -374,8 +372,6 @@ pre, .pre {
 .ln-letters a.ln-disabled, .ln-pages a.ln-disabled  {
     color: #cccccc;
 }
-
-
 #more-accordion #more-panel {
     margin: 0;
     width: 386px;
@@ -890,8 +886,6 @@ a#addJobButton:hover {
 #openOverlayContainer {
 	border: 5px solid #FF0000 !important;
 }
-
-
 #searchbar .input_box {
     background-image: none;
     width: 305px;

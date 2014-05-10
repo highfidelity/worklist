@@ -45,8 +45,6 @@ class S3 {
 
 	private static $__accessKey; // AWS Access key
 	private static $__secretKey; // AWS Secret key
-
-
 	/**
 	* Constructor - if you're not using the class statically
 	*
@@ -60,8 +58,6 @@ class S3 {
 			self::setAuth($accessKey, $secretKey);
 		self::$useSSL = $useSSL;
 	}
-
-
 	/**
 	* Set AWS access key and secret key
 	*
@@ -73,8 +69,6 @@ class S3 {
 		self::$__accessKey = $accessKey;
 		self::$__secretKey = $secretKey;
 	}
-
-
 	/**
 	* Get a list of buckets
 	*
@@ -108,8 +102,6 @@ class S3 {
 
 		return $results;
 	}
-
-
 	/*
 	* Get contents for a bucket
 	*
@@ -193,8 +185,6 @@ class S3 {
 
 		return $results;
 	}
-
-
 	/**
 	* Put a bucket
 	*
@@ -228,8 +218,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Delete an empty bucket
 	*
@@ -248,8 +236,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Create input info array for putObject()
 	*
@@ -266,8 +252,6 @@ class S3 {
 		'md5sum' => $md5sum !== false ? (is_string($md5sum) ? $md5sum :
 		base64_encode(md5_file($file, true))) : '');
 	}
-
-
 	/**
 	* Create input array info for putObject() with a resource
 	*
@@ -285,8 +269,6 @@ class S3 {
 		$input['fp'] =& $resource;
 		return $input;
 	}
-
-
 	/**
 	* Put an object
 	*
@@ -360,8 +342,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Put an object from a file (legacy function)
 	*
@@ -376,8 +356,6 @@ class S3 {
 	public static function putObjectFile($file, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $contentType = null) {
 		return self::putObject(self::inputFile($file), $bucket, $uri, $acl, $metaHeaders, $contentType);
 	}
-
-
 	/**
 	* Put an object from a string (legacy function)
 	*
@@ -392,8 +370,6 @@ class S3 {
 	public static function putObjectString($string, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $contentType = 'text/plain') {
 		return self::putObject($string, $bucket, $uri, $acl, $metaHeaders, $contentType);
 	}
-
-
 	/**
 	* Get an object
 	*
@@ -424,8 +400,6 @@ class S3 {
 		}
 		return $rest->response;
 	}
-
-
 	/**
 	* Get object information
 	*
@@ -446,8 +420,6 @@ class S3 {
 		}
 		return $rest->code == 200 ? $returnInfo ? $rest->headers : true : false;
 	}
-
-
 	/**
 	* Copy an object
 	*
@@ -482,8 +454,6 @@ class S3 {
 			'hash' => substr((string)$rest->body->ETag, 1, -1)
 		) : false;
 	}
-
-
 	/**
 	* Set logging for a bucket
 	*
@@ -540,8 +510,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Get logging status for a bucket
 	*
@@ -568,8 +536,6 @@ class S3 {
 			'targetPrefix' => (string)$rest->body->LoggingEnabled->TargetPrefix,
 		);
 	}
-
-
 	/**
 	* Disable bucket logging
 	*
@@ -579,8 +545,6 @@ class S3 {
 	public static function disableBucketLogging($bucket) {
 		return self::setBucketLogging($bucket, null);
 	}
-
-
 	/**
 	* Get a bucket's location
 	*
@@ -600,8 +564,6 @@ class S3 {
 		}
 		return (isset($rest->body[0]) && (string)$rest->body[0] !== '') ? (string)$rest->body[0] : 'US';
 	}
-
-
 	/**
 	* Set object or bucket Access Control Policy
 	*
@@ -659,8 +621,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Get object or bucket Access Control Policy
 	*
@@ -715,8 +675,6 @@ class S3 {
 		}
 		return $acp;
 	}
-
-
 	/**
 	* Delete an object
 	*
@@ -736,8 +694,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Get a query string authenticated URL
 	*
@@ -838,8 +794,6 @@ class S3 {
 			return self::__parseCloudFrontDistributionConfig($rest->body);
 		return false;
 	}
-
-
 	/**
 	* Get CloudFront distribution info
 	*
@@ -864,8 +818,6 @@ class S3 {
 		}
 		return false;
 	}
-
-
 	/**
 	* Update a CloudFront distribution
 	*
@@ -894,8 +846,6 @@ class S3 {
 		}
 		return false;
 	}
-
-
 	/**
 	* Delete a CloudFront distribution
 	*
@@ -917,8 +867,6 @@ class S3 {
 		}
 		return true;
 	}
-
-
 	/**
 	* Get a list of CloudFront distributions
 	*
@@ -949,8 +897,6 @@ class S3 {
 		}
 		return array();
 	}
-
-
 	/**
 	* Get a DistributionConfig DOMDocument
 	*
@@ -976,8 +922,6 @@ class S3 {
 		$dom->appendChild($distributionConfig);
 		return $dom->saveXML();
 	}
-
-
 	/**
 	* Parse a CloudFront distribution config
 	*
@@ -1009,8 +953,6 @@ class S3 {
 		}
 		return $dist;
 	}
-
-
 	/**
 	* Grab CloudFront response
 	*
@@ -1035,8 +977,6 @@ class S3 {
 		}
 		return $rest->response;
 	}
-
-
 	/**
 	* Get MIME type for file
 	*
@@ -1083,8 +1023,6 @@ class S3 {
 		$ext = strtolower(pathInfo($file, PATHINFO_EXTENSION));
 		return isset($exts[$ext]) ? $exts[$ext] : 'application/octet-stream';
 	}
-
-
 	/**
 	* Generate the auth string: "AWS AccessKey:Signature"
 	*
@@ -1095,8 +1033,6 @@ class S3 {
 	public static function __getSignature($string) {
 		return 'AWS '.self::$__accessKey.':'.self::__getHash($string);
 	}
-
-
 	/**
 	* Creates a HMAC-SHA1 hash
 	*
@@ -1123,8 +1059,6 @@ final class S3Request {
 		'Host' => '', 'Date' => '', 'Content-MD5' => '', 'Content-Type' => ''
 	);
 	public $fp = false, $size = 0, $data = false, $response;
-
-
 	/**
 	* Constructor
 	*
@@ -1151,8 +1085,6 @@ final class S3Request {
 		$this->response = new STDClass;
 		$this->response->error = false;
 	}
-
-
 	/**
 	* Set request parameter
 	*
@@ -1163,8 +1095,6 @@ final class S3Request {
 	public function setParameter($key, $value) {
 		$this->parameters[$key] = $value;
 	}
-
-
 	/**
 	* Set request header
 	*
@@ -1175,8 +1105,6 @@ final class S3Request {
 	public function setHeader($key, $value) {
 		$this->headers[$key] = $value;
 	}
-
-
 	/**
 	* Set x-amz-meta-* header
 	*
@@ -1187,8 +1115,6 @@ final class S3Request {
 	public function setAmzHeader($key, $value) {
 		$this->amzHeaders[$key] = $value;
 	}
-
-
 	/**
 	* Get the S3 response
 	*
@@ -1319,8 +1245,6 @@ final class S3Request {
 
 		return $this->response;
 	}
-
-
 	/**
 	* CURL write callback
 	*
@@ -1335,8 +1259,6 @@ final class S3Request {
 			$this->response->body .= $data;
 		return strlen($data);
 	}
-
-
 	/**
 	* CURL header callback
 	*

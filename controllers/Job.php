@@ -115,8 +115,6 @@ class JobController extends Controller {
             $action = "cancel_codereview";
         }
 
-
-
         if ($action == 'view_bid') {
             $action = "view";
             $this->write('view_bid_id', isset($_REQUEST['bid_id']) ? $_REQUEST['bid_id'] : 0);
@@ -1153,8 +1151,6 @@ class JobController extends Controller {
                 } else {
                     $bid['unix_done_full'] = '';
                 }
-
-
                 // calculate Total Time to Complete
                 if (isset($bid['unix_done_by']) && $bid['unix_done_by'] != 0) {
                     $timeToComplete = (int) $bid['unix_done_by'] - (int) $bid['unix_bid_created'];
@@ -1243,8 +1239,6 @@ class JobController extends Controller {
             $hideFees = true;
         }
         $this->write('hideFees', $hideFees);
-
-
         $this->write('bids', $bids);
 
         $this->write('userHasRights', $this->hasRights($user_id, $workitem));
@@ -1357,8 +1351,6 @@ class JobController extends Controller {
                 return false;
             }
         }
-
-
         $workitem->setStatus($newStatus);
         $projectId = $workitem->getProjectId();
         $thisProject = new Project($projectId);
@@ -1494,5 +1486,3 @@ class JobController extends Controller {
         return $entry->latestFromTask($item_id);
     }
 }
-
-

@@ -63,8 +63,6 @@ ul.ui-combobox-list {
 	background: #66CC66;
 	border: none;
 }
-
-
 li[val=ALL] input[type=checkbox] {
     visibility:hidden;
 }

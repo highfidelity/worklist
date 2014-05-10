@@ -50,8 +50,6 @@ nav.navbar .navbar-right > li > a[href="./github/login"] {
     color: #fff;
     font-size: 1.4em;
 }
-
-
 /* loading bar */
 body.onAjax nav.navbar > .container-fluid:after {
     content: ' ';
@@ -278,8 +276,6 @@ body .chosen-container-single .chosen-search:before {
     margin-right: 10px;
     float: right;
 }
-
-
 body .chosen-container-single .chosen-single,
 body .chosen-container-single .chosen-search input[type="text"] {
     background: none repeat scroll 0% 0% transparent;
@@ -369,8 +365,6 @@ body .chosen-container-multi .chosen-choices li.search-choice {
     border-color: #007F7c;
     padding: 4px 20px 2px 5px;
 }
-
-
 body .chosen-container-multi .chosen-choices li.search-field {
     margin: 3px 1px;
 }

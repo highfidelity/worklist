@@ -29,8 +29,6 @@ class Review extends DataObject {
     public function __destructor() {
         parent::__destruct();
     }
-
-
     /**
      * Load a review by id
      */
@@ -85,8 +83,6 @@ class Review extends DataObject {
         }
         return $objectData;
     }
-
-
     /**
      * Get reviews that have been updated on DONE and have not been notified on journal yet
      */

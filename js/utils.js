@@ -117,8 +117,6 @@ var Utils = {
     emptyFormModal: function(data) {
         Utils.modal('empty-form', data);
     },
-
-
     /**
      * Shows a info dialog with @message
      */

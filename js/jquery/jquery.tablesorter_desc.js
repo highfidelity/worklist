@@ -190,8 +190,6 @@
 			function buildCache(table) {
 
 				if(table.config.debug) { var cacheTime = new Date(); }
-
-
 				var totalRows = (table.tBodies[0] && table.tBodies[0].rows.length) || 0,
 					totalCells = (table.tBodies[0].rows[0] && table.tBodies[0].rows[0].cells.length) || 0,
 					parsers = table.config.parsers,
@@ -504,8 +502,6 @@
 
 					// try to auto detect column type, and store in tables config
 					this.config.parsers = buildParserCache(this,$headers);
-
-
 					// build the cache for the tbody cells
 					cache = buildCache(this);
 
@@ -524,8 +520,6 @@
 						var totalRows = ($this[0].tBodies[0] && $this[0].tBodies[0].rows.length) || 0;
 
 						if(!this.sortDisabled && totalRows > 0) {
-
-
 							// store exp, for speed
 							var $cell = $(this);
 
@@ -614,8 +608,6 @@
 
 						//set css for headers
 						setHeadersCss(this,$headers,sortList,sortCSS);
-
-
 						// sort the table and append it to the dom
 						appendToTable(this,multisort(this,sortList,cache));
 
@@ -825,8 +817,6 @@
 	    },
 	  type: "numeric"
 	});
-
-
 	ts.addParser({
 	    id: "metadata",
 	    is: function(s) {

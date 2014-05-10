@@ -1,8 +1,6 @@
 // LiveValidation 1.3 (standalone version)
 // Copyright (c) 2007-2008 Alec Hill (www.livevalidation.com)
 // LiveValidation is licensed under the terms of the MIT License
-
-
 // Custom email validation fuctions for SendLove
 function SLEmail(B,C){if(B)B=B.replace(/^\s+|\s+$/g,""); Validate.Email(B,C); }
 function SLEmail2(B,C){if(B && B.replace(/^\s+|\s+$/g,"").match(/^[\w\d]+ \([\w\d._%-]+@[\w\d.-]+\.[\w]{2,4}\)$/)) return true; return Validate.Email(B,C); }
@@ -10,8 +8,6 @@ function SLEmail2(B,C){if(B && B.replace(/^\s+|\s+$/g,"").match(/^[\w\d]+ \([\w\
 //LiveValidation 1.3 (standalone version)
 //Copyright (c) 2007-2008 Alec Hill (www.livevalidation.com)
 //LiveValidation is licensed under the terms of the MIT License
-
-
 //NOTE!! This file has been modified from original version 1.3. Please view job #19323 for details Teddy 07/Jun/2013
 
 /*********************************************** LiveValidation class ***********************************/
@@ -219,8 +215,6 @@ remove: function(validationFunction, validationParamsObj){
  if(found) this.validations.splice(i,1);
  return this;
 },
-
-
 /**
 * makes the validation wait the alotted time from the last keystroke
 */
@@ -417,8 +411,6 @@ insertMessage: function(elementToInsert){
        }
    }
 },
-
-
 /**
 *  changes the class of the field based on whether it is valid or not
 */

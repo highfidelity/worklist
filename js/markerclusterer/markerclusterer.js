@@ -38,8 +38,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 /**
  * @name ClusterIconStyle
  * @class This class represents the object for values in the <code>styles</code> array passed
@@ -109,8 +107,6 @@ function ClusterIcon(cluster, styles) {
 
   this.setMap(cluster.getMap()); // Note: this causes onAdd to be called
 }
-
-
 /**
  * Adds the icon to the DOM.
  */
@@ -177,8 +173,6 @@ ClusterIcon.prototype.onAdd = function () {
     google.maps.event.trigger(mc, "mouseout", cClusterIcon.cluster_);
   });
 };
-
-
 /**
  * Removes the icon from the DOM.
  */
@@ -190,8 +184,6 @@ ClusterIcon.prototype.onRemove = function () {
     this.div_ = null;
   }
 };
-
-
 /**
  * Draws the icon.
  */
@@ -202,8 +194,6 @@ ClusterIcon.prototype.draw = function () {
     this.div_.style.left = pos.x + "px";
   }
 };
-
-
 /**
  * Hides the icon.
  */
@@ -213,8 +203,6 @@ ClusterIcon.prototype.hide = function () {
   }
   this.visible_ = false;
 };
-
-
 /**
  * Positions and shows the icon.
  */
@@ -233,8 +221,6 @@ ClusterIcon.prototype.show = function () {
   }
   this.visible_ = true;
 };
-
-
 /**
  * Sets the icon styles to the appropriate element in the styles array.
  *
@@ -258,8 +244,6 @@ ClusterIcon.prototype.useStyle = function (sums) {
   this.fontFamily_ = style.fontFamily || "Arial,sans-serif";
   this.backgroundPosition_ = style.backgroundPosition || "0 0";
 };
-
-
 /**
  * Sets the position at which to center the icon.
  *
@@ -268,8 +252,6 @@ ClusterIcon.prototype.useStyle = function (sums) {
 ClusterIcon.prototype.setCenter = function (center) {
   this.center_ = center;
 };
-
-
 /**
  * Creates the cssText style parameter based on the position of the icon.
  *
@@ -312,8 +294,6 @@ ClusterIcon.prototype.createCss = function (pos) {
       this.textDecoration_ + ';');
   return style.join("");
 };
-
-
 /**
  * Returns the position at which to place the DIV depending on the latlng.
  *
@@ -326,8 +306,6 @@ ClusterIcon.prototype.getPosFromLatLng_ = function (latlng) {
   pos.y -= this.anchorIcon_[0];
   return pos;
 };
-
-
 /**
  * Creates a single cluster that manages a group of proximate markers.
  *  Used internally, do not call this constructor directly.
@@ -347,8 +325,6 @@ function Cluster(mc) {
   this.bounds_ = null;
   this.clusterIcon_ = new ClusterIcon(this, mc.getStyles());
 }
-
-
 /**
  * Returns the number of markers managed by the cluster. You can call this from
  * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
@@ -359,8 +335,6 @@ function Cluster(mc) {
 Cluster.prototype.getSize = function () {
   return this.markers_.length;
 };
-
-
 /**
  * Returns the array of markers managed by the cluster. You can call this from
  * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
@@ -371,8 +345,6 @@ Cluster.prototype.getSize = function () {
 Cluster.prototype.getMarkers = function () {
   return this.markers_;
 };
-
-
 /**
  * Returns the center of the cluster. You can call this from
  * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
@@ -383,8 +355,6 @@ Cluster.prototype.getMarkers = function () {
 Cluster.prototype.getCenter = function () {
   return this.center_;
 };
-
-
 /**
  * Returns the map with which the cluster is associated.
  *
@@ -394,8 +364,6 @@ Cluster.prototype.getCenter = function () {
 Cluster.prototype.getMap = function () {
   return this.map_;
 };
-
-
 /**
  * Returns the <code>MarkerClusterer</code> object with which the cluster is associated.
  *
@@ -405,8 +373,6 @@ Cluster.prototype.getMap = function () {
 Cluster.prototype.getMarkerClusterer = function () {
   return this.markerClusterer_;
 };
-
-
 /**
  * Returns the bounds of the cluster.
  *
@@ -422,8 +388,6 @@ Cluster.prototype.getBounds = function () {
   }
   return bounds;
 };
-
-
 /**
  * Removes the cluster from the map.
  *
@@ -434,8 +398,6 @@ Cluster.prototype.remove = function () {
   this.markers_ = [];
   delete this.markers_;
 };
-
-
 /**
  * Adds a marker to the cluster.
  *
@@ -492,8 +454,6 @@ Cluster.prototype.addMarker = function (marker) {
   this.updateIcon_();
   return true;
 };
-
-
 /**
  * Determines if a marker lies within the cluster's bounds.
  *
@@ -504,8 +464,6 @@ Cluster.prototype.addMarker = function (marker) {
 Cluster.prototype.isMarkerInClusterBounds = function (marker) {
   return this.bounds_.contains(marker.getPosition());
 };
-
-
 /**
  * Calculates the extended bounds of the cluster with the grid.
  */
@@ -513,8 +471,6 @@ Cluster.prototype.calculateBounds_ = function () {
   var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
   this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
 };
-
-
 /**
  * Updates the cluster icon.
  */
@@ -539,8 +495,6 @@ Cluster.prototype.updateIcon_ = function () {
   this.clusterIcon_.useStyle(sums);
   this.clusterIcon_.show();
 };
-
-
 /**
  * Determines if a marker has already been added to the cluster.
  *
@@ -560,8 +514,6 @@ Cluster.prototype.isMarkerAlreadyAdded_ = function (marker) {
   }
   return false;
 };
-
-
 /**
  * @name MarkerClustererOptions
  * @class This class represents the optional parameter passed to
@@ -689,8 +641,6 @@ function MarkerClusterer(map, opt_markers, opt_options) {
   this.addMarkers(opt_markers, true);
   this.setMap(map); // Note: this causes onAdd to be called
 }
-
-
 /**
  * Implementation of the onAdd interface method.
  * @ignore
@@ -713,8 +663,6 @@ MarkerClusterer.prototype.onAdd = function () {
     })
   ];
 };
-
-
 /**
  * Implementation of the onRemove interface method.
  * Removes map event listeners and all cluster icons from the DOM.
@@ -744,15 +692,11 @@ MarkerClusterer.prototype.onRemove = function () {
   this.activeMap_ = null;
   this.ready_ = false;
 };
-
-
 /**
  * Implementation of the draw interface method.
  * @ignore
  */
 MarkerClusterer.prototype.draw = function () {};
-
-
 /**
  * Sets up the styles object.
  */
@@ -771,8 +715,6 @@ MarkerClusterer.prototype.setupStyles_ = function () {
     });
   }
 };
-
-
 /**
  *  Fits the map to the bounds of the markers managed by the clusterer.
  */
@@ -786,8 +728,6 @@ MarkerClusterer.prototype.fitMapToMarkers = function () {
 
   this.getMap().fitBounds(bounds);
 };
-
-
 /**
  * Returns the value of the <code>gridSize</code> property.
  *
@@ -796,8 +736,6 @@ MarkerClusterer.prototype.fitMapToMarkers = function () {
 MarkerClusterer.prototype.getGridSize = function () {
   return this.gridSize_;
 };
-
-
 /**
  * Sets the value of the <code>gridSize</code> property.
  *
@@ -806,8 +744,6 @@ MarkerClusterer.prototype.getGridSize = function () {
 MarkerClusterer.prototype.setGridSize = function (gridSize) {
   this.gridSize_ = gridSize;
 };
-
-
 /**
  * Returns the value of the <code>minimumClusterSize</code> property.
  *
@@ -825,8 +761,6 @@ MarkerClusterer.prototype.getMinimumClusterSize = function () {
 MarkerClusterer.prototype.setMinimumClusterSize = function (minimumClusterSize) {
   this.minClusterSize_ = minimumClusterSize;
 };
-
-
 /**
  *  Returns the value of the <code>maxZoom</code> property.
  *
@@ -835,8 +769,6 @@ MarkerClusterer.prototype.setMinimumClusterSize = function (minimumClusterSize) 
 MarkerClusterer.prototype.getMaxZoom = function () {
   return this.maxZoom_;
 };
-
-
 /**
  *  Sets the value of the <code>maxZoom</code> property.
  *
@@ -845,8 +777,6 @@ MarkerClusterer.prototype.getMaxZoom = function () {
 MarkerClusterer.prototype.setMaxZoom = function (maxZoom) {
   this.maxZoom_ = maxZoom;
 };
-
-
 /**
  *  Returns the value of the <code>styles</code> property.
  *
@@ -855,8 +785,6 @@ MarkerClusterer.prototype.setMaxZoom = function (maxZoom) {
 MarkerClusterer.prototype.getStyles = function () {
   return this.styles_;
 };
-
-
 /**
  *  Sets the value of the <code>styles</code> property.
  *
@@ -865,8 +793,6 @@ MarkerClusterer.prototype.getStyles = function () {
 MarkerClusterer.prototype.setStyles = function (styles) {
   this.styles_ = styles;
 };
-
-
 /**
  * Returns the value of the <code>title</code> property.
  *
@@ -875,8 +801,6 @@ MarkerClusterer.prototype.setStyles = function (styles) {
 MarkerClusterer.prototype.getTitle = function () {
   return this.title_;
 };
-
-
 /**
  *  Sets the value of the <code>title</code> property.
  *
@@ -885,8 +809,6 @@ MarkerClusterer.prototype.getTitle = function () {
 MarkerClusterer.prototype.setTitle = function (title) {
   this.title_ = title;
 };
-
-
 /**
  * Returns the value of the <code>zoomOnClick</code> property.
  *
@@ -895,8 +817,6 @@ MarkerClusterer.prototype.setTitle = function (title) {
 MarkerClusterer.prototype.getZoomOnClick = function () {
   return this.zoomOnClick_;
 };
-
-
 /**
  *  Sets the value of the <code>zoomOnClick</code> property.
  *
@@ -905,8 +825,6 @@ MarkerClusterer.prototype.getZoomOnClick = function () {
 MarkerClusterer.prototype.setZoomOnClick = function (zoomOnClick) {
   this.zoomOnClick_ = zoomOnClick;
 };
-
-
 /**
  * Returns the value of the <code>averageCenter</code> property.
  *
@@ -915,8 +833,6 @@ MarkerClusterer.prototype.setZoomOnClick = function (zoomOnClick) {
 MarkerClusterer.prototype.getAverageCenter = function () {
   return this.averageCenter_;
 };
-
-
 /**
  *  Sets the value of the <code>averageCenter</code> property.
  *
@@ -925,8 +841,6 @@ MarkerClusterer.prototype.getAverageCenter = function () {
 MarkerClusterer.prototype.setAverageCenter = function (averageCenter) {
   this.averageCenter_ = averageCenter;
 };
-
-
 /**
  * Returns the value of the <code>ignoreHidden</code> property.
  *
@@ -935,8 +849,6 @@ MarkerClusterer.prototype.setAverageCenter = function (averageCenter) {
 MarkerClusterer.prototype.getIgnoreHidden = function () {
   return this.ignoreHidden_;
 };
-
-
 /**
  *  Sets the value of the <code>ignoreHidden</code> property.
  *
@@ -945,8 +857,6 @@ MarkerClusterer.prototype.getIgnoreHidden = function () {
 MarkerClusterer.prototype.setIgnoreHidden = function (ignoreHidden) {
   this.ignoreHidden_ = ignoreHidden;
 };
-
-
 /**
  * Returns the value of the <code>imageExtension</code> property.
  *
@@ -955,8 +865,6 @@ MarkerClusterer.prototype.setIgnoreHidden = function (ignoreHidden) {
 MarkerClusterer.prototype.getImageExtension = function () {
   return this.imageExtension_;
 };
-
-
 /**
  *  Sets the value of the <code>imageExtension</code> property.
  *
@@ -965,8 +873,6 @@ MarkerClusterer.prototype.getImageExtension = function () {
 MarkerClusterer.prototype.setImageExtension = function (imageExtension) {
   this.imageExtension_ = imageExtension;
 };
-
-
 /**
  * Returns the value of the <code>imagePath</code> property.
  *
@@ -975,8 +881,6 @@ MarkerClusterer.prototype.setImageExtension = function (imageExtension) {
 MarkerClusterer.prototype.getImagePath = function () {
   return this.imagePath_;
 };
-
-
 /**
  *  Sets the value of the <code>imagePath</code> property.
  *
@@ -985,8 +889,6 @@ MarkerClusterer.prototype.getImagePath = function () {
 MarkerClusterer.prototype.setImagePath = function (imagePath) {
   this.imagePath_ = imagePath;
 };
-
-
 /**
  * Returns the value of the <code>imageSizes</code> property.
  *
@@ -995,8 +897,6 @@ MarkerClusterer.prototype.setImagePath = function (imagePath) {
 MarkerClusterer.prototype.getImageSizes = function () {
   return this.imageSizes_;
 };
-
-
 /**
  *  Sets the value of the <code>imageSizes</code> property.
  *
@@ -1005,8 +905,6 @@ MarkerClusterer.prototype.getImageSizes = function () {
 MarkerClusterer.prototype.setImageSizes = function (imageSizes) {
   this.imageSizes_ = imageSizes;
 };
-
-
 /**
  * Returns the value of the <code>calculator</code> property.
  *
@@ -1015,8 +913,6 @@ MarkerClusterer.prototype.setImageSizes = function (imageSizes) {
 MarkerClusterer.prototype.getCalculator = function () {
   return this.calculator_;
 };
-
-
 /**
  * Sets the value of the <code>calculator</code> property.
  *
@@ -1026,8 +922,6 @@ MarkerClusterer.prototype.getCalculator = function () {
 MarkerClusterer.prototype.setCalculator = function (calculator) {
   this.calculator_ = calculator;
 };
-
-
 /**
  * Returns the value of the <code>printable</code> property.
  *
@@ -1036,8 +930,6 @@ MarkerClusterer.prototype.setCalculator = function (calculator) {
 MarkerClusterer.prototype.getPrintable = function () {
   return this.printable_;
 };
-
-
 /**
  * Sets the value of the <code>printable</code> property.
  *
@@ -1046,8 +938,6 @@ MarkerClusterer.prototype.getPrintable = function () {
 MarkerClusterer.prototype.setPrintable = function (printable) {
   this.printable_ = printable;
 };
-
-
 /**
  * Returns the value of the <code>batchSizeIE</code> property.
  *
@@ -1056,8 +946,6 @@ MarkerClusterer.prototype.setPrintable = function (printable) {
 MarkerClusterer.prototype.getBatchSizeIE = function () {
   return this.batchSizeIE_;
 };
-
-
 /**
  * Sets the value of the <code>batchSizeIE</code> property.
  *
@@ -1066,8 +954,6 @@ MarkerClusterer.prototype.getBatchSizeIE = function () {
 MarkerClusterer.prototype.setBatchSizeIE = function (batchSizeIE) {
   this.batchSizeIE_ = batchSizeIE;
 };
-
-
 /**
  *  Returns the array of markers managed by the clusterer.
  *
@@ -1076,8 +962,6 @@ MarkerClusterer.prototype.setBatchSizeIE = function (batchSizeIE) {
 MarkerClusterer.prototype.getMarkers = function () {
   return this.markers_;
 };
-
-
 /**
  *  Returns the number of markers managed by the clusterer.
  *
@@ -1086,8 +970,6 @@ MarkerClusterer.prototype.getMarkers = function () {
 MarkerClusterer.prototype.getTotalMarkers = function () {
   return this.markers_.length;
 };
-
-
 /**
  * Returns the current array of clusters formed by the clusterer.
  *
@@ -1096,8 +978,6 @@ MarkerClusterer.prototype.getTotalMarkers = function () {
 MarkerClusterer.prototype.getClusters = function () {
   return this.clusters_;
 };
-
-
 /**
  * Returns the number of clusters formed by the clusterer.
  *
@@ -1106,8 +986,6 @@ MarkerClusterer.prototype.getClusters = function () {
 MarkerClusterer.prototype.getTotalClusters = function () {
   return this.clusters_.length;
 };
-
-
 /**
  * Adds a marker to the clusterer. The clusters are redrawn unless
  *  <code>opt_nodraw</code> is set to <code>true</code>.
@@ -1121,8 +999,6 @@ MarkerClusterer.prototype.addMarker = function (marker, opt_nodraw) {
     this.redraw_();
   }
 };
-
-
 /**
  * Adds an array of markers to the clusterer. The clusters are redrawn unless
  *  <code>opt_nodraw</code> is set to <code>true</code>.
@@ -1139,8 +1015,6 @@ MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
     this.redraw_();
   }
 };
-
-
 /**
  * Pushes a marker to the clusterer.
  *
@@ -1160,8 +1034,6 @@ MarkerClusterer.prototype.pushMarkerTo_ = function (marker) {
   marker.isAdded = false;
   this.markers_.push(marker);
 };
-
-
 /**
  * Removes a marker from the cluster.  The clusters are redrawn unless
  *  <code>opt_nodraw</code> is set to <code>true</code>. Returns <code>true</code> if the
@@ -1180,8 +1052,6 @@ MarkerClusterer.prototype.removeMarker = function (marker, opt_nodraw) {
 
   return removed;
 };
-
-
 /**
  * Removes an array of markers from the cluster. The clusters are redrawn unless
  *  <code>opt_nodraw</code> is set to <code>true</code>. Returns <code>true</code> if markers
@@ -1206,8 +1076,6 @@ MarkerClusterer.prototype.removeMarkers = function (markers, opt_nodraw) {
 
   return removed;
 };
-
-
 /**
  * Removes a marker and returns true if removed, false if not.
  *
@@ -1237,8 +1105,6 @@ MarkerClusterer.prototype.removeMarker_ = function (marker) {
   this.markers_.splice(index, 1); // Remove the marker from the list of managed markers
   return true;
 };
-
-
 /**
  * Removes all clusters and markers from the map and also removes all markers
  *  managed by the clusterer.
@@ -1247,8 +1113,6 @@ MarkerClusterer.prototype.clearMarkers = function () {
   this.resetViewport_(true);
   this.markers_ = [];
 };
-
-
 /**
  * Recalculates and redraws all the marker clusters from scratch.
  *  Call this after changing any properties.
@@ -1268,8 +1132,6 @@ MarkerClusterer.prototype.repaint = function () {
     }
   }, 0);
 };
-
-
 /**
  * Returns the current bounds extended by the grid size.
  *
@@ -1305,16 +1167,12 @@ MarkerClusterer.prototype.getExtendedBounds = function (bounds) {
 
   return bounds;
 };
-
-
 /**
  * Redraws all the clusters.
  */
 MarkerClusterer.prototype.redraw_ = function () {
   this.createClusters_(0);
 };
-
-
 /**
  * Removes all clusters from the map. The markers are also removed from the map
  *  if <code>opt_hide</code> is set to <code>true</code>.
@@ -1339,8 +1197,6 @@ MarkerClusterer.prototype.resetViewport_ = function (opt_hide) {
     }
   }
 };
-
-
 /**
  * Calculates the distance between two latlng locations in km.
  *
@@ -1360,8 +1216,6 @@ MarkerClusterer.prototype.distanceBetweenPoints_ = function (p1, p2) {
   var d = R * c;
   return d;
 };
-
-
 /**
  * Determines if a marker is contained in a bounds.
  *
@@ -1372,8 +1226,6 @@ MarkerClusterer.prototype.distanceBetweenPoints_ = function (p1, p2) {
 MarkerClusterer.prototype.isMarkerInBounds_ = function (marker, bounds) {
   return bounds.contains(marker.getPosition());
 };
-
-
 /**
  * Adds a marker to a cluster, or creates a new cluster.
  *
@@ -1403,8 +1255,6 @@ MarkerClusterer.prototype.addToClosestCluster_ = function (marker) {
     this.clusters_.push(cluster);
   }
 };
-
-
 /**
  * Creates the clusters. This is done in batches to avoid timeout errors
  *  in some browsers when there is a huge number of markers.
@@ -1470,8 +1320,6 @@ MarkerClusterer.prototype.createClusters_ = function (iFirst) {
     google.maps.event.trigger(this, "clusteringend", this);
   }
 };
-
-
 /**
  * Extends an object's prototype by another's.
  *
@@ -1489,8 +1337,6 @@ MarkerClusterer.prototype.extend = function (obj1, obj2) {
     return this;
   }).apply(obj1, [obj2]);
 };
-
-
 /**
  * The default function for determining the label text and style
  * for a cluster icon.
@@ -1517,8 +1363,6 @@ MarkerClusterer.CALCULATOR = function (markers, numStyles) {
     index: index
   };
 };
-
-
 /**
  * The number of markers to process in one batch.
  *
@@ -1526,8 +1370,6 @@ MarkerClusterer.CALCULATOR = function (markers, numStyles) {
  * @constant
  */
 MarkerClusterer.BATCH_SIZE = 2000;
-
-
 /**
  * The number of markers to process in one batch (IE only).
  *
@@ -1535,8 +1377,6 @@ MarkerClusterer.BATCH_SIZE = 2000;
  * @constant
  */
 MarkerClusterer.BATCH_SIZE_IE = 500;
-
-
 /**
  * The default root name for the marker cluster images.
  *
@@ -1544,8 +1384,6 @@ MarkerClusterer.BATCH_SIZE_IE = 500;
  * @constant
  */
 MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
-
-
 /**
  * The default extension name for the marker cluster images.
  *
@@ -1553,8 +1391,6 @@ MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.c
  * @constant
  */
 MarkerClusterer.IMAGE_EXTENSION = "png";
-
-
 /**
  * The default array of sizes for the marker cluster images.
  *

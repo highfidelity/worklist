@@ -76,8 +76,6 @@ function AppendPagination(page, cPages, table) {
         $('.table-' + table).append(pagination);
     }
 }
-
-
 // json row fields: id, summary, status, payee, fee
 function AppendRow(json, odd) {
     var pre = '', post = '';

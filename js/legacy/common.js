@@ -13,8 +13,6 @@ function gradient(id, level)
 	box.style.display="block";
 	return;
 }
-
-
 function fadein(id)
 {
 	var level = 0;
@@ -24,11 +22,7 @@ function fadein(id)
 		level += 0.01;
 	}
 }
-
-
 // Open the lightbox
-
-
 function openbox(formtitle, fadin)
 {
   var box = document.getElementById('box');
@@ -47,8 +41,6 @@ function openbox(formtitle, fadin)
     box.style.display='block';
   }
 }
-
-
 // Close the lightbox
 
 function closebox()

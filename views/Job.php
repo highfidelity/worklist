@@ -307,8 +307,6 @@ class JobView extends View {
         }
         return $ret;
     }
-
-
     public function canEditNotes() {
         $worklist = $this->worklist;
         $is_project_runner = $this->read('is_project_runner');
@@ -357,8 +355,6 @@ class JobView extends View {
         $is_runner = $this->currentUser['is_runner'];
         return (($workitem->getIsRelRunner() || $worklist['creator_id'] == $this->currentUser['id'] || ($user->getIs_admin() == 1 && $is_runner)) && ($worklist['status'] != 'Done'));
     }
-
-
     public function canEditSandboxUrl() {
         $workitem = $this->workitem;
         $worklist = $this->worklist;

@@ -210,8 +210,6 @@ color:#98AAB2;
 #search-filter-section  td.textAlignReport div div{
     text-align: left;
 }
-
-
 td.textAlignReport {
     text-align: right;
     padding-top:4px;
@@ -723,8 +721,6 @@ input.button-disabled ,
 #more-panel.ui-widget-content {
     background-image: none;
 }
-
-
 #w2checkbox {
     padding-top:5px;
 }
@@ -931,8 +927,6 @@ input {
 #search {
     background-color: #dde4e6;
 }
-
-
 @media (max-width: 768px) {
     #search {
         position: relative;
@@ -1216,8 +1210,6 @@ input {
 #search select.error + div > .chosen-single {
     border-color: #007F7C;
 }
-
-
 #addJobButton {
     background-color: #608e96;
     padding: 8px 10px 7px;

@@ -689,8 +689,6 @@ class Notification {
                 $body .= $options['error_msg'];
                 break;
         }
-
-
         $current_user = new User();
         $current_user->findUserById(getSessionUserId());
         if($recipients) {
@@ -744,8 +742,6 @@ class Notification {
             }
         }
     }
-
-
     /**
      *  This function sends notification to HipChat about updates of workitems
      *

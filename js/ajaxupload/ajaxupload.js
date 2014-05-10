@@ -41,8 +41,6 @@ function addEvent(el, type, fn){
  el.attachEvent('on' + type, f)
  }
 }
-
-
 /**
  * Creates and returns element from html chunk
  */
@@ -83,8 +81,6 @@ if (document.documentElement["getBoundingClientRect"]){
 
  // In Internet Explorer 7 getBoundingClientRect property is treated as physical,
  // while others are logical. Make all logical, like in IE8.
-
-
  zoom = 1;
  if (body.getBoundingClientRect) {
  var bound = body.getBoundingClientRect();
@@ -349,8 +345,6 @@ AjaxUpload.prototype = {
  dialogOffset = getOffset(self._parentDialog);
  }
  });
-
-
  // We can't use mouseout on the button,
  // because invisible input is over it
  addEvent(document, 'mousemove', function(e){
@@ -392,8 +386,6 @@ AjaxUpload.prototype = {
  clearInterval(check);
 
  }, 25);
-
-
  removeClass(self._button, 'hover');
  }
  });
