@@ -348,8 +348,8 @@ class JsonServer
                 $workitem_attached->loadById($workitem);
                 $current_user = new User();
                 $current_user->findUserById($_SESSION['userid']);
-                $journal_message = 
-                    '@' . $current_user->getNickname() . ' uploaded an [attachment](' . 
+                $journal_message =
+                    '@' . $current_user->getNickname() . ' uploaded an [attachment](' .
                     $file->getUrl() . ') to #' . $workitem;
                 sendJournalNotification($journal_message);
             }
@@ -385,7 +385,7 @@ class JsonServer
         if ($icon === false) {
             $icon = $file->getUrl();
         }
-        
+
         if ($success) {
             // we need to reload the file because scanner might have updated fields
             // and our object is out of date
@@ -404,8 +404,6 @@ class JsonServer
                 error_log(__FILE__.": Error uploading images to S3:\n$e");
             }
         }
-
-    
         return $this->setOutput(array(
             'success' => $success,
             'error'   => isset($error) ? $error : '',
@@ -414,8 +412,6 @@ class JsonServer
             'icon'    => $icon
         ));
     }
-    
-    
     protected function actionChangeFileTitle()
     {
         if(isset($_SESSION['userid']) && $_SESSION['userid'] > 0) {
@@ -525,29 +521,29 @@ class JsonServer
         $workitem_id = $this->getRequest()->getParam('workitem');
         $user_id = $this->getRequest()->getParam('userid');
         $workItemToCheckCodeReview = new WorkItem($workitem_id);
-         
+
         // This loop waits its turn to check for review. Shared memory is used for this
         // 2nd, third etc reviewers code will halt here
         do {
             $sem_id = shmop_open($workitem_id, "n", 0644, 10);
         } while ($sem_id === false);
-        
+
         $workItem = new WorkItem($workitem_id);
-        
+
         $user = new User();
         $user->findUserById($user_id);
-        
+
         $status = $workItem->startCodeReview($user_id);
-        
+
         sleep(4); // we want a 3 sec delay to ensure that database update statement executes
         shmop_delete($sem_id); // Delete shared memory
-        
+
         if ($status === null) {
             return $this->setOutput(array('success' => false, 'data' => nl2br('Code Review not available right now')));
         } else if ($status === true || (int)$status == 0) {
             $journal_message = '@' . $user->getNickname() . ' has started a code review for #' . $workitem_id. ' ';
             sendJournalNotification($journal_message);
-            
+
             $options = array(
                 'type' => 'code-review-started',
                 'workitem' => $workItem,
@@ -556,7 +552,7 @@ class JsonServer
                 'nick' => $user->getNickname()
             );
             Notification::workitemNotifyHipchat($options, $data);
-            
+
             return $this->setOutput(array('success' => true,'data' => $journal_message));
         } else {
             $workItem->setStatus('SvnHold');
@@ -572,21 +568,21 @@ class JsonServer
             if ($status & 16) { //sandbox has not-included files
                 $message .= " - Sandbox contains 'not-included' files\n";
             }
-            
+
             $user_is_mechanic = $workItem->getMechanic()->getId() == $user_id;
             require_once('Notification.class.php');
-            
+
             //post comment
             $comment = new Comment();
             $comment->setWorklist_id((int)$workitem_id);
             $comment->setUser_id((int) $user_id);
             $comment->setComment($message);
             $comment->save();
-            
+
             $journalMessage = str_replace("\n", '', $message);
             sendJournalNotification("@Otto could not authorize sandbox for #" . $workitem_id . $journalMessage . ' Status set to *SvnHold*');
             return $this->setOutput(array(
-                    'success' => false, 
+                    'success' => false,
                     'data' => 'Sandbox verification failed. Alerting developer to resolve.'
                 )
             );
@@ -605,7 +601,7 @@ class JsonServer
         $workitem->save();
         $journal_message = '@' . $user->getNickname() . ' has canceled their code review for #' . $workitem_id;
         sendJournalNotification($journal_message);
-        
+
         $options = array(
             'type' => 'code-review-canceled',
             'workitem' => $workitem,
@@ -614,17 +610,17 @@ class JsonServer
             'nick' => $user->getNickname(),
         );
         Notification::workitemNotifyHipchat($options, $data);
-        
+
         return $this->setOutput(array('success' => true,'data' => $journal_message));
     }
-    
+
     protected function actionGetFilesForWorkitem() {
         $workitem_id = $this->getRequest()->getParam('workitem');
         $files = File::fetchAllFilesForWorkitem($workitem_id);
         $user = new User();
         $user->findUserById($this->getRequest()->getParam('userid'));
         $workitem = WorkItem::getById($workitem_id);
-        
+
         $data = array(
             'images' => array(),
             'documents' => array()
@@ -653,7 +649,7 @@ class JsonServer
             } else {
                 $can_delete = false;
             }
-            
+
             $icon = File::getIconFromMime($file->getMime());
             if(! isset($_SESSION['userid']) || $_SESSION['userid'] <= 0) {
                 $fileUrl = "javascript:;";
@@ -689,7 +685,7 @@ class JsonServer
             'data' => $data
         ));
     }
-    
+
     protected function actionGetFilesForProject() {
         $files = File::fetchAllFilesForProject($this->getRequest()->getParam('projectid'));
         $user = new User();
@@ -709,7 +705,7 @@ class JsonServer
                 $fileUrl = $file->getUrl();
                 $iconUrl = $file->getUrl();
             }
-            
+
             $icon = File::getIconFromMime($file->getMime());
             if ($icon === false) {
                 array_push($data['images'], array(
@@ -735,13 +731,13 @@ class JsonServer
             'data' => $data
         ));
     }
-    
+
     protected function actionGetCodeReviewersProject() {
         $data = array();
         $project = new Project();
         try {
             $project->loadById($this->getRequest()->getParam('projectid'));
-    
+
             if($codeReviewers = $project->getCodeReviewers()) {
                 foreach($codeReviewers as $codeReviewer) {
                     $data[] = array(
@@ -753,7 +749,7 @@ class JsonServer
                     );
                 }
             }
-            
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => array('codeReviewers' => $data)
@@ -766,13 +762,13 @@ class JsonServer
             ));
         }
     }
-    
+
     protected function actionGetRunnersForProject() {
         $data = array();
         $project = new Project();
         try {
             $project->loadById($this->getRequest()->getParam('projectid'));
-    
+
             if($runners = $project->getRunners()) {
                 foreach($runners as $runner) {
                     $data[] = array(
@@ -784,7 +780,7 @@ class JsonServer
                     );
                 }
             }
-    
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => array('runners' => $data)
@@ -797,14 +793,14 @@ class JsonServer
             ));
         }
     }
-        
+
     protected function actionRemoveRunnersFromProject() {
         $data = array();
         $project = new Project();
-        
+
         try {
             $request_user = $this->getUser();
-            
+
             $project->loadById($this->getRequest()->getParam('projectid'));
             if (! $project->getProjectId()) {
                 throw new Exception('Not a project in our system');
@@ -812,7 +808,7 @@ class JsonServer
             if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId())) {
                 throw new Exception('Not enough rights');
             }
-                                    
+
             $runners = preg_split('/;/', $this->getRequest()->getParam('runners'));
             $deleted_runners = array();
             foreach($runners as $runner) {
@@ -830,12 +826,12 @@ class JsonServer
                         'projectFounder' => $founder->getNickname(),
                         'projectFounderUrl' => $founderUrl
                     );
-                    if (! sendTemplateEmail($user->getUsername(), 'project-runner-removed', $data)) { 
+                    if (! sendTemplateEmail($user->getUsername(), 'project-runner-removed', $data)) {
                         error_log("JsonServer:actionRemoveRunnersFromProject: send_email to user failed");
                     }
                 }
             }
-            
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => array('deleted_runners' => $deleted_runners)
@@ -848,14 +844,14 @@ class JsonServer
             ));
         }
     }
-    
+
     protected function actionRemoveCodeReviewersFromProject() {
         $data = array();
         $project = new Project();
-    
+
         try {
             $request_user = $this->getUser();
-    
+
             $project->loadById($this->getRequest()->getParam('projectid'));
             if (! $project->getProjectId()) {
                 throw new Exception('Not a project in our system');
@@ -863,7 +859,7 @@ class JsonServer
             if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId())) {
                 throw new Exception('Not enough rights');
             }
-    
+
             $codeReviewers = preg_split('/;/', $this->getRequest()->getParam('codeReviewers'));
             $deleted_codeReviewers = array();
             foreach($codeReviewers as $codeReviewer) {
@@ -886,7 +882,7 @@ class JsonServer
                     }
                 }
             }
-    
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => array('deleted_codereviewers' => $deleted_codeReviewers)
@@ -899,7 +895,7 @@ class JsonServer
             ));
         }
     }
-    
+
     /**
      * Allows you to add a reviewer to the project
      */
@@ -909,7 +905,7 @@ class JsonServer
         $founder = new User();
         try {
             $request_user = $this->getUser();
-    
+
             $project->loadById($this->getRequest()->getParam('projectid'));
             if (! $project->getProjectId()) {
                 throw new Exception('Not a project in our system');
@@ -924,11 +920,11 @@ class JsonServer
             if ($project->isProjectCodeReviewer($user->getId())) {
                 throw new Exception('Entered user is already a Code Reviewer for this project');
             }
-    
+
             if (! $project->addCodeReviewer($user->getId())) {
                 throw new Exception('Could not add the user as a designer for this project');
             }
-    
+
             $founder->findUserById($project->getOwnerId());
             $founderUrl = SECURE_SERVER_URL . 'jobs#userid=' . $founder->getId();
             $data = array(
@@ -944,7 +940,7 @@ class JsonServer
             // Add a journal notification
             $journal_message = '@' . $user->getNickname() . ' has been granted *Review* rights for project **' . $project->getName() . '**';
             sendJournalNotification($journal_message);
-    
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => 'Code Reviewer added successfully'
@@ -957,14 +953,14 @@ class JsonServer
             ));
         }
     }
-    
+
     protected function actionAddRunnerToProject() {
         $project = new Project();
         $user = new User();
         $founder = new User();
         try {
             $request_user = $this->getUser();
-            
+
             $project->loadById($this->getRequest()->getParam('projectid'));
             if (! $project->getProjectId()) {
                 throw new Exception('Not a project in our system');
@@ -983,7 +979,7 @@ class JsonServer
             if (! $project->addRunner($user->getId())) {
                 throw new Exception('Could not add the user as a designer for this project');
             }
-            
+
             $founder->findUserById($project->getOwnerId());
             $founderUrl = SECURE_SERVER_URL . 'jobs#userid=' . $founder->getId();
             $data = array(
@@ -993,13 +989,13 @@ class JsonServer
                 'projectFounder' => $founder->getNickname(),
                 'projectFounderUrl' => $founderUrl
             );
-            if (! sendTemplateEmail($user->getUsername(), 'project-runner-added', $data)) { 
+            if (! sendTemplateEmail($user->getUsername(), 'project-runner-added', $data)) {
                 error_log("JsonServer:actionAddRunnerToProject: send email to user failed");
             }
             // Add a journal notification
             $journal_message = '@' . $user->getNickname() . ' has been granted Designer rights for project **' . $project->getName() . '**';
             sendJournalNotification($journal_message);
-            
+
             return $this->setOutput(array(
                 'success' => true,
                 'data' => 'Designer added successfully'
@@ -1012,8 +1008,6 @@ class JsonServer
             ));
         }
     }
-
-
     /**
      * This method handles the upload of the W9 form
      *
@@ -1048,32 +1042,32 @@ class JsonServer
 
             $body = "<p>Hi there,</p>";
             $body .= "<p>" . $user->getNickname() . " just uploaded his/her W-9 Form.</p>";
-            $body .= "<p>When it's tax time, you'll need to know that " 
+            $body .= "<p>When it's tax time, you'll need to know that "
                   . $user->getNickname() . " is " . $user->getFirst_name() . " " . $user->getLast_name() . "</p>";
             $body .= "<p>You can download and approve it from this URL:</p>";
 
             $body .= "<p><a href=\"{$url}\">Click here</a></p>";
-            
-            if(! send_email(FINANCE_EMAIL, $subject, $body)) { 
+
+            if(! send_email(FINANCE_EMAIL, $subject, $body)) {
                 error_log("JsonServer:w9Upload: send_email to admin failed");
             }
-            
+
             // send approval email to user
             $subject = 'Worklist.net: W9 Received';
 
             $body = "<p>Hello you!</p>";
-            $body .= "<p>Thanks for uploading your W9 to our system. 
-                One of our staff will verify the receipt and then activate 
+            $body .= "<p>Thanks for uploading your W9 to our system.
+                One of our staff will verify the receipt and then activate
                 your account for bidding within the next 24 hours.<br/>
-                Until then, you are welcome to browse the jobs list, 
-                take a look at the open source code via the links at 
+                Until then, you are welcome to browse the jobs list,
+                take a look at the open source code via the links at
                 the bottom of any worklist page and ask questions in our Chat.
                 <br /><br />
                 See you in the Worklist!
                 <br /><br />
                 - the Worklist.net team";
-            
-            if(! send_email($user->getUsername(), $subject, $body)) { 
+
+            if(! send_email($user->getUsername(), $subject, $body)) {
                 error_log("JsonServer:w9Upload: send_email to user failed");
             }
 
@@ -1082,20 +1076,18 @@ class JsonServer
             return $this->setOutput(array(
                 'success' => true,
                 'message' => 'The file ' . basename( $_FILES['Filedata']['name']) . ' has been uploaded.'
-            ));            
-            
+            ));
+
         } catch (Exception $e) {
             $success = false;
             $error = 'There was a problem uploading your file';
             error_log(__FILE__.": Error uploading W9 form to S3:\n$e");
-            
+
             return $this->setOutput(array(
                 'success' => false,
                 'message' => 'An error occured while uploading the file, please try again!'
-            ));            
+            ));
         }
-
-
     }
 
     protected function actionChangeUserStatus()
@@ -1169,11 +1161,11 @@ class JsonServer
         $workitem = (int)$this->getRequest()->getParam('workitem');
         $runner_id = (int) $this->getRequest()->getParam('runner');
         $runner = new User();
-        
+
         if ($this->getUser()->isRunner()) {
             $workitem = new WorkItem($workitem);
             if ($runner->findUserById($runner_id) && $runner->isRunner()
-                && Project::isAllowedRunnerForProject($runner_id, $workitem->getProjectId()) ) { 
+                && Project::isAllowedRunnerForProject($runner_id, $workitem->getProjectId()) ) {
                 $oldRunner = $workitem->getRunner();
                 $workitem->setRunnerId($runner->getId())
                          ->save();

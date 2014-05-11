@@ -65,9 +65,9 @@ class Bid {
             return null;
         }
     }
-    
+
     public function getBid_amount() {
         return $this->_row['bid_amount'];
     }
-        
+
 }

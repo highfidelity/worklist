@@ -31,18 +31,18 @@ class ProjectView extends View {
     }
 
     public function runnerOrOwner() {
-        return $this->currentUser['is_runner'] 
+        return $this->currentUser['is_runner']
             || $this->read('is_owner');
     }
 
     public function runnerOrPayerOrOwner() {
-        return $this->currentUser['is_runner'] 
-            || $this->currentUser['is_payer'] 
+        return $this->currentUser['is_runner']
+            || $this->currentUser['is_payer']
             || $this->read('is_owner');
     }
 
     public function adminOrOwner() {
-        return $this->currentUser['is_admin'] 
+        return $this->currentUser['is_admin']
             || $this->read('is_owner');
     }
 
@@ -66,7 +66,7 @@ class ProjectView extends View {
             if ($project->getHipchatColor() == $color) {
                 $selected = 'checked="checked"';
             }
-            $ret .= 
+            $ret .=
                 '<div><label>' .
                 '<input name="hipchat_color" type="radio" ' . $selected . ' value="' . $color . '" />' .
                   $color .

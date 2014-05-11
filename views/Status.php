@@ -43,14 +43,14 @@ class StatusView extends View {
             } else { // github event
                 if (!preg_match('/^(Fork|PullRequest(ReviewComment)?|IssueComment)Event$/', $entry['type'])) {
                     continue;
-                }                
+                }
                 $id = $entry['id'];
                 $type = 'github' . preg_replace('/Event$/', '', $entry['type']);
                 $date = strtotime($entry['created_at']);
                 $content = self::formatGithubEntry($entry);
             }
 
-            $ret .= 
+            $ret .=
                   '<li entryid="' . $id . '" date="' . $date . '" type="' . $type . '">'
                 .     '<h4>' . relativeTime($date - $now) . '</h4>'
                 .     $content

@@ -3,10 +3,10 @@ require_once(dirname(__FILE__)."/../config.php");
 
 class Database {
     /**
-     * @var resource 
+     * @var resource
      */
     protected $link;
-    
+
     public function __destruct(){
         if($this->link){
             mysql_close($this->link);
@@ -88,7 +88,7 @@ class Database {
         $sql = "UPDATE " . $table . " ";
         $set = "SET";
         $w = " WHERE";
-        
+
         $c = 0;
         foreach($data as $column => $value){
             if(isset($format)){
@@ -98,7 +98,7 @@ class Database {
             }
             $c++;
         }
-        
+
         $c = 0;
         foreach($where as $column => $value){
             if(isset($where_format)){

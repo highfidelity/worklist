@@ -31,8 +31,6 @@ if($id <= 0)
             (strtotime($ar['If-Modified-Since']) >= $image_time)) // and grater than
             $send_304 = true;                                     // image_time
     }
-
-
     if ($send_304)
     {
         // Sending 304 response to browser

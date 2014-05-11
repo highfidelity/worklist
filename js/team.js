@@ -243,11 +243,11 @@ function addCommas(nStr) {
 }
 
 function outputPagination(page, cPages) {
-    var previousLink = page > 1 
-            ? '<li><a href="#?page=' + (page - 1) + '">Previous</a></li>' 
+    var previousLink = page > 1
+            ? '<li><a href="#?page=' + (page - 1) + '">Previous</a></li>'
             : '<li>Previous</li> ',
-        nextLink = page < cPages 
-            ? '<li><a href="#?page=' + (page + 1) + '" class = "ln-last">Next</a></li>' 
+        nextLink = page < cPages
+            ? '<li><a href="#?page=' + (page + 1) + '" class = "ln-last">Next</a></li>'
             : '<li>Next</li>';
     var pagination = previousLink;
     var fromPage = 1;

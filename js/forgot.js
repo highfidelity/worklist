@@ -7,5 +7,5 @@ $(function() {
     username.add(Validate.Length, {
         minimum: 10,
         maximum: 50
-    });    
+    });
 })

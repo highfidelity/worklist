@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ProjectStatusView extends View {
 	public $title = '';

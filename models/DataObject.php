@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -15,12 +15,10 @@ if (!defined('USERS_SKILLS'))   define('USERS_SKILLS', 'rel_users_skills');
 if (!defined('MISSIONS_SKILLS'))   define('MISSIONS_SKILLS', 'rel_missions_skills');
 if (!defined('MISSIONS_TRANSACTIONS'))   define('MISSIONS_TRANSACTIONS', 'rel_missions_transactions');
 
-
-
 class DataObject {
     public $link;
     private $lastID;
-    
+
     public function getLastID() {
         return $this->lastID;
     }
@@ -30,7 +28,7 @@ class DataObject {
     public function __construct($join= array()) {
         // Establish the link with our DB
         $this->link = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
-        
+
         // Error checking
         if (mysqli_connect_errno()) {
             error_log("DataObject mysql error: " . mysqli_connect_error());
@@ -51,24 +49,24 @@ class DataObject {
     public function __destructor() {
         $this->link->close();
     }
-    
+
      public function init($join) {
-        
+
         if (count($join) > 0) {
             if (isset($this->notCol)) {
                 foreach ($this->notCol['join'] as $joinID => $joinInfo) {
                     if ( isset($join[$joinID]) ) {
                         $this->notCol['join'][$joinID]['useIt'] = $join[$joinID];
-                    } 
+                    }
                 }
             }
         }
     }
-    
+
     /** Get the join columns.
      */
     public function getJoinColumns() {
-        
+
         $join_cols = array();
         if (isset($this->notCol) ) {
             foreach ($this->notCol['join'] as $joinID => $joinInfo) {
@@ -82,7 +80,7 @@ class DataObject {
     /** Get the join tables.
      */
     public function getJoinTables() {
-        
+
         $join_tables = array();
         $sql="";
         if (isset($this->notCol) ) {
@@ -122,7 +120,7 @@ class DataObject {
         }
         return $only_cols;
     }
-    
+
     /**
      * Get columns and values
      */
@@ -138,7 +136,7 @@ class DataObject {
         }
         return $values;
     }
-    
+
     /**
      * Insert the given values into the DB for this model
      */
@@ -146,7 +144,7 @@ class DataObject {
 	// If we don't have any valid columns to insert, fail
         if (empty($values) || count($values) == 0) { return false; }
         $sql = "INSERT INTO `" . $this->table_name . "` (";
-        
+
 	// Get columns for this table (don't insert things that can't be)
         $columns = $this->getColumns();
 
@@ -162,12 +160,12 @@ class DataObject {
                     continue;
                 }
                 $_values .= "'" . $this->mysqli_real_escape_string($value)  . "',";
-            } 
+            }
         }
         // If we don't have any valid columns to insert, fail
-        if (empty($_columns)) { 
+        if (empty($_columns)) {
             var_dump($_columns);
-            return false; 
+            return false;
         }
 
         // Add union
@@ -180,7 +178,7 @@ class DataObject {
         $result = $this->link->prepare($sql) or error_log("prepare failed $sql");
         if ($result && $result->execute()) {
             $this->lastID =  mysqli_insert_id($this->link);
-            $result->close();    
+            $result->close();
             return true;
         } else {
             var_dump($sql . " * " . $this->link->error);
@@ -204,7 +202,7 @@ class DataObject {
         }
         return $join_cols;
     }
-    
+
     /**
      * Get associative array for the specified columns
      * where @condition is true
@@ -266,7 +264,7 @@ class DataObject {
             return null;
         }
     }
-    
+
     /**
      * Get the number of rows on this table
      */
@@ -288,7 +286,7 @@ class DataObject {
      */
     public function removeRow($condition) {
         $sql = "DELETE FROM `" . $this->table_name . "` WHERE {$condition}";
-        
+
         // If removed successfully return true
         if ($result = $this->link->query($sql)) {
             return true;
@@ -296,7 +294,7 @@ class DataObject {
             return false;
         }
     }
-    
+
     /**
      * Load the object by automated data from @objectData
      */
@@ -304,22 +302,22 @@ class DataObject {
         if (!$objectData && is_array($objectData)) {
             return false;
         }
-        
+
         foreach ($objectData[0] as $key => $val) {
             $this->$key = $val;
         }
         return true;
     }
-    
+
     /**
      * Saves all the object contents to the db
      * limited to @limiter row
      */
     public function save($limiter,$limiter2=null) {
         $sql = "UPDATE `" . $this->table_name . "` SET ";
-        
+
         $columns = $this->getObjectData();
-        
+
         // Add each column name to the sql statement
         array_shift($columns);
         foreach ($columns as $column => $value) {
@@ -334,22 +332,22 @@ class DataObject {
             $sql .= "`". $column . "` = '". $this->mysqli_real_escape_string($value) . "',";
         }
         $sql = substr_replace($sql, "", -1);
-        
+
         $limiter_value = $this->$limiter;
-        
+
         // Limit the query to the current user
         $sql .= " WHERE `{$limiter}` = '{$limiter_value}'";
-        
+
         if ($limiter2 !== null) {
             $limiter_value = $this->$limiter2;
-            
+
             // Limit the query to the current user
             $sql .= " AND `{$limiter2}` = '{$limiter_value}' ";
         }
         // Execute our query and send the result back
         $result = $this->link->prepare($sql);
         if ($result && $result->execute()) {
-            $result->close();    
+            $result->close();
             return true;
         } else {
             error_log("DataObject:save mysql error: " . $sql . " * " . $this->link->error);
@@ -357,7 +355,7 @@ class DataObject {
             return false;
         }
     }
-	
+
 	public function dbUpdate($sql) {
 		if ($this->link->query($sql)) {
             return true;
@@ -366,7 +364,7 @@ class DataObject {
             var_dump($sql . " * " .$this->link->error);
         }
 	}
-	
+
 	public function mysqli_real_escape_string($str) {
 		return mysqli_real_escape_string($this->link,$str);
 	}

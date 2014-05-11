@@ -1,7 +1,7 @@
 <?php
 
 class AjaxResponse
-{    
+{
     public function __construct($chat)
     {
         $this->chat = $chat;
@@ -17,17 +17,17 @@ class AjaxResponse
     {
         $message = $_POST['message'];
         $this->logTries();
-		
+
         if (empty($_SESSION['nickname']) && $this->areUrlsInMessage($message)) {
             $message = "@me echo You cannot send a message with a web address if you are not logged in.";
         } elseif (isSpammer($_SERVER['REMOTE_ADDR'])) {
             $message = "@me echo Love to you! Sorry but you aren't allowed to participate. Your IP has been blocked."
                 ." If you aren't a spammer please give us a feedback with the button above.";
         } elseif (empty($_SESSION['nickname']) && (substr($message, 0, 3) == '@me' ||
-            substr($message, 0, 5) == '@ping')) {	    	
+            substr($message, 0, 5) == '@ping')) {
             $message = "@me echo Sorry but for you to use any of the chat commands, you need to be logged in.";
         }
- 
+
         $author = isset($_SESSION['nickname']) ? $_SESSION['nickname'] : GUEST_NAME;
         $sampled = isset($_POST['sampled']) ? $_POST['sampled'] : 0;
         $data = $this->chat->sendEntry($author, $message, array('sampled'=>$sampled));
@@ -36,9 +36,9 @@ class AjaxResponse
         }
         return($data);
     }
-	
+
 	public function updateAllEntryJobs() {
-		$this->chat->updateAllJobIds();	
+		$this->chat->updateAllJobIds();
 		echo "<br/><br/>Jobs per Entry table updated!";
 	}
 
@@ -50,21 +50,21 @@ class AjaxResponse
 	            'message' => 'You are not allowed to do that!'
 	        ));
 	    }
-	    
+
 	    if (empty($_REQUEST['entryid']) || empty($_REQUEST['hours'])) {
 	        return(array(
 	            'success' => false,
 	            'message' => 'Not enough information!'
 	        ));
 	    }
-	    
+
 	    $id = (int)$_REQUEST['entryid'];
 	    $hours = (int)$_REQUEST['hours'];
 	    $secs = ($hours * 3600);
-	    
+
 	    $sql = 'SELECT `ip` FROM `'.ENTRIES.'` WHERE `id` = "' . $id . '";';
 	    $result = mysql_query($sql);
-	    
+
 	    if (!$result) {
 	        return(array(
 	            'success' => false,
@@ -72,13 +72,13 @@ class AjaxResponse
 	        ));
 	    }
 	    $ip = mysql_fetch_assoc($result);
-		
+
 		if( $ip== $_SERVER['REMOTE_ADDR'] ) {
 	        return(array(
 	            'success' => false,
 	            'message' => 'You cannot block your own IP!'
 	        ));
-		}		
+		}
 
 	    $sql = 'INSERT INTO `' . BLOCKED_IP . '` VALUES (NULL, "' . $ip['ip'] . '", UNIX_TIMESTAMP(NOW()), ' . $secs . ');';
 	    $result = mysql_query($sql);
@@ -88,10 +88,10 @@ class AjaxResponse
 	            'message' => 'Database error: ' . mysql_error()
 	        ));
 	    }
-	    
+
         $days = (int)($hours / 24);
         $hours = (($days == 0) ? $hours : (int)($hours % $days));
-	    	    
+
 	    return(array(
 	        'success' => true,
 	        'message' => 'IP: '.$ip['ip'].' successfully blocked',
@@ -106,14 +106,14 @@ class AjaxResponse
 	            'message' => 'You are not allowed to do that!'
 	        ));
 	    }
-	    
+
 	    if (empty($_REQUEST['ipv4'])) {
 	        return(array(
 	            'success' => false,
 	            'message' => 'Not enough information!'
 	        ));
 	    }
-	    
+
 	    $ip = mysql_real_escape_string($_REQUEST['ipv4']);
 	    $sql = 'DELETE FROM `' . BLOCKED_IP . '` WHERE `ipv4` = "' . $ip . '";';
 	    $result = mysql_query($sql);
@@ -123,17 +123,17 @@ class AjaxResponse
 	            'message' => 'Database error: ' . mysql_error()
 	        ));
 	    }
-	    
+
 	    $message = 'The IP (' . $ip . ') has been successfully unblocked.';
-	    
+
 	    // Send entry
 	    $info = $this->chat->sendEntry(USER_JOURNAL, $message, array('userid' => USER_JOURNAL_ID));
-	    
+
 	    return(array(
 	        'success' => true,
 	        'message' => $message,
 	        'info' => $info
-	    ));	    
+	    ));
 	}
 	public function markspam()
 	{
@@ -143,14 +143,14 @@ class AjaxResponse
 	            'message' => 'You are not allowed to do that!'
 	        ));
 	    }
-	    
+
 	    if (empty($_REQUEST['entryid'])) {
 	        return(array(
 	            'success' => false,
 	            'message' => 'Not enough information!'
 	        ));
 	    }
-	    
+
 	    $id = (int)$_REQUEST['entryid'];
 	    $sql = 'UPDATE `'.ENTRIES.'` SET `visible` = 0 WHERE `id` = ' . $id . ';';
 	    $result = mysql_query($sql);
@@ -163,7 +163,7 @@ class AjaxResponse
 	    return(array(
 	        'success' => true,
 	        'message' => 'The entry has be marked as spam.'
-	    ));	    
+	    ));
 	}
 	public function typing()
 	{
@@ -382,7 +382,7 @@ class AjaxResponse
         // get the speakers
         //$data['speakers'] = $this->speakerList(1);
         //$entries = array_merge($entries, $this->speakerNotes($data['speakers']));
-    
+
         $entries_array = array();
         // use old way if json argument not defined for backwards compatibility
         if (empty($_POST["json"])) {
@@ -438,8 +438,8 @@ class AjaxResponse
 	function speakerList($justSpeakers = false)
 	{
 	    $speakers = $this->chat->listSpeakers();
-		if ($justSpeakers) 
-		{ 
+		if ($justSpeakers)
+		{
 			return $speakers;
 		}
 	    $entries = $this->speakerNotes($speakers);
@@ -504,27 +504,27 @@ class AjaxResponse
     private function areUrlsInMessage($message)
     {
         if (
-			strpos($message, 'http') > -1 || strpos($message, 'http://') > -1 || strpos($message, '.com') > -1 || 
-			strpos($message, '.net') > -1 || strpos($message, '.org') > -1 || strpos($message, '.info') > -1 || 
-			strpos($message, '.biz') > -1 || strpos($message, '.me') > -1 || strpos($message, 'www.') > -1 || 
-			strpos($message, '.us') > -1 || strpos($message, '.edu') > -1 || strpos($message, '.uk') > -1 || strpos($message, '.to') > -1 || 
-			strpos($message, '.ch') > -1 || strpos($message, '.fr') > -1 || strpos($message, '.jp') > -1 || 
-			strpos($message, '.de') > -1 || strpos($message, '.ru') > -1 || strpos($message, '.it') > -1 || 
-			strpos($message, '.mil') > -1 || strpos($message, '.gov') > -1 || strpos($message, '.au') > -1 || strpos($message, '.cc') > -1 || 
-			strpos($message, '.ca') > -1 || strpos($message, '.coop') > -1 || strpos($message, '.dk') > -1 || strpos($message, '.bt') > -1 || 
-			strpos($message, '.at') > -1 || strpos($message, '.as') > -1 || strpos($message, '.az') > -1 || strpos($message, '.be') > -1 || 
+			strpos($message, 'http') > -1 || strpos($message, 'http://') > -1 || strpos($message, '.com') > -1 ||
+			strpos($message, '.net') > -1 || strpos($message, '.org') > -1 || strpos($message, '.info') > -1 ||
+			strpos($message, '.biz') > -1 || strpos($message, '.me') > -1 || strpos($message, 'www.') > -1 ||
+			strpos($message, '.us') > -1 || strpos($message, '.edu') > -1 || strpos($message, '.uk') > -1 || strpos($message, '.to') > -1 ||
+			strpos($message, '.ch') > -1 || strpos($message, '.fr') > -1 || strpos($message, '.jp') > -1 ||
+			strpos($message, '.de') > -1 || strpos($message, '.ru') > -1 || strpos($message, '.it') > -1 ||
+			strpos($message, '.mil') > -1 || strpos($message, '.gov') > -1 || strpos($message, '.au') > -1 || strpos($message, '.cc') > -1 ||
+			strpos($message, '.ca') > -1 || strpos($message, '.coop') > -1 || strpos($message, '.dk') > -1 || strpos($message, '.bt') > -1 ||
+			strpos($message, '.at') > -1 || strpos($message, '.as') > -1 || strpos($message, '.az') > -1 || strpos($message, '.be') > -1 ||
 			strpos($message, '.cn') > -1 || strpos($message, '.ac') > -1 || strpos($message, '.af') > -1 || strpos($message, '.al') > -1 ||
-			strpos($message, '.am') > -1 || strpos($message, '.cx') > -1 || strpos($message, '.cz') > -1 || strpos($message, '.dz') > -1 || 
-			strpos($message, '.ec') > -1 || strpos($message, '.ee') > -1 || strpos($message, '.eg') > -1 || strpos($message, '.es') > -1 || 
-			strpos($message, '.fo') > -1 || strpos($message, '.ga') > -1 || strpos($message, '.gf') > -1 || strpos($message, '.gl') > -1 || 
+			strpos($message, '.am') > -1 || strpos($message, '.cx') > -1 || strpos($message, '.cz') > -1 || strpos($message, '.dz') > -1 ||
+			strpos($message, '.ec') > -1 || strpos($message, '.ee') > -1 || strpos($message, '.eg') > -1 || strpos($message, '.es') > -1 ||
+			strpos($message, '.fo') > -1 || strpos($message, '.ga') > -1 || strpos($message, '.gf') > -1 || strpos($message, '.gl') > -1 ||
 			strpos($message, '.gr') > -1 || strpos($message, '.gs') > -1 || strpos($message, '.hk') > -1 || strpos($message, '.il') > -1 ||
-			strpos($message, '.in') > -1 || strpos($message, '.io') > -1 || strpos($message, '.is') > -1 || strpos($message, '.li') > -1 || 
-			strpos($message, '.lu') > -1 || strpos($message, '.ly') > -1 || strpos($message, '.kr') > -1 || strpos($message, '.kz') > -1 || 
-			strpos($message, '.mc') > -1 || strpos($message, '.mm') > -1 || strpos($message, '.ms') > -1 || strpos($message, '.mx') > -1 || 
-			strpos($message, '.nl') > -1 || strpos($message, '.no') > -1 || strpos($message, '.nu') > -1 || strpos($message, '.nz') > -1 || 
-			strpos($message, '.pl') > -1 || strpos($message, '.pt') > -1 || strpos($message, '.ro') > -1 || strpos($message, '.se') > -1 || 
-			strpos($message, '.sg') > -1 || strpos($message, '.sh') > -1 || strpos($message, '.sk') > -1 || strpos($message, '.so') > -1 || 
-			strpos($message, '.st') > -1 || strpos($message, '.tc') > -1 || strpos($message, '.tf') > -1 || strpos($message, '.th') > -1 || 
+			strpos($message, '.in') > -1 || strpos($message, '.io') > -1 || strpos($message, '.is') > -1 || strpos($message, '.li') > -1 ||
+			strpos($message, '.lu') > -1 || strpos($message, '.ly') > -1 || strpos($message, '.kr') > -1 || strpos($message, '.kz') > -1 ||
+			strpos($message, '.mc') > -1 || strpos($message, '.mm') > -1 || strpos($message, '.ms') > -1 || strpos($message, '.mx') > -1 ||
+			strpos($message, '.nl') > -1 || strpos($message, '.no') > -1 || strpos($message, '.nu') > -1 || strpos($message, '.nz') > -1 ||
+			strpos($message, '.pl') > -1 || strpos($message, '.pt') > -1 || strpos($message, '.ro') > -1 || strpos($message, '.se') > -1 ||
+			strpos($message, '.sg') > -1 || strpos($message, '.sh') > -1 || strpos($message, '.sk') > -1 || strpos($message, '.so') > -1 ||
+			strpos($message, '.st') > -1 || strpos($message, '.tc') > -1 || strpos($message, '.tf') > -1 || strpos($message, '.th') > -1 ||
 			strpos($message, '.tj') > -1 || strpos($message, '.tm') > -1)
 	    {
 	        return true;

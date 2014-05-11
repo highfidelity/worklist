@@ -27,6 +27,6 @@ class Sanitize {
     function filterRequestInput($fieldName, $option=0, $flags=0) {
         if(isset($_REQUEST["$fieldName"])) {
             $_REQUEST[$fieldName] = filter_var($_REQUEST[$fieldName], $option, $flags);
-        } 
+        }
     }
 }

@@ -1,6 +1,6 @@
-/*  
+/*
     Copyright (c) 2009-2010, LoveMachine Inc.
-    All Rights Reserved. 
+    All Rights Reserved.
     http://www.lovemachineinc.com
 */
 
@@ -43,13 +43,11 @@ td.noroles {
 #projectCodeReviewers .codeReviewerLastActivity {
     width: 50%;
 }
-
-
 #add-reviewer-submit {
-    margin-top: 0px !important;	
+    margin-top: 0px !important;
 }
 #add-runner-submit {
-    margin-top: 0px !important;	
+    margin-top: 0px !important;
 }
 #projectHeader {
     margin: 10px 0 25px 0;
@@ -130,8 +128,6 @@ td.noroles {
     border-top: 2px solid #E1E8EA;
     border-bottom: 2px solid #E1E8EA;
 }
-
-
 #contactInfo {
     display: inline-block;
 }
@@ -158,7 +154,7 @@ td.noroles {
 }
 
 #projectUrlField,
-#projectInternal input, 
+#projectInternal input,
 #projectInternal label,
 #contactInfo,
 #projectRunner {
@@ -232,10 +228,8 @@ textarea#description {
     position: relative;
     right: -2px;
     top: 6px;
-    width: auto !important;    
+    width: auto !important;
 }
-
-
 #projectDescription p {
     font-size: 1.5em;
     padding: 10px 0 5px 0;
@@ -248,13 +242,13 @@ p#projectTotalFees {
     margin-bottom: 5px;
 }
 
-#projectTotalFees, 
+#projectTotalFees,
 #projectFundingSource {
     font-style: italic;
 }
 
 #projectTotalFees strong {
-    color: #333333;    
+    color: #333333;
 }
 
 p#projectFundingSource {
@@ -347,8 +341,6 @@ a#projectRepositoryUrl:hover {
     font-family: proxima-nova, sans-serif;
     font-weight: bold;
 }
-
-
 #projectTotalJobs h3,
 #projectAverageBid h3,
 #projectAverageJobTime h3 {
@@ -416,7 +408,7 @@ li#projectAverageBid {
 #viewHistory {
     margin-top: 5px;
     color: #999999;
-} 
+}
 
 #viewHistory a {
     font-weight: bold;
@@ -435,8 +427,6 @@ li#projectAverageBid {
 #projectActiveJobs h3 {
     border-bottom: none;
 }
-
-
 #projectCodeReviewRights h3 > span {
     color: #999999;
 }

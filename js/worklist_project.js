@@ -29,8 +29,8 @@ var WorklistProject = {
     },
 
     createSandbox: function() {
-        WorklistProject.apiCall('createSandbox', 
-                                'projectname=' + projectName + '&username=' + username + '&nickname=' + nickname + '&unixusername=' + unixname + '&newuser=' + newuser + '&dbuser=' + dbuser, 
+        WorklistProject.apiCall('createSandbox',
+                                'projectname=' + projectName + '&username=' + username + '&nickname=' + nickname + '&unixusername=' + unixname + '&newuser=' + newuser + '&dbuser=' + dbuser,
                                 function(response) {
             if (response && response['success']) {
                 $('#sandbox-status').html("Sandbox created <span class='success'>✔</span>");
@@ -45,15 +45,15 @@ var WorklistProject = {
     },
 
     sendEmails: function() {
-        WorklistProject.apiCall('sendNewProjectEmails', 
-                                'projectname=' + projectName + 
-                                '&username=' + username + 
-                                '&nickname=' + nickname + 
-                                '&unixusername=' + unixname + 
-                                '&template=' + template + 
-                                '&dbuser=' + dbuser + 
+        WorklistProject.apiCall('sendNewProjectEmails',
+                                'projectname=' + projectName +
+                                '&username=' + username +
+                                '&nickname=' + nickname +
+                                '&unixusername=' + unixname +
+                                '&template=' + template +
+                                '&dbuser=' + dbuser +
                                 '&repo_type=' + this.repo_type +
-                                '&github_repo_url=' + github_repo_url, 
+                                '&github_repo_url=' + github_repo_url,
                                 function(response) {
             if (response && response['success']) {
                 $('#emails-status').html("Emails sent <span class='success'>✔</span>");
@@ -63,9 +63,9 @@ var WorklistProject = {
             $('#project-completed').show();
         });
     },
-    
+
     modifyConfigFile: function() {
-        WorklistProject.apiCall('modifyConfigFile', 'projectname=' + projectName + '&username=' + username + '&nickname=' + nickname + '&unixusername=' + unixname + '&template=' + template + '&dbuser=' + dbuser, 
+        WorklistProject.apiCall('modifyConfigFile', 'projectname=' + projectName + '&username=' + username + '&nickname=' + nickname + '&unixusername=' + unixname + '&template=' + template + '&dbuser=' + dbuser,
                                 function(response) {
             if (response && response['success']) {
                 return true;
@@ -74,24 +74,24 @@ var WorklistProject = {
             }
         });
     },
-    
+
     addPostCommitHook: function() {
         WorklistProject.apiCall('addPostCommitHook', 'repo=' + projectName, function(response) {
             if (response && response['success']) {
                 return true;
             } else {
                 return false;
-            }                                  
+            }
         })
     },
-    
+
     deployStagingSite: function() {
         WorklistProject.apiCall('deployStagingSite', 'repo=' + projectName, function(response) {
             if (response && response['success']) {
                 return true;
             } else {
                 return false;
-            }                                  
+            }
         })
     },
 

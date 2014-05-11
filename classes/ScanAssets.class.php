@@ -11,40 +11,40 @@ class ScanAssets {
         }
         mysql_select_db(DB_NAME, $con);
 
-        $scan_files = array(); 
+        $scan_files = array();
         $sql_get_files = 'SELECT `id`, `userid`,(SELECT `username` FROM `' . USERS . '` where `id`=files.userid)
-        AS `useremail`, files.workitem AS `worklist_id`, `url`, `title`, `description`  
+        AS `useremail`, files.workitem AS `worklist_id`, `url`, `title`, `description`
         FROM `' . FILES . '` WHERE `is_scanned` = 0 LIMIT 10';
         $result = mysql_query($sql_get_files);
-        // Read the file names of all the files available. 
+        // Read the file names of all the files available.
         while ($row = mysql_fetch_assoc($result)) {
-    
-            $file_name  = pathinfo(parse_url($row['url'],PHP_URL_PATH),PATHINFO_BASENAME);  
+
+            $file_name  = pathinfo(parse_url($row['url'],PHP_URL_PATH),PATHINFO_BASENAME);
             $scan_files[] = $file_name;
-    
-            // Get the full path and prepare it for the command line. 
-            $real_path = realpath (dirname(__FILE__) .'/uploads/' . $file_name); 
-            $safe_path = escapeshellarg($real_path); 
-            // Reset the values. 
-            $return = -1; 
+
+            // Get the full path and prepare it for the command line.
+            $real_path = realpath (dirname(__FILE__) .'/uploads/' . $file_name);
+            $safe_path = escapeshellarg($real_path);
+            // Reset the values.
+            $return = -1;
             $out = '';
             $cmd = VIRUS_SCAN_CMD . ' ' . $safe_path;
-            $workitem = null; 
+            $workitem = null;
             if (!empty($safe_path) && file_exists($real_path) && filesize($real_path) > 0 ) {
-                // Execute the command.  
+                // Execute the command.
                 exec ($cmd, $out, $return);
-                
-                if ($return == 0) { //if clean update db 
+
+                if ($return == 0) { //if clean update db
                     $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 0 WHERE `id` = ' . $row['id'];
                     $notify = '';
                 } else {
                     $workitem = new WorkItem();
                     $workitem->loadById($row['worklist_id']);
-                    
+
                     if ($return == 1) { // If the file contains a virus send email to the user and update db.
                         $notify = 'virus-found';
                         $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 1 WHERE `id` = ' . $row['id'];
-                    } else { 
+                    } else {
                         // unknown error
                         $notify = 'virus-error';
                         $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 2 WHERE `id` = ' . $row['id'];
@@ -56,9 +56,9 @@ class ScanAssets {
                 $sql = 'UPDATE `' . FILES . '` SET is_scanned = 4, scan_result = 0 WHERE `id` = ' . $row['id'];
                 $out = '<p>File->' . $safe_path .' not found.</p>';
             }
-    
+
             mysql_query($sql) or die(mysql_error() .':' . $sql);
-            
+
             //send mail if there's a problem
             if (! empty($notify)) {
                 Notification::workitemNotify(array(
@@ -69,26 +69,26 @@ class ScanAssets {
                     'file_title' => $row['title']
                 ));
             }
-            print('<br>' . $row['title'] . ' <p>Upload Report:' . 
+            print('<br>' . $row['title'] . ' <p>Upload Report:' .
                 (empty($notify) ? 'Ok' : ($notify == 'virus-found') ? 'Infected' : 'Error').'</p>');
             print_r($out);
         }
     } //End of method
-    
+
     //This method gets passed a filename directly
     public function _scanFile($file_name) {
         set_time_limit(15*60);
-        
-        // Get the full path and prepare it for the command line. 
-        $safe_path = escapeshellarg($file_name); 
-        // Reset the values. 
-        $return = -1; 
+
+        // Get the full path and prepare it for the command line.
+        $safe_path = escapeshellarg($file_name);
+        // Reset the values.
+        $return = -1;
         $out = '';
-        $cmd = VIRUS_SCAN_CMD . ' ' . $safe_path; 
+        $cmd = VIRUS_SCAN_CMD . ' ' . $safe_path;
         $fct_return = false;
-            
+
         if (!empty($safe_path) && file_exists($file_name) && filesize($file_name) > 0 ) {
-            // Execute the command.  
+            // Execute the command.
             //error_log("scanning with $cmd");
             exec ($cmd, $out, $return);
         }
@@ -99,7 +99,7 @@ class ScanAssets {
     //This method finds the filename by id in the database
     public function scanFile($id) {
         set_time_limit(15*60);
-        
+
         $con = mysql_connect(DB_SERVER,DB_USER,DB_PASSWORD);
         if (!$con) {
             error_log('Could not connect: ' . mysql_error());
@@ -107,47 +107,47 @@ class ScanAssets {
         }
         mysql_select_db(DB_NAME, $con);
 
-        //scan_files = array(); 
+        //scan_files = array();
         $sql_get_files = 'SELECT `id`, `userid`,(SELECT `username` FROM `' . USERS . '` where `id`=files.userid)
-        AS `useremail`, files.workitem AS `worklist_id`, `url`, `title`, `description`  
+        AS `useremail`, files.workitem AS `worklist_id`, `url`, `title`, `description`
         FROM `' . FILES . '` WHERE id=' . $id;
         $result = mysql_query($sql_get_files);
         $row = mysql_fetch_assoc($result);
-        
-        // Get the file name. 
+
+        // Get the file name.
         $file_name  = pathinfo(parse_url($row['url'],PHP_URL_PATH),PATHINFO_BASENAME);
-    
-        // Get the full path and prepare it for the command line. 
-        $real_path = UPLOAD_PATH . '/' . $file_name; 
-        $safe_path = escapeshellarg($real_path); 
-        // Reset the values. 
-        $return = -1; 
+
+        // Get the full path and prepare it for the command line.
+        $real_path = UPLOAD_PATH . '/' . $file_name;
+        $safe_path = escapeshellarg($real_path);
+        // Reset the values.
+        $return = -1;
         $out = '';
-        $cmd = VIRUS_SCAN_CMD . ' ' . $safe_path; 
+        $cmd = VIRUS_SCAN_CMD . ' ' . $safe_path;
         $fct_return = false;
-            
+
         if (!empty($safe_path) && file_exists($real_path) && filesize($real_path) > 0 ) {
-            // Execute the command.  
+            // Execute the command.
             exec ($cmd, $out, $return);
-            
-            if ($return == 0) { //if clean update db 
+
+            if ($return == 0) { //if clean update db
                 $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 0 WHERE `id` = ' . $id;
                 $notify = '';
                 $fct_return = true;
             } else {
                 $workitem = new WorkItem();
                 $workitem->loadById($row['worklist_id']);
-                
+
                 if ($return == 1) { // If the file contains a virus send email to the user and update db.
-                    $notify = 'virus-found'; 
+                    $notify = 'virus-found';
                     $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 1 WHERE `id` = ' . $id;
-                } else { 
+                } else {
                     // <unknown error
-                    $notify = 'virus-error'; 
+                    $notify = 'virus-error';
                     $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 2 WHERE `id` = ' . $id;
                 }
             }
-            
+
             if (mysql_query($sql)) {
                 // send mail if there's a problem
                 if (! empty($notify)) {
@@ -167,7 +167,7 @@ class ScanAssets {
                 error_log('error SQL');
             }
         }
-        
+
         return $fct_return;
     } //End of method
 } //End of Class

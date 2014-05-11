@@ -1,14 +1,12 @@
 <?php
 
 class Ajax {
-    
+
     public $user_id;
-    
+
     public function __construct() {
         $this->user_id = getSessionUserId();
     }
-
-    
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.

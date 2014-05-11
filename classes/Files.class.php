@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
 * All File table related operations are handled by this class

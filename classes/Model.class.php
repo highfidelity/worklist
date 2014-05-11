@@ -4,7 +4,7 @@ class Model extends AppObject {
     protected $column = array();
     protected $table = '';
 
-    public function __construct($values = array()) 
+    public function __construct($values = array())
     {
         //parent::__construct();
 
@@ -18,7 +18,7 @@ class Model extends AppObject {
         $this->setValues($values, false);
     }
 
-    public function __get($name) 
+    public function __get($name)
     {
         if (array_key_exists($name, $this->column)) {
             return $this->column[$name]->value;
@@ -62,7 +62,7 @@ class Model extends AppObject {
     {
         foreach($this->column as $name => $column) {
             if (isset($values[$name])) {
-                $col =& $this->column[$name]; 
+                $col =& $this->column[$name];
                 $col->value = $values[$name];
                 if (!$markAsTouched) {
                     $col->touched = false;
@@ -103,13 +103,13 @@ class Model extends AppObject {
         return $ret;
 
     }
-    
+
     public function findById($id)
     {
         $where = sprintf('`id` = %d', (int)$id);
         return $this->loadUnique($where);
     }
-    
+
     protected function getColumns()
     {
         $columns = array();
@@ -132,10 +132,10 @@ class Model extends AppObject {
             $this->column[$name] = new ModelColumn($name, $type);
         }
     }
-    
+
     private function prepareData()
     {
-        $columns = array(); 
+        $columns = array();
         $values = array();
         foreach ($this->column as $name => $column) {
             if (!$column->touched) {
@@ -178,7 +178,7 @@ class Model extends AppObject {
         return false;
     }
 
-    public function save() 
+    public function save()
     {
         $sql = "UPDATE `" . $this->table . "` SET ";
         $data = $this->prepareData();

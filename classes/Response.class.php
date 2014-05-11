@@ -6,11 +6,11 @@ class Response {
      */
     protected $body;
     protected $error;
-    
+
     public function __construct(){
         $this->setError(new Error());
     }
-    
+
     public function setError($error){
         $this->error = $error;
         return $this;

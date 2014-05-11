@@ -29,7 +29,7 @@ function ToolTip() {
 }
 
 function validateCodeReviews(control) {
-    if (!$('#cr_anyone_field').is(':checked') && !$('#cr_3_favorites_field').is(':checked') && 
+    if (!$('#cr_anyone_field').is(':checked') && !$('#cr_3_favorites_field').is(':checked') &&
         !$('#cr_project_admin_field').is(':checked') && !$('#cr_job_runner_field').is(':checked') &&
         !$('#cr_users_specified_field').is(':checked')) {
         $('#cr_anyone_field').prop('checked', true);
@@ -38,7 +38,7 @@ function validateCodeReviews(control) {
     if($(control).attr('id') == "cr_users_specified_field") {
         if($('#cr_users_specified_field').is(':checked')) {
             $('.code_review_chks').prop('checked', false);
-        } 
+        }
     } else if ($(control).is(':checked')) {
         $('#cr_users_specified_field').prop('checked', false);
     }
@@ -125,7 +125,7 @@ $(document).ready(function() {
         });
     }
     getProjectRunners();
-    
+
     $("#addrunner-textbox").autocomplete({source: autocompleteUserSource});
     $('#addRunner-form').submit(function(event) {
         openNotifyOverlay('<span>Adding designer to your project...</span>', false);
@@ -151,7 +151,7 @@ $(document).ready(function() {
                 closeNotifyOverlay();
             }
         });
-        
+
         return false;
     });
 
@@ -159,7 +159,7 @@ $(document).ready(function() {
         Utils.infoDialog('Removing Designer','Removing selected user(s) as Designer(s) for this project. ' +
             'If this user has active jobs for which they are the Designer, you will need to ' +
             'change the Designer status to an eligible Designer.' );
-        
+
         var runners = '';
         $('#projectRunners input[name^=runner]:checked').each(function() {
             var runner = parseInt($(this).attr('name').substring(6));
@@ -245,10 +245,10 @@ $(document).ready(function() {
                 closeNotifyOverlay();
             }
         });
-        
+
         return false;
     });
-    
+
     $('#removecodereviewer').click(function(event) {
         openNotifyOverlay(
             '<span>Removing selected user(s) as code reviewer(s) for this project. ', true);
@@ -276,13 +276,13 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $("#testFlightButton").click(function() {
         showTestFlightForm(projectid);
     });
 
     makeWorkitemTooltip(".payment-joblink, .joblink");
-    
+
     if ($("#projectLogoEdit").length > 0) {
         new AjaxUpload('projectLogoEdit', {
             action: 'jsonserver.php',
@@ -305,7 +305,7 @@ $(document).ready(function() {
             }
         });
     }
-    
+
     //derived from bids to show edit dialog when project owner clicks on a role <mikewasmike 16-jun-2011>
     $('tr.role').click(function() {
         $.metadata.setType("elem", "script");
@@ -342,15 +342,15 @@ $(document).ready(function() {
         hide: 'fade',
         width: 480,
     });
-    
+
     $('#addrunner').click(function() {
         $('#add-runner').dialog('open');
     });
-    
+
     $('#addcodereviewer').click(function() {
         $('#add-codereviewer').dialog('open');
     });
-    
+
     //popup for removing Project Runner
     $('#remove-runner').dialog({
         autoOpen: false,
@@ -361,38 +361,38 @@ $(document).ready(function() {
         width: 350,
         height: 450,
     });
-    
+
     // new dialog for adding and editing roles <mikewasmike 16-jun-2011>
-    $('#popup-addrole').dialog({ 
-        autoOpen: false, 
-        modal: true, 
-        maxWidth: 600, 
-        width: 300, 
-        show: 'fade', 
+    $('#popup-addrole').dialog({
+        autoOpen: false,
+        modal: true,
+        maxWidth: 600,
+        width: 300,
+        show: 'fade',
         hide: 'fade'
     });
-    $('#popup-role-info').dialog({ 
-        autoOpen: false, 
-        modal: true, 
-        maxWidth: 600, 
-        width: 350, 
-        show: 'fade', 
+    $('#popup-role-info').dialog({
+        autoOpen: false,
+        modal: true,
+        maxWidth: 600,
+        width: 350,
+        show: 'fade',
         hide: 'fade'
     });
-    $('#popup-edit-role').dialog({ 
-        autoOpen: false, 
-        dialogClass: 'white-theme', 
-        modal: true, 
-        maxWidth: 600, 
-        width: 250, 
-        show: 'fade', 
-        hide: 'fade' 
+    $('#popup-edit-role').dialog({
+        autoOpen: false,
+        dialogClass: 'white-theme',
+        modal: true,
+        maxWidth: 600,
+        width: 250,
+        show: 'fade',
+        hide: 'fade'
     });
-    $('#popup-testflight').dialog({ 
-        autoOpen: false, 
-        maxWidth: 600, 
-        width: 410, 
-        show: 'fade', 
+    $('#popup-testflight').dialog({
+        autoOpen: false,
+        maxWidth: 600,
+        width: 410,
+        show: 'fade',
         hide: 'fade'
     });
 

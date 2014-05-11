@@ -1,6 +1,6 @@
-<?php 
+<?php
 //  Copyright (c) 2010, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 
 //  This class handles a Comment if you need more functionality don't hesitate to add it.
@@ -14,53 +14,53 @@ class Comment
 	 * @var integer
 	 */
 	protected $id;
-	
+
 	/**
-	 * Parents identication 
+	 * Parents identication
 	 * @var integer
 	 */
 	protected $comment_id;
-	
+
 	/**
 	 * Workitem identication
 	 * @var integer
 	 */
 	protected $worklist_id;
-	
+
 	/**
 	 * The User
 	 * @var integer
 	 */
 	protected $user_id;
-	
+
 	/**
 	 * The User Object
 	 * @var User
 	 */
 	protected $user;
-	
+
 	/**
 	 * Date of the comment
 	 * @var integer
 	 */
 	protected $date;
-	
+
 	/**
 	 * Comment
 	 * @var string
 	 */
 	protected $comment;
-	
+
 	/**
 	 * Avatar
 	 * @var string
 	 */
 	protected $avatar;
-	
+
 	/**
 	 * @return the $id
 	 */
-	public function getId() 
+	public function getId()
 	{
 		return $this->id;
 	}
@@ -68,7 +68,7 @@ class Comment
 	/**
 	 * @param $id the $id to set
 	 */
-	public function setId($id) 
+	public function setId($id)
 	{
 		$this->id = $id;
 		return $this;
@@ -77,7 +77,7 @@ class Comment
 	/**
 	 * @return the $pid
 	 */
-	public function getComment_id() 
+	public function getComment_id()
 	{
 		return $this->comment_id;
 	}
@@ -85,7 +85,7 @@ class Comment
 	/**
 	 * @param $pid the $pid to set
 	 */
-	public function setComment_id($comment_id) 
+	public function setComment_id($comment_id)
 	{
 		$this->comment_id = $comment_id;
 		return $this;
@@ -94,7 +94,7 @@ class Comment
 	/**
 	 * @return the $wid
 	 */
-	public function getWorklist_id() 
+	public function getWorklist_id()
 	{
 		return $this->worklist_id;
 	}
@@ -102,7 +102,7 @@ class Comment
 	/**
 	 * @param $wid the $wid to set
 	 */
-	public function setWorklist_id($worklist_id) 
+	public function setWorklist_id($worklist_id)
 	{
 		$this->worklist_id = $worklist_id;
 		return $this;
@@ -111,7 +111,7 @@ class Comment
 	/**
 	 * @return the $uid
 	 */
-	public function getUser_id() 
+	public function getUser_id()
 	{
 		return $this->user_id;
 	}
@@ -119,7 +119,7 @@ class Comment
 	/**
 	 * @param $uid the $uid to set
 	 */
-	public function setUser_id($user_id) 
+	public function setUser_id($user_id)
 	{
 		$this->user_id = $user_id;
 		return $this;
@@ -128,7 +128,7 @@ class Comment
 	/**
 	 * @return the $user
 	 */
-	public function getUser() 
+	public function getUser()
 	{
 		if (null === $this->user) {
 			$this->setUser();
@@ -139,7 +139,7 @@ class Comment
 	/**
 	 * @param $uid the $user to set
 	 */
-	public function setUser() 
+	public function setUser()
 	{
 		$user = new User();
 		$user->findUserById($this->getUser_id());
@@ -150,7 +150,7 @@ class Comment
 	/**
 	 * @return the $date
 	 */
-	public function getDate() 
+	public function getDate()
 	{
 		return $this->date;
 	}
@@ -162,7 +162,7 @@ class Comment
 	/**
 	 * @param $date the $date to set
 	 */
-	public function setDate($date) 
+	public function setDate($date)
 	{
 		$this->date = $date;
 		return $this;
@@ -171,7 +171,7 @@ class Comment
 	/**
 	 * @return the $comment
 	 */
-	public function getComment() 
+	public function getComment()
 	{
 		return $this->comment;
 	}
@@ -183,12 +183,12 @@ class Comment
 	/**
 	 * @param $comment the $comment to set
 	 */
-	public function setComment($comment) 
+	public function setComment($comment)
 	{
 		$this->comment = trim($comment);
 		return $this;
 	}
-	
+
 	/**
 	 * @return the $avatar
 	 */
@@ -199,14 +199,14 @@ class Comment
 		}
 		return $this->avatar;
 	}
-	
+
 	/**
 	 * Retrieves the url to the avatar
 	 */
 	public function setAvatar()
 	{
 		defineSendloveAPI();
-		
+
 		$params = array(
 			'action' => 'getProfilePicture',
             'api_key' => SENDLOVE_API_KEY,
@@ -214,15 +214,15 @@ class Comment
 			'width' => 50,
 			'height' => 50
 		);
-		
+
 		$referer = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
     	$retval = json_decode(postRequest(SENDLOVE_API_URL, $params, array(CURLOPT_REFERER => $referer)), true);
-    	
+
     	$this->avatar = false;
     	if ($retval['success'] == true) {
     		$this->avatar = $retval['picture'];
     	}
-    	
+
     	return $this;
 	}
 
@@ -238,10 +238,10 @@ class Comment
             $this->setOptions($options);
         }
     }
-    
+
 	/**
 	 * Use this method to update or insert a comment.
-	 * 
+	 *
 	 * @return (boolean)
 	 */
 	public function save()
@@ -260,10 +260,10 @@ class Comment
 			return $this->update();
 		}
 	}
-    
+
     /**
      * This method finds a file by its id
-     * 
+     *
      * @param int $id
      * @return File $this
      */
@@ -275,7 +275,7 @@ class Comment
     	$where = sprintf('`id` = %d', (int)$id);
 		return $this->loadComment($where);
     }
-    
+
     public static function findCommentsForWorkitem($id = null)
     {
     	if (null === $id) {
@@ -290,7 +290,7 @@ class Comment
     	$comments = self::getCommentsRecursive($list, 0);
     	return $comments;
     }
-    
+
     public static function getCommentsRecursive($list, $depth)
     {
     	$_list = array();
@@ -309,7 +309,7 @@ class Comment
     	}
     	return $_list;
     }
-    
+
     public static function getChildCommentsById($id)
     {
     	$sql = 'SELECT `id` FROM `' . COMMENTS . '` WHERE `comment_id` = ' . (int)$id . ' ORDER BY `date` ASC';
@@ -320,7 +320,7 @@ class Comment
     	}
     	return $comments;
     }
-    
+
     /**
      * Checks if the setter for the property exists and calls it
      *
@@ -354,7 +354,7 @@ class Comment
         }
         $this->$method();
     }
-	
+
     /**
      * Automatically sets the options array
      * Array: Name => Value
@@ -373,7 +373,7 @@ class Comment
         }
         return $this;
 	}
-	
+
 	/**
 	 * Function to load a comment from the database.
 	 */
@@ -383,7 +383,7 @@ class Comment
 		$sql = 'SELECT * FROM `' . COMMENTS . '` WHERE ' . $where . ' LIMIT 1;';
 		// and get the result
 		$result = mysql_query($sql);
-		
+
 		if ($result && (mysql_num_rows($result) == 1)) {
 			$options = mysql_fetch_assoc($result);
 			$this->setOptions($options);
@@ -391,7 +391,7 @@ class Comment
 		}
 		return false;
 	}
-	
+
 	private function getCommentColumns()
 	{
 		$columns = array();
@@ -404,7 +404,7 @@ class Comment
 		}
 		return false;
 	}
-	
+
 	private function prepareData()
 	{
 		$columns = $this->getCommentColumns();
@@ -436,7 +436,7 @@ class Comment
 		}
 		return false;
 	}
-	
+
 	private function validate()
 	{
 		$valid = false;
@@ -445,7 +445,7 @@ class Comment
 		}
 		return $valid;
 	}
-	
+
 	private function update()
 	{
 		$flag = false;
@@ -461,14 +461,14 @@ class Comment
 			$sql .= '`' . $column . '` = "' . $data['values'][$index] . '"';
 			$flag = true;
 		}
-		$sql .= ' WHERE `id` = ' . (int)$this->getId() . ';'; 
+		$sql .= ' WHERE `id` = ' . (int)$this->getId() . ';';
 		$result = mysql_query($sql);
 		if ($result) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * inserts What on position of where
 	 * notice that Position is the index of the array, so it starts with 0!
@@ -509,5 +509,5 @@ class Comment
 			return array_merge($whereFirst, array_slice($Where, $Position));
 		}
 	}
-	
+
 }

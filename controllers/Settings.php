@@ -21,8 +21,6 @@ class SettingsController extends Controller {
         $settings_link = SECURE_SERVER_URL . "settings";
         $worklist_link = SECURE_SERVER_URL . "jobs";
         $returned_json = array();
-
-
         // process updates to user's settings
         if (isset($_POST['save']) && $_POST['save']) {
 
@@ -70,8 +68,6 @@ class SettingsController extends Controller {
                         'message' => "Update failed, nickname already exists!"
                     )));
                 }
-
-
                 $sql = "
                     UPDATE " . USERS . "
                     SET nickname = '" . mysql_real_escape_string($nickname) . "' WHERE id ='" . $_SESSION['userid'] . "'";
@@ -124,8 +120,6 @@ class SettingsController extends Controller {
                 $body .= '<p><a href=' . $link . '>Click here to confirm your email address</a></p>';
                 $body .= '<p><br/>You can view your settings <a href=' . $settings_link . '>here</a></p>';
                 $body .= '<p><a href=' . $worklist_link . '>www.worklist.net</a></p>';
-
-
                 $plain  = 'Dear ' . $user->getNickname() . ',' . "\n\n";
                 $plain .= 'Please confirm your new email address in the Worklist.' . "\n\n";
                 $plain .= $link . "\n\n";
@@ -184,7 +178,7 @@ class SettingsController extends Controller {
 
             if ($paypal_email != $user->getPaypal_email()) {
                 $saveArgs = array_merge($saveArgs, array('paypal' => 0, 'paypal_email' => 0, 'payway' => 1));
-                $messages[] = "Your payment information has been updated.";                
+                $messages[] = "Your payment information has been updated.";
             }
 
             if (!$user->getW9_accepted() && $user->getCountry() == 'US') {
@@ -263,13 +257,13 @@ class SettingsController extends Controller {
                 if (!empty($messages)) {
                     $to = $_SESSION['username'];
                     $subject = "Settings";
-                    $body  = 
+                    $body  =
                         '<p>Congratulations!</p>' .
                         '<p>You have successfully updated your settings with Worklist: <ul>';
                     foreach ($messages as $msg) {
                         $body .= '<li>'. $msg . '</li>';
                     }
-                    $body .= 
+                    $body .=
                         '</ul>' .
                         '<p><br/>You can view your settings <a href=' . $settings_link . '>here</a></p>' .
                         '<p><a href=' . $worklist_link . '>www.worklist.net</a></p>';
@@ -278,8 +272,6 @@ class SettingsController extends Controller {
 
                     $msg="Account updated successfully!";
                 }
-
-
                 if (isset($_POST['timezone'])) {
                   $_SESSION['timezone'] = trim($_POST['timezone']);
                 }

@@ -7,7 +7,7 @@ class ProjectsView extends View {
     public $stylesheets = array(
         'css/projects.css'
     );
-    
+
     public $scripts = array(
         'js/jquery/jquery.timeago.js',
         'js/jquery/jquery.metadata.js',

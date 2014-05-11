@@ -133,7 +133,7 @@ w9-approved
     'subject' => 'Worklist: your W-9 has been approved',
     'body' => '<p>Hello,</p>
                <p>Your W-9 form has been approved.</p>
-            <p>       
+            <p>
         Cheers,<br/>
         Worklist / High Fidelity</p>'
 ),
@@ -159,7 +159,7 @@ replacement data:
 /*
  * project-created
  *     send project creator the details associated to the newly created project
- * 
+ *
  * replacement data:
  *     nickname: User's nickname
  *     project_name: Name of the project
@@ -183,7 +183,7 @@ replacement data:
                <p>7. Your project is set to allow anybody to code review by default, you can change this setting by <a href="' . WORKLIST_URL . '{project_name}?action=edit">editing your project</a>.</p>
                <p><a href="'.SERVER_URL.'>www.worklist.net</a></p>'
 ),
-    
+
 'project-created-existingsb' => array(
     'subject' => 'New project {project_name} added to Worklist!',
     'body' => '<p>Hi {nickname}!</p>
@@ -225,7 +225,7 @@ replacement data:
                </p>
                <p>You can view the details <a href="' . WORKLIST_URL . '{project_name}">here</a>.'
 ),
-    
+
 'forked-repo' => array(
     'subject' => 'New fork {project_name} created on your GitHub account',
     'body' => '<p>Hi {nickname}!</p>
@@ -238,7 +238,7 @@ replacement data:
                <p>If you have any questions, look for assistance in our Chat.</p>
                <p>The Worklist</p>'
 ),
-    
+
 'branch-created' => array(
     'subject' => 'New branch {branch_name} created for repo {users_fork} on your GitHub account',
     'body' => '<p>Hi {nickname}!</p>
@@ -284,9 +284,9 @@ replacement data:
                Cheers,<br/>
                Worklist / High Fidelity</p>'
 ),
-    
+
 'commit-howto' => array(
-    
+
 ),
 'project-codereviewer-added' => array(
    'subject' => 'Worklist: Added as a Code Reviewer to Project',
@@ -314,7 +314,7 @@ replacement data:
 
 'project-runner-removed' => array(
     'subject' => 'Worklist: Designer rights removed for the {projectName} project',
-    'body' => 
+    'body' =>
         '<p>Hi {nickname}</p>
         <p>Your Designer rights have been removed for the following project:<br />
         <a href="{projectUrl}">{projectName}</a><br />
@@ -334,10 +334,10 @@ replacement data:
 ),
 'project-inactive' => array(
     'subject' => 'Worklist: Project set as inactive',
-    'body' => 
+    'body' =>
         '<p>Hi {owner}!</p>
         <p>Your project, <a href="{projectUrl}">{projectName}</a> has not shown any activity in 90+ days.</p>
-        <p>We will be setting your project as inactive, but will retain all data including repository, database and sandboxes.</p> 
+        <p>We will be setting your project as inactive, but will retain all data including repository, database and sandboxes.</p>
         <p>Should you elect to add any new jobs for <a href="{projectUrl}">{projectName}</a> in the future, you can still do so – just make sure the Project Select active only checkbox is deselected when adding your job.</p>
         <p>Once a job reaches working status, your project will automatically be reactivated again!</p>
         <p></p>
@@ -347,10 +347,10 @@ replacement data:
 ),
 'project-removed' => array(
     'subject' => 'The {projectName} project was removed',
-    'body' => 
+    'body' =>
         '<p>Hi {owner}!</p>
-        <p>Your project, <a href="{projectUrl}">{projectName}</a> was added on {creation_date}. Since that time, no jobs have been added.</p> 
-        <p>We are removing this project from the Worklist. Should you wish to pursue this in the future please 
+        <p>Your project, <a href="{projectUrl}">{projectName}</a> was added on {creation_date}. Since that time, no jobs have been added.</p>
+        <p>We are removing this project from the Worklist. Should you wish to pursue this in the future please
            feel free to re-add the project and we will be more than happy to work with you!</p>
         <p></p>
         <p>Pease email <a href="mailto:' . SUPPORT_EMAIL . '">' . SUPPORT_EMAIL . '</a> with any issues or concerns.</p>

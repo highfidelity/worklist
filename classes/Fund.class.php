@@ -44,7 +44,7 @@ class Fund{
     }
 
     protected function load($fund_id = null) {
-    
+
         if ($fund_id === null && ! $this->fund_id) {
             throw new Fund_Exception('Missing fund id.');
         } elseif ($fund_id === null) {
@@ -142,11 +142,11 @@ class Fund{
     public function getPPAPIKey() {
         return $this->pp_API_key;
     }
-    
+
     public function getFunds() {
         $query = "
             SELECT *
-            FROM `" . FUNDS . "` 
+            FROM `" . FUNDS . "`
             ORDER BY `name`";
 
         $result = mysql_query($query);

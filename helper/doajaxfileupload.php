@@ -63,7 +63,7 @@ if(!empty($_SESSION['username']) && empty($_SESSION['nickname']))
 	}elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none')
 	{
 		$error = 'No file was uploaded..';
-	}else 
+	}else
 	{
 			//$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
 			//$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
@@ -94,11 +94,9 @@ if(!empty($_SESSION['username']) && empty($_SESSION['nickname']))
 				    }
 */
 				    $data = file_get_contents($_FILES[$fileElementName]['tmp_name']);
-				    $data = mysql_real_escape_string($data); 
+				    $data = mysql_real_escape_string($data);
 				    $files = new Files();
 				    $result = $files->add($ext,$data);
-				    
-
 
 				    if($result) {
 				      $image_id = $result;
@@ -114,12 +112,12 @@ if(!empty($_SESSION['username']) && empty($_SESSION['nickname']))
 					  }
 				      }
 				    }
-				  
+
 			}
-			
+
 			//for security reasons, remove all uploaded files
  			@unlink($_FILES[$fileElementName]);
-	}		
+	}
 	echo "{";
 	echo				"error: '" . $error . "',\n";
 	echo				"msg: '" . $msg . "'\n";

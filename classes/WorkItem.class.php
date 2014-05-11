@@ -150,7 +150,7 @@ class WorkItem {
     {
         return $this->summary;
     }
-    
+
     public function setBugJobId($id) {
         $this->bugJobId = intval($id);
         return $this;
@@ -158,8 +158,6 @@ class WorkItem {
     public function getBugJobId() {
         return $this->bugJobId;
     }
-    
-
     public function setCreatorId($creatorId)
     {
         $this->creatorId = (int)$creatorId;
@@ -187,15 +185,15 @@ class WorkItem {
      * @return ARRAY list of users id
      */
     public function getUsersWithFeesBugId() {
-    
+
         //Read Bug Job workitem
         $bugItem = new WorkItem();
         $bugItem->loadById($this->getBugJobId());
-        
+
         //return users with fees in original job
         return ($bugItem->getUsersWithFeesId());
     }
-    
+
     /**
      *
      * Get users with fees in work item
@@ -203,9 +201,9 @@ class WorkItem {
      * @return ARRAY list of users id
      */
     public function getUsersWithFeesId() {
-    
+
         $query = " SELECT f.`user_id`
-            FROM `" . FEES . "` f INNER JOIN `" . USERS . "` u ON u.`id` = f.`user_id`  
+            FROM `" . FEES . "` f INNER JOIN `" . USERS . "` u ON u.`id` = f.`user_id`
             WHERE f.`worklist_id` = " . $this->id . " AND u.`is_active` = 1";
         $result_query = mysql_query($query);
         if($result_query) {
@@ -218,7 +216,7 @@ class WorkItem {
         	return null;
         }
     }
-    
+
     /**
      *
      * Get users with bids in work item
@@ -226,9 +224,9 @@ class WorkItem {
      * @return ARRAY list of users id
      */
     public function getUsersWithBidsId() {
-    
+
         $query = "SELECT b.`bidder_id`
-            FROM `" . BIDS . "` f INNER JOIN `" . USERS . "` u ON u.`id` = b.`bidder_id`  
+            FROM `" . BIDS . "` f INNER JOIN `" . USERS . "` u ON u.`id` = b.`bidder_id`
             WHERE b.`worklist_id` = " . $this->id . " AND u.`is_active` = 1";
         $result_query = mysql_query($query);
         if($result_query) {
@@ -241,7 +239,7 @@ class WorkItem {
             return null;
         }
     }
-    
+
     public function getRunnerId()
     {
         return $this->runnerId;
@@ -258,38 +256,38 @@ class WorkItem {
     {
         return $this->mechanicId;
     }
-    
+
     protected function setCreator()
     {
         $user = new User();
         $this->creator = $user->findUserById($this->getCreatorId());
         return $this;
     }
-    
+
     protected function setRunner()
     {
         $user = new User();
         $this->runner = $user->findUserById($this->getRunnerId());
         return $this;
     }
-    
+
     protected function setMechanic()
     {
         $user = new User();
         $this->mechanic = $user->findUserById($this->getMechanicId());
         return $this;
     }
-    
+
     public function getCreator()
     {
         return $this->creator;
     }
-    
+
     public function getRunner()
     {
         return $this->runner;
     }
-    
+
     public function getMechanic()
     {
         return $this->mechanic;
@@ -300,7 +298,7 @@ class WorkItem {
         $this->status = $status;
         return $this;
     }
-    
+
     public function resetCRFlags() {
         $this->code_reviewer_id = 0;
         $this->code_review_started = 0;
@@ -334,7 +332,7 @@ class WorkItem {
     {
         return $this->notes;
     }
-	
+
     public function setIs_bug($is_bug)
     {
         $this->is_bug = $is_bug;
@@ -345,7 +343,7 @@ class WorkItem {
     {
         return $this->is_bug;
     }
-	
+
     public function setBudget_id($budget_id)
     {
         $this->budget_id = $budget_id;
@@ -359,8 +357,6 @@ class WorkItem {
         }
         return $this->budget_id;
     }
-
-	
     public function setSandbox($sandbox)
     {
         $this->sandbox = $sandbox;
@@ -371,16 +367,16 @@ class WorkItem {
     {
         return $this->sandbox;
     }
-    
+
     public function setCReviewerId($code_reviewer_id) {
         $this->code_reviewer_id = $code_reviewer_id;
         return $this;
     }
-    
+
     public function getCReviewerId() {
         return $this->code_reviewer_id;
     }
-    
+
     public function setCRStarted($cr_status) {
         $this->code_review_started = $cr_status;
         return $this;
@@ -398,7 +394,7 @@ class WorkItem {
     public function getCRcompleted() {
         return $this->code_review_completed;
     }
-    
+
     /**
      *
      * Lookup original item summary for bug job
@@ -407,15 +403,15 @@ class WorkItem {
      * @return STRING	original job summary
      */
     public function getBugJobSummary() {
-    
+
         $query=sprintf("SELECT w.summary FROM ". WORKLIST .
                         " w WHERE w.id =%d",$this->getBugJobId());
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
-        
+
         return $row['summary'];
     }
-    
+
     public function setWorkitemSkills($skills = false) {
         // if no array provided, get skill from db
         if (! $skills) {
@@ -429,12 +425,12 @@ class WorkItem {
                     $this->skills[] = $row['skill'];
                 }
             }
-            
+
         } else {
             $this->skills = $skills;
         }
     }
-    
+
     public function saveSkills() {
         // clear current skills
         if ($this->getId()) {
@@ -445,12 +441,12 @@ class WorkItem {
                           SELECT ".$this->getId().", id FROM ".SKILLS." WHERE skill='".$skill."'";
                 mysql_query($query) || die('There was an error ' . mysql_error() . ' QUERY: ' . $query);
             }
-            
+
             return true;
         } else {
             return false;
         }
-    
+
     }
 
     public function getSkills() {
@@ -481,7 +477,7 @@ class WorkItem {
             return false;
         }
     }
-    
+
     protected function insert()
     {
         $query = "INSERT INTO ".WORKLIST." (summary, creator_id, runner_id, status,".
@@ -530,7 +526,7 @@ class WorkItem {
             } else {
                 $user_id = 0 ; // this means auto pass script has changed the status to PASS
             }
-            
+
             $query = "INSERT INTO ".STATUS_LOG." (worklist_id, status, user_id, change_date) VALUES (".$this->getId().", '$status', ".$user_id.", NOW())";
             mysql_unbuffered_query($query);
         }
@@ -564,7 +560,7 @@ class WorkItem {
         if (!defined('TWITTER_OAUTH_SECRET') || TWITTER_OAUTH_SECRET=='' ) {
             return false;
         }
-         
+
         if (empty($_SERVER['HTTPS']))
         {
             $prefix    = 'http://';
@@ -578,16 +574,14 @@ class WorkItem {
         $link = $prefix . $_SERVER['HTTP_HOST'] . $port . '/rw/?' . $this->id;
         $summary_max_length = 140-strlen('New job: ')-strlen($link)-1;
         $summary = substr(html_entity_decode($this->summary, ENT_QUOTES), 0, $summary_max_length);
-        
+
         $connection = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_OAUTH_TOKEN, TWITTER_OAUTH_SECRET);
         $content = $connection->get('account/verify_credentials');
-         
+
         $message='New job: ' . $summary . ' ' . $link;
         $connection->post('statuses/update', array('status' => $message));
         */
     }
-
-
     public function save() {
         if(isset($this->id)){
             if ($this->idExists($this->getId())) {
@@ -709,8 +703,8 @@ class WorkItem {
         // Fix for #15353: Only select active runners 20-SEP-2011 <danS>
         $query = " SELECT DISTINCT(w.`runner_id`) as runner
             FROM `" . WORKLIST . "` AS w INNER JOIN `" . USERS . "` u ON u.`id` = w.`runner_id`
-            WHERE w.`project_id` = " . $this->getProjectId() . " 
-              AND u.`is_runner` = 1 
+            WHERE w.`project_id` = " . $this->getProjectId() . "
+              AND u.`is_runner` = 1
               AND u.`is_active` = 1";
         $result_query = mysql_query($query);
         if($result_query) {
@@ -723,22 +717,22 @@ class WorkItem {
             return null;
         }
     }
-    
+
     public function getIsRelRunner() {
         $query = "SELECT r.`runner_id` as relrunner
-                  FROM `" . PROJECT_RUNNERS . "` as r 
+                  FROM `" . PROJECT_RUNNERS . "` as r
                   WHERE r.`project_id` = " . $this->getProjectId() . "
                   AND r.`runner_id` = " . $_SESSION['userid'] . " ";
         $result = mysql_query($query);
-        
+
         if ($result && mysql_num_rows($result) > 0) {
-    
+
             return true;
         }
         return false;
-    
+
     }
-        
+
     public function getFees($worklist_id)
     {
         $query = "SELECT fees.`id`, fees.`amount`, u.`nickname`, fees.`desc`,fees.`user_id`, DATE_FORMAT(fees.`date`, '%m/%d/%Y') as date, fees.`paid`, fees.`bid_notes`
@@ -750,10 +744,10 @@ class WorkItem {
         if($result_query){
             $temp_array = array();
             while($row = mysql_fetch_assoc($result_query)) {
-            
+
                 // this is to make sure to remove extra slashes 11-MAR-2011 <webdev>
                 $row['desc'] = stripslashes($row['desc']);
-                
+
                 $temp_array[] = $row;
             }
             return $temp_array;
@@ -772,15 +766,15 @@ class WorkItem {
             $query =  "INSERT INTO `".BIDS."` (`id`, `bidder_id`, `email`, `worklist_id`, `bid_amount`, `bid_created`, `bid_expires`, `bid_done_in`, `notes`)
                        VALUES (NULL, '$mechanic_id', '$username', '$itemid', '$bid_amount', NOW(), '1 years', '$done_in', '$notes')";
             }
-        
+
         if($this->status == 'Suggested') {
             mysql_unbuffered_query("UPDATE `" . WORKLIST . "` SET  `" . WORKLIST . "` . `status` = 'SuggestedWithBid',
                                     `status_changed`=NOW() WHERE  `" . WORKLIST . "` . `id` = '$itemid'");
             }
         return mysql_query($query) ? mysql_insert_id() : null;
-    
+
         }
-    
+
     public function updateBid($bid_id, $bid_amount, $done_in, $bid_expires, $timezone, $notes) {
         $bid_expires = strtotime($bid_expires);
         if ($bid_id > 0 && $this->status != 'SuggestedWithBid') {
@@ -791,10 +785,10 @@ class WorkItem {
         $query =  "UPDATE `".BIDS."` SET `bid_amount` = '".$bid_amount."' ,`bid_done_in` = '$done_in', `bid_expires` = '1 years', `notes` = '".$notes."' WHERE id = '".$bid_id."'";
         mysql_query($query);
         }
-        
+
         return $bid_id;
     }
-    
+
     public function getUserDetails($mechanic_id)
     {
         $query = "SELECT nickname, username FROM ".USERS." WHERE id='{$mechanic_id}'";
@@ -838,7 +832,7 @@ class WorkItem {
             $this->load($row[0]);
         }
     }
-				
+
     public function loadStatusByBidId($bid_id)
     {
         $query = "SELECT `worklist_id`," . WORKLIST . ".status FROM `".BIDS."` LEFT JOIN " . WORKLIST . " ON " . BIDS. ".worklist_id = " . WORKLIST . ".id WHERE " . BIDS . ".`id` = ".(int)$bid_id;
@@ -890,22 +884,18 @@ class WorkItem {
         /*if ($this->hasAcceptedBids()) {
             throw new Exception('Can not accept an already accepted bid.');
         }*/
-        
-        
         $user_id = isset($_SESSION['userid']) ? (int)$_SESSION['userid'] : 0;
         $is_runner = isset($_SESSION['is_runner']) ? (int)$_SESSION['is_runner'] : 0;
-        
+
         // If a bid is being accepted, and the runner for the workitem does not exist (incase a bid went from suggested straight
         // to working), then we should set the person accepting the bid as the runner;
         if (!$this->getRunnerId()) {
             $this->setRunnerId($user_id);
         }
-        
+
         $res = mysql_query('SELECT * FROM `'.BIDS.'` WHERE `id`=' . $bid_id);
         $bid_info = mysql_fetch_assoc($res);
         $workitem_info = $this->getWorkItem($bid_info['worklist_id']);
-        
-
 
         // Get bidder information
         $bidder = new User;
@@ -916,10 +906,8 @@ class WorkItem {
         }
 
         $bid_info['nickname'] = $bidder->getNickname();
-
-        
         $project = new Project($this->getProjectId());
-        
+
         // Get the repo for this project
         $repository = $this->getRepository();
         $job_id = $this->getId();
@@ -957,7 +945,7 @@ class WorkItem {
         if (!$branchStatus['error']) {
             $bid_info['sandbox'] = $branchStatus['branch_url'];
         }
-        
+
         $bid_info['bid_done'] = strtotime('+' . $bid_info['bid_done_in'], time());
 
         // Adding transaction wrapper around steps
@@ -980,7 +968,7 @@ class WorkItem {
                 mysql_query("ROLLBACK");
                 return false;
             }
-        
+
             // adding bid amount to list of fees
             if (! $result = mysql_query("INSERT INTO `".FEES."` (`id`, `worklist_id`, `amount`, `user_id`, `desc`, `bid_notes`, `date`, `bid_id`) VALUES (NULL, ".$bid_info['worklist_id'].", '".$bid_info['bid_amount']."', '".$bid_info['bidder_id']."', 'Accepted Bid', '".mysql_real_escape_string($bid_info['notes'])."', NOW(), '$bid_id')")) {
                 error_log("AcceptBid:Insert Fee failed: ".mysql_error());
@@ -1013,13 +1001,13 @@ class WorkItem {
                 if (preg_match($reviewer_fee_desc, $fee['desc'])) {
                     $reviewer_fee_added = true;
                 }
-                
+
                 if ($fee['desc'] == $creator_fee_desc) {
                     $creator_fee_added = true;
                 }
                 if ($fee['desc'] == $runner_fee_desc) {
                     $runner_fee_added = true;
-                }                
+                }
             }
 
             // get project creator role settings, if not available, no fee is added
@@ -1037,12 +1025,12 @@ class WorkItem {
                     }
 
                     // add the fee
-                        
+
                     /**
                      * @TODO - We call addfees and then deduct from budget
                      * seems we should add the deduction process to the AddFee
                      * function
-                     * 
+                     *
                      */
                     AddFee($this->getId(), $creator_fee, $fee_category, $creator_fee_desc, $this->getCreatorId(), $is_expense, $is_rewarder);
                     // and reduce the runners budget
@@ -1054,7 +1042,7 @@ class WorkItem {
 
             $project_roles = $project->getRoles($this->getProjectId(), "role_title = 'Runner'");
             if (count($project_roles) != 0 && ! $runner_fee_added) {
-                    
+
                 error_log("[FEES] we have a role for runner");
                 $runner_role = $project_roles[0];
                 if ($runner_role['percentage'] !== null && $runner_role['min_amount'] !== null) {
@@ -1063,7 +1051,7 @@ class WorkItem {
                     if ((float) $runner_fee < $runner_role['min_amount']) {
                         $runner_fee = $runner_role['min_amount'];
                     }
-                    // add the fee 
+                    // add the fee
                     AddFee($this->getId(), $runner_fee, $fee_category, $runner_fee_desc, $this->getRunnerId(), $is_expense, $is_rewarder);
                     // and reduce the runners budget
                     $myRunner = new User();
@@ -1096,14 +1084,14 @@ class WorkItem {
     }
 
     public function validateAction($action, $action_error) {
-        
+
         switch ($action) {
             case 'withdraw_bid':
                 if ($this->getStatus() == 'Done') {
                     $action_error = 'Cannot withdraw bid when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
 
@@ -1112,15 +1100,15 @@ class WorkItem {
                     $action_error = 'Cannot decline bid when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
-				
+
             case 'save_workitem':
                 if ($this->getStatus() == 'Done') {
                     return false;
                 }
-                
+
                 return $action;
                 break;
 
@@ -1133,10 +1121,10 @@ class WorkItem {
                         }
                     }
                 }
-                    
+
                 return $action;
                 break;
-            
+
             case 'edit_bid':
                 if ($this->getStatus() != 'Bidding') {
                     if ($this->getStatus() != 'SuggestedWithBid') {
@@ -1146,16 +1134,16 @@ class WorkItem {
                         }
                     }
                 }
-                    
+
                 return $action;
                 break;
-            
+
             case 'add_fee':
                 if ($this->getStatus() == 'Done') {
                     $action_error = 'Cannot add fee when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
 
@@ -1164,10 +1152,10 @@ class WorkItem {
                     $action_error = 'Cannot add tip when status is Done, Pass or Suggested';
                     return false;
                 }
-                
+
                 return $action;
                 break;
-                
+
             case 'view_bid':
                 if ($this->getStatus() != 'Bidding') {
                     if ($this->getStatus() != 'SuggestedWithBid') {
@@ -1177,10 +1165,10 @@ class WorkItem {
                         }
                     }
                 }
-                
+
                 return $action;
                 break;
-                
+
             case 'accept_bid':
                 if ($this->getStatus() != 'Bidding') {
                     if ($this->getStatus() != 'SuggestedWithBid') {
@@ -1190,7 +1178,7 @@ class WorkItem {
                         }
                     }
                 }
-                
+
                 return $action;
                 break;
 
@@ -1203,29 +1191,29 @@ class WorkItem {
                         }
                     }
                 }
-                
+
                 return $action;
                 break;
 
             case 'status-switch':
                 return $action;
                 break;
-                
+
             case 'save-review-url':
                 if ($this->getStatus() == 'Done') {
                     $action_error = 'Cannot change review URL when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
-                
+
             case 'invite-people':
                 if ($this->getStatus() == 'Done') {
                     $action_error = 'Cannot invite people when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
 
@@ -1234,10 +1222,10 @@ class WorkItem {
                     $action_error = 'Cannot add comment when status is Done';
                     return false;
                 }
-                
+
                 return $action;
                 break;
-                
+
             case 'edit':
                 return $action;
                 break;
@@ -1245,7 +1233,7 @@ class WorkItem {
             case 'cancel_codereview':
                 return $action;
                 break;
-                
+
             case 'finish_codereview':
                 return $action;
                 break;
@@ -1283,15 +1271,15 @@ class WorkItem {
 
     function getFollowersId() {
         $followers = array();
-        $query = ' SELECT f.`user_id` 
-            FROM `' . TASK_FOLLOWERS . '` f INNER JOIN `' . USERS . '` u ON u.`id` = f.`user_id` 
+        $query = ' SELECT f.`user_id`
+            FROM `' . TASK_FOLLOWERS . '` f INNER JOIN `' . USERS . '` u ON u.`id` = f.`user_id`
             WHERE f.`workitem_id` = ' . $this->id . '
               AND u.`is_active` = 1';
         $res = mysql_query($query);
         while($row = mysql_fetch_row($res)) {
             $followers[]= $row[0];
         }
-        
+
         return $followers;
     }
 
@@ -1329,8 +1317,6 @@ class WorkItem {
             $reviewer_fee = 0;
             $reviewer_fee_desc = '/^Code Review - comment/';
             $reviewer_fee_added = false;
-
-
             $fees = $this->getFees($this->getId());
             foreach ($fees as $fee) {
                 // find the accepted bid amount
@@ -1342,7 +1328,7 @@ class WorkItem {
                     $reviewer_fee_added = true;
                 }
             }
-            
+
             if (!$reviewer_fee_added && $include_review) {
                 $project = new Project();
                 $project_roles = $project->getRoles($this->getProjectId(), "role_title = 'Reviewer'");
@@ -1356,12 +1342,12 @@ class WorkItem {
                         }
                         // add the fee
                         $reviewer_fee_detail = 'Code Review - comment';
-                        AddFee($this->getId(), 
-                               $reviewer_fee, 
-                               $fee_category, 
-                               $reviewer_fee_detail, 
-                               $this->getCReviewerId(), 
-                               $is_expense, 
+                        AddFee($this->getId(),
+                               $reviewer_fee,
+                               $fee_category,
+                               $reviewer_fee_detail,
+                               $this->getCReviewerId(),
+                               $is_expense,
                                $is_rewarder);
                         // and reduce the runners budget
                         $myRunner = new User();
@@ -1373,7 +1359,7 @@ class WorkItem {
         }
     }
     function flagAll0FeesAsPaid() {
-        $query = "UPDATE " . FEES . " SET paid = 1, paid_date=NOW(), user_paid =" . $this->getRunnerId() 
+        $query = "UPDATE " . FEES . " SET paid = 1, paid_date=NOW(), user_paid =" . $this->getRunnerId()
             . " WHERE worklist_id = " . $this->id . " AND amount = 0 AND withdrawn = 0";
         if (! $result = mysql_query($query)) {
             return false;

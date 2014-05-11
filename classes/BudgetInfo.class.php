@@ -3,7 +3,7 @@
 class BudgetInfo {
     public function __construct() {
     }
-    
+
     /**
      * Get the budget view
      */
@@ -18,7 +18,7 @@ class BudgetInfo {
         include(dirname(__FILE__) . "/BudgetInfo/popup-give-budget.inc");
         exit(0);
     }
-    
+
     public function getViewAddFunds() {
         $reqUserId = getSessionUserId();
         $user = new User();
@@ -54,7 +54,7 @@ class BudgetInfo {
         }
         $this->validateRequest(array('budgetId'));
         $budget_id = (int) $_REQUEST['budgetId'];
-        
+
         $budget = new Budget();
         if ($budget->loadById($budget_id)) {
             $sources = $budget->loadSources();
@@ -76,7 +76,7 @@ class BudgetInfo {
                 'allocated' => money_format('%i', $allocated),
                 'submitted' => money_format('%i', $submitted),
                 'paid' => money_format('%i', $paid),
-                'transferred' => money_format('%i', $transfered)                
+                'transferred' => money_format('%i', $transfered)
             ));
         } else {
             $this->respond(true, 'Invalid budget id');
@@ -95,11 +95,11 @@ class BudgetInfo {
         }
         $this->validateRequest(array('budgetId', 'budgetReason', 'budgetNote'));
         $budget_id = $_REQUEST['budgetId'];
-        
+
         $budget = new Budget();
         if ($budget->loadById($budget_id)) {
             if ($reqUserId == $budget->receiver_id ||
-                $budget->giver_id == $reqUserId) {         
+                $budget->giver_id == $reqUserId) {
                 $budget->notes = $_REQUEST['budgetNote'];
                 $budget->reason = $_REQUEST['budgetReason'];
                 if ($budget->save('id')) {
@@ -118,15 +118,15 @@ class BudgetInfo {
     Return the sum of fees that are not already paid for all the workitems linked to a specific budget
     **/
     public function getSumOfFeeNotPaidByBudget($budget_id) {
-        $query = "SELECT SUM(`amount`) FROM `" . FEES . 
-            "` WHERE paid = 0 AND amount > 0  AND `" . FEES . 
-            "`.`withdrawn` != 1 AND ((worklist_id = 0 AND budget_id = " . $budget_id . ") OR worklist_id IN (SELECT id FROM " . 
+        $query = "SELECT SUM(`amount`) FROM `" . FEES .
+            "` WHERE paid = 0 AND amount > 0  AND `" . FEES .
+            "`.`withdrawn` != 1 AND ((worklist_id = 0 AND budget_id = " . $budget_id . ") OR worklist_id IN (SELECT id FROM " .
                 WORKLIST . " WHERE budget_id = " . $budget_id . " AND status != 'Pass'))";
         $result_query = mysql_query($query);
         $row = $result_query ? mysql_fetch_row($result_query) : null;
         return !empty($row) ? $row[0] : null;
     }
-    
+
     public function closeOutBudgetSource($remainingFunds, $budget, $budgetReceiver, $budgetGiver) {
             $sources = $budget->loadSources(" ORDER BY s.transfer_date DESC");
             if ($sources == null) {
@@ -194,9 +194,9 @@ class BudgetInfo {
             }
     }
     /**
-     * Close the budget 
+     * Close the budget
      */
-     
+
     public function closeOutBudget() {
         $reqUserId = getSessionUserId();
         $user = new User();
@@ -207,7 +207,7 @@ class BudgetInfo {
         }
         $this->validateRequest(array('budgetId'));
         $budget_id = $_REQUEST['budgetId'];
-        
+
         $budget = new Budget();
         if ($budget->loadById($budget_id)) {
             if ($budget->active != 1) {
@@ -215,7 +215,7 @@ class BudgetInfo {
                 return;
             }
             if ($reqUserId == $budget->receiver_id ||
-                $budget->giver_id == $reqUserId) {  
+                $budget->giver_id == $reqUserId) {
                 $budgetGiver = new User();
                 if (!$budgetGiver->findUserById($budget->giver_id)) {
                     $this->respond(false, 'Invalid giver id.');
@@ -230,7 +230,7 @@ class BudgetInfo {
                 $childrenNotClosed = $budget->getChildrenNotClosed($budget->id);
                 if ($childrenNotClosed == 0) {
                     // all the budgeted jobs are paid ?
-                    
+
                     $feeAmountNotPaid = $this->getSumOfFeeNotPaidByBudget($budget->id);
                     if ($feeAmountNotPaid === null) {
                         $remainingFunds = $budget->getRemainingFunds();
@@ -247,7 +247,7 @@ class BudgetInfo {
                             }
                         } else {
                             if ($reqUserId == $budget->receiver_id) {
-                                $this->respond(false, 'Your budget is spent. Please contact the grantor (' . 
+                                $this->respond(false, 'Your budget is spent. Please contact the grantor (' .
                                     $budgetGiver->getNickname() . ') for additional funds.');
                             } else {
                                 $budget->original_amount = $budget->amount;
@@ -255,7 +255,7 @@ class BudgetInfo {
                                 $budget->active = 0;
                                 $budgetReceiver->updateBudget(- $remainingFunds, $budget->id, false);
                                 $this->closeOutBudgetSource($remainingFunds, $budget, $budgetReceiver, $budgetGiver);
-                                if ($budget->save('id')) {  
+                                if ($budget->save('id')) {
                                     $this->respond(true, 'Budget closed');
                                 } else {
                                     $this->respond(false, 'Error in update budget.');
@@ -276,7 +276,7 @@ class BudgetInfo {
             $this->respond(false, 'Invalid budget id');
         }
     }
-     
+
     public function sendBudgetcloseOutEmail($options) {
         $subject = "Closed - Budget ";
         if ($options["seed"] == 1) {
@@ -297,8 +297,8 @@ class BudgetInfo {
             $body .= "<p>Your budget balance was over by $" . $options["remainingFunds"] . "</p>";
         }
         $body .= '<p>Click <a href="' . $link . '">here</a> to see this budget.</p>';
-        $body .= '<p>- Worklist.net</p>';       
-        
+        $body .= '<p>- Worklist.net</p>';
+
         $plain = 'Hello ' . $options["receiver_nickname"] . '\n\n';
         $plain .= 'Your budget has been closed out:\n\n';
         $plain .= "Budget " . $options["budget_id"] . " for " . $options["reason"] . "\n\n";
@@ -312,22 +312,22 @@ class BudgetInfo {
             $plain .= "Your budget balance was over by $" . $options["remainingFunds"] . "\n\n";
         }
         $plain .= 'Click ' . $link . ' to see this budget.\n\n';
-        $plain .= '- Worklist.net\n\n';       
+        $plain .= '- Worklist.net\n\n';
 
-        if (!send_email($options["receiver_email"], $subject, $body, $plain)) { 
+        if (!send_email($options["receiver_email"], $subject, $body, $plain)) {
             error_log("BudgetInfo: send_email failed on closed out budget");
         }
         if ($options["remainingFunds"] < 0 || $options["seed"] == 1) {
-            if (!send_email($options["giver_email"], $subject, $body, $plain)) { 
+            if (!send_email($options["giver_email"], $subject, $body, $plain)) {
                 error_log("BudgetInfo: send_email failed on closed out budget");
             }
         }
     }
-    
+
     /**
      * Check that all the @fields were sent on the request
      * returns true/false.
-     * 
+     *
      * @fields has to be an array of strings
      */
     public function validateRequest($fields, $return=false) {
@@ -335,7 +335,7 @@ class BudgetInfo {
         if (!is_array($fields)) {
             return false;
         }
-        
+
         foreach ($fields as $field) {
             if (!isset($_REQUEST[$field])) {
                 // If we specified that the function must return do so
@@ -347,8 +347,6 @@ class BudgetInfo {
             }
         }
     }
-
-    
     /**
      * Sends a json encoded response back to the caller
      * with @succeeded and @message

@@ -31,7 +31,7 @@ class UsersController extends Controller {
             case 'json':
             default:
                 echo json_encode(array('users' => $ret));
-        }        
+        }
     }
 
     public function dashboard() {

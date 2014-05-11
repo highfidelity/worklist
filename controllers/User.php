@@ -103,21 +103,21 @@ class UserController extends Controller {
                         if ($value) {
                             switch ($value) {
                                 case 'approved':
-                                    if (! sendTemplateEmail($updateUser->getUsername(), 'w9-approved')) { 
+                                    if (! sendTemplateEmail($updateUser->getUsername(), 'w9-approved')) {
                                         error_log("UserController: send_email failed on w9 approved notification");
                                     }
 
                                     break;
-                                    
+
                                 case 'rejected':
                                     $data = array();
                                     $data['reason'] = strip_tags($_POST['reason']);
-                                    
-                                    if (! sendTemplateEmail($updateUser->getUsername(), 'w9-rejected', $data)) { 
+
+                                    if (! sendTemplateEmail($updateUser->getUsername(), 'w9-rejected', $data)) {
                                         error_log("UserController: send_email failed on w9 rejected notification");
                                     }
                                     break;
-                                
+
                                 default:
                                     break;
                             }
@@ -199,7 +199,7 @@ class UserController extends Controller {
                 $userId = $user->getId();
             }
         } else {
-            $userId = getSessionUserId(); 
+            $userId = getSessionUserId();
             $user->findUserById($userId);
         }
         $this->write('userId', $userId);

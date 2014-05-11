@@ -2,7 +2,7 @@
 //  vim:ts=4:et
 
 //  Copyright (c) 2010, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 
 class Bonus
@@ -30,7 +30,7 @@ class Bonus
 
         $id = (int) $id;
         // do not proceed if called without an id
-        if (!$id) { 
+        if (!$id) {
             return false;
         }
 
@@ -46,7 +46,7 @@ class Bonus
             FROM
                 " . FEES . "
             WHERE
-                id = {$id} 
+                id = {$id}
                 AND bonus = 1";
 
         if ( $select_result = mysql_query($select_query) ) {

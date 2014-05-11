@@ -57,7 +57,7 @@ class Project {
     public function loadById($id) {
         return $this->load($id);
     }
-    
+
     public function loadByName($name) {
         $query = "SELECT project_id FROM `".PROJECTS."` WHERE `name`='" . $name . "'";
         $result = mysql_query($query);
@@ -90,7 +90,7 @@ class Project {
         }
 
         $query = "
-            SELECT 
+            SELECT
                 p.project_id,
                 p.name,
                 p.description,
@@ -101,7 +101,7 @@ class Project {
                 p.contact_info,
                 p.last_commit,
                 p.active,
-                p.owner_id, 
+                p.owner_id,
                 p.fund_id,
                 p.testflight_enabled,
                 p.testflight_team_token,
@@ -111,7 +111,7 @@ class Project {
                 p.cr_project_admin,
                 p.cr_job_runner,
                 p.cr_users_specified,
-                p.internal, 
+                p.internal,
                 p.creation_date,
                 p.hipchat_enabled,
                 p.hipchat_notification_token,
@@ -162,7 +162,7 @@ class Project {
         $this->setGithubSecret($row['github_secret']);
         return true;
     }
-    
+
     public function getTotalFees($project_id) {
         $feesCount = 0;
         $feesQuery = "SELECT SUM(F.amount) AS fees_sum FROM " . FEES . " F,
@@ -180,13 +180,13 @@ class Project {
         }
         return $feesCount;
     }
-    
+
     public function idExists($project_id) {
         $query = "
             SELECT project_id
             FROM ".PROJECTS."
             WHERE project_id=".(int)$project_id;
-        
+
         $res = mysql_query($query);
         if (!$res) {
             throw new Exception('MySQL error.');
@@ -203,7 +203,7 @@ class Project {
     public function getProjectId() {
         return $this->project_id;
     }
-    
+
     public function setName($name) {
         $this->name = $name;
         return $this;
@@ -220,7 +220,7 @@ class Project {
 
     public function getDescription() {
         return $this->description;
-    }    
+    }
 
     public function setWebsite($website) {
         $this->website = $website;
@@ -242,16 +242,16 @@ class Project {
             return "http://" . $this->getWebsite();
         }
     }
-    
+
     public function setBudget($budget) {
         $this->budget = $budget;
         return $this;
     }
-    
+
     public function getBudget() {
         return $this->budget;
     }
-       
+
     public function setRepository($repository) {
         $this->repository = $repository;
         return $this;
@@ -260,7 +260,7 @@ class Project {
     public function getRepository() {
         return $this->repository;
     }
-    
+
     public function setRepo_type($repo_type) {
         $this->repo_type = $repo_type;
         return $this;
@@ -268,22 +268,22 @@ class Project {
 
     public function getRepo_type() {
         return $this->repo_type;
-    }        
-    
+    }
+
     public function setContactInfo($contact_info) {
         $this->contact_info = $contact_info;
         return $this;
     }
-    
+
     public function getContactInfo() {
         return $this->contact_info;
     }
-    
+
     public function setLastCommit($date) {
         $this->last_commit = $date;
         return $this;
     }
-    
+
     public function getLastCommit() {
         return $this->last_commit;
     }
@@ -295,7 +295,7 @@ class Project {
 
     public function getActive() {
         return $this->active;
-    }    
+    }
 
     public function setOwnerId($owner_id) {
         $this->owner_id = $owner_id;
@@ -305,7 +305,7 @@ class Project {
     public function getOwnerId() {
         return $this->owner_id;
     }
-    
+
     public function setFundId($fund_id) {
         $this->fund_id = $fund_id;
     }
@@ -313,7 +313,7 @@ class Project {
     public function getFundId() {
         return $this->fund_id;
     }
-    
+
     public function setTestFlightTeamToken($testflight_team_token) {
         $this->testflight_team_token = $testflight_team_token;
         return $this;
@@ -339,7 +339,7 @@ class Project {
 
     public function getLogo() {
         return $this->logo;
-    } 
+    }
 
     public function setCrAnyone($cr_anyone) {
         $this->cr_anyone = $cr_anyone;
@@ -348,8 +348,8 @@ class Project {
 
     public function getCrAnyone() {
         return $this->cr_anyone;
-    } 
-    
+    }
+
     public function setCrFav($cr_3_favorites) {
         $this->cr_3_favorites = $cr_3_favorites;
         return $this;
@@ -367,7 +367,7 @@ class Project {
     public function getCrAdmin() {
         return $this->cr_project_admin;
     }
-    
+
     public function setCrRunner($cr_job_runner) {
         $this->cr_job_runner = $cr_job_runner;
         return $this;
@@ -389,16 +389,16 @@ class Project {
     public function getInternal() {
         return $this->internal;
     }
-    
+
     public function setCreationDate($creation_date) {
         $this->creation_date = $creation_date;
         return $this;
     }
-    
+
     public function getCreationDate() {
         return $this->creation_date;
     }
-    
+
     public function setHipchatNotificationToken($hipchat_notification_token) {
         $this->hipchat_notification_token = $hipchat_notification_token;
         return $this;
@@ -424,19 +424,19 @@ class Project {
     public function getHipchatRoom() {
         return $this->hipchat_room;
     }
-    
+
     public function setHipchatColor($hipchat_color) {
         $this->hipchat_color = $hipchat_color;
         return $this;
     }
-    
+
     public function getHipchatColor() {
         $hipchat_color = $this->hipchat_color;
-        
+
         if (in_array($hipchat_color, $this->getHipchatColorsArray())) {
             return $hipchat_color;
         }
-        
+
         return $this->getHipchatDefaultColor();
     }
 
@@ -466,7 +466,7 @@ class Project {
              "random"
         );
     }
-    
+
     public function getHipchatDefaultColor() {
         $colors = $this->getHipchatColorsArray();
         return $colors[0];
@@ -477,7 +477,7 @@ class Project {
         $room_id = 0;
         $token = $this->getHipchatNotificationToken();
         $url = HIPCHAT_API_AUTH_URL . $token;
-        
+
         $response = CURLHandler::Get($url, array());
         $response = json_decode($response);
 
@@ -488,10 +488,10 @@ class Project {
                     break;
                 }
             }
-            
+
             if ($room_id > 0 ) {
                 $url = HIPCHAT_API_MESSAGE_URL . $token;
-                $fields = array( 
+                $fields = array(
                     'room_id' => $room_id,
                     'from' => 'Worklist.net',
                     'message' => $message,
@@ -499,7 +499,7 @@ class Project {
                     'notify' => $notify,
                     'color' => $this->getHipchatColor()
                 );
-                
+
                 $result = CURLHandler::Post($url, $fields);
                 $result = json_decode($result);
                 if ($result->status != 'sent') {
@@ -512,7 +512,7 @@ class Project {
             }
         } else {
             $success = false;
-            $body = "Failed to authenticate to hipchat.";            
+            $body = "Failed to authenticate to hipchat.";
         }
 
         if ($success == false) {
@@ -561,19 +561,19 @@ class Project {
         $rt = mysql_query($query);
         $project_id = mysql_insert_id();
         $this->setProjectId($project_id);
-                
+
         //for the project added insert 3 pre-populated roles with percentages and minimum amounts <joanne>
         $query = "INSERT INTO " . ROLES . " (project_id, role_title, percentage, min_amount)
-            VALUES 
+            VALUES
             ($project_id,'Creator','10.00','10.00'),
             ($project_id,'Runner','25.00','20.00'),
             ($project_id,'Reviewer','10.00','5.00')";
         $rt = mysql_query($query);
-        
+
         $query = "INSERT INTO " . PROJECT_RUNNERS . " (project_id, runner_id)
-            VALUES 
+            VALUES
             ($project_id, ' " . mysql_real_escape_string($this->getOwnerId()) . " ')";
-        $rt = mysql_query($query);    
+        $rt = mysql_query($query);
         if($rt) {
             return 1;
         }
@@ -583,7 +583,7 @@ class Project {
     protected function update() {
 
         $query = "
-            UPDATE ".PROJECTS." 
+            UPDATE ".PROJECTS."
             SET
                 name='".mysql_real_escape_string($this->getName())."',
                 description='".mysql_real_escape_string($this->getDescription())."',
@@ -626,27 +626,27 @@ class Project {
 
     /**
         Return an array of all projects containing all fields
-    **/    
+    **/
     public function getProjects($active = true, $selections = array(), $onlyInactive = false) {
         $query = "
             SELECT
                 " . ((count($selections) > 0) ? implode(",", $selections) : "*") . "
             FROM
                 `" . PROJECTS . "`" ."
-            WHERE 
+            WHERE
                 `" . PROJECTS . "`.internal = 1  AND `" . PROJECTS . "`.active = 1
             ORDER BY name ASC";
-        
+
         $result = mysql_query($query);
-        
+
         if (mysql_num_rows($result)) {
             while ($project = mysql_fetch_assoc($result)) {
                 $query = "SELECT
-                            SUM(status IN ('Done', 'Completed')) AS completed, 
-                            SUM(status IN ('Working', 'Review', 'SvnHold', 'Functional')) AS underway, 
-                            SUM(status='Bidding') AS bidding 
+                            SUM(status IN ('Done', 'Completed')) AS completed,
+                            SUM(status IN ('Working', 'Review', 'SvnHold', 'Functional')) AS underway,
+                            SUM(status='Bidding') AS bidding
                           FROM
-                            " . WORKLIST . " 
+                            " . WORKLIST . "
                           WHERE
                             project_id = " . $project['project_id'];
                 $resultCount = mysql_query($query);
@@ -656,11 +656,11 @@ class Project {
                 $bCount = $resultCount->bidding === NULL ? 0 : $resultCount->bidding;
                 $uCount = $resultCount->underway === NULL ? 0 : $resultCount->underway;
                 $cCount = $resultCount->completed === NULL ? 0 : $resultCount->completed;
-    
+
                 if($cCount) {
                     $feesQuery = "SELECT SUM(F.amount) as fees_sum FROM " . FEES . " F,
                             " . WORKLIST . " W
-                            WHERE F.worklist_id = W.id 
+                            WHERE F.worklist_id = W.id
                             AND F.withdrawn = 0
                             AND W.project_id = " . $project['project_id'] . "
                             AND W.status IN ('Completed', 'Done')";
@@ -672,12 +672,12 @@ class Project {
                         }
                     }
                 }
-                
+
                 $project['bCount'] = $bCount;
                 $project['uCount'] = $uCount;
                 $project['cCount'] = $cCount;
                 $project['feesCount'] = $feesCount;
-                $projects[$project['project_id']] = $project;                
+                $projects[$project['project_id']] = $project;
             }
             return $projects;
         }
@@ -688,7 +688,7 @@ class Project {
      *  Return an array of repositories
      */
     public function getRepositoryList() {
-    
+
         $query = "
             SELECT `repository`
             FROM `".PROJECTS."`
@@ -752,14 +752,14 @@ class Project {
     public function isProjectCodeReviewer($user_id = false) {
         return array_key_exists($user_id, $this->getCodeReviewers());
     }
-    
+
     /**
       Determine if the given user_id is a project runner
     */
     public function isProjectRunner($user_id = false) {
         return array_key_exists($user_id, $this->getRunners());
     }
-    
+
     /**
      * new function for getting roles for the project <mikewasmike 15-JUN-2011>
      * @param int $project_id
@@ -781,7 +781,7 @@ class Project {
             return null;
         }
     }
-    
+
     /**
      * new function for adding roles in the project <mikewasmike 15-JUN-2011>
      * @param int $project_id
@@ -794,7 +794,7 @@ class Project {
         $query = "INSERT INTO `".ROLES."` (id,`project_id`,`role_title`,`percentage`,`min_amount`)  VALUES(NULL,'$project_id','$role_title','$percentage','$min_amount')";
         return mysql_query($query) ? mysql_insert_id() : null;
     }
-    
+
     /**
      * new function for editing roles in the project <mikewasmike 15-JUN-2011>
      * @param int $role_id
@@ -807,7 +807,7 @@ class Project {
         $query = "UPDATE `".ROLES."` SET `role_title`='$role_title',`percentage`='$percentage',`min_amount`='$min_amount' WHERE `id`={$role_id}";
         return mysql_query($query) ? 1 : 0;
     }
-    
+
     /**
      * new function for deleting roles in the project <mikewasmike 15-JUN-2011>
      * @param int $role_id
@@ -816,7 +816,7 @@ class Project {
     public function deleteRole($role_id){
         $query = "DELETE FROM `".ROLES."`  WHERE `id`={$role_id}";
         return mysql_query($query) ? 1 : 0;
-    }  
+    }
     /**
      * Allows you to add a reviewer to the project
      * @param $codeReviewer_id
@@ -829,7 +829,7 @@ class Project {
             "VALUES (" . $project_id . ", " . $codeReviewer_id . ")";
         return mysql_query($query) ? 1 : 0;
     }
-    
+
     public function deleteCodeReviewer($codeReviewer_id) {
         $codeReviewer_id = (int) $codeReviewer_id;
         if ($codeReviewer_id == $this->getOwnerId()) {
@@ -846,12 +846,12 @@ class Project {
     public function addRunner($runner_id) {
         $project_id = $this->getProjectId();
         $runner_id = (int) $runner_id;
-        $query = 
+        $query =
             "INSERT INTO `" . PROJECT_RUNNERS . "` (project_id, runner_id) " .
             "VALUES (" . $project_id . ", " . $runner_id . ")";
         return mysql_query($query) ? 1 : 0;
     }
-    
+
     /**
      * Remove Runner from Project
      */
@@ -861,31 +861,31 @@ class Project {
             return false;
         }
         $project_id = $this->getProjectId();
-        $query = 
+        $query =
             "DELETE FROM `" . PROJECT_RUNNERS . "` " .
             "WHERE `project_id`={$project_id} AND `runner_id`={$runner_id}";
         return mysql_query($query) ? 1 : 0;
     }
-   
+
     /**
      * Get Runners Job Stats for Project
      */
     public function getRunners() {
-        $query = 
+        $query =
             "SELECT DISTINCT u.id, u.nickname, (
                 SELECT COUNT(DISTINCT(w.id))
-                FROM " . WORKLIST . " w 
-                LEFT JOIN " . PROJECT_RUNNERS . " p on w.project_id = p.project_id 
-                WHERE w.runner_id = u.id 
-                AND w.status IN('Bidding', 'Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')  
+                FROM " . WORKLIST . " w
+                LEFT JOIN " . PROJECT_RUNNERS . " p on w.project_id = p.project_id
+                WHERE w.runner_id = u.id
+                AND w.status IN('Bidding', 'Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')
                 AND p.project_id = " . $this->getProjectId() . "
-            ) totalJobCount 
-            FROM " . USERS . " u 
+            ) totalJobCount
+            FROM " . USERS . " u
             WHERE u.id IN (
                 SELECT runner_id
                 FROM rel_project_runners
                 WHERE project_id = " . $this->getProjectId() . "
-            ) 
+            )
             ORDER BY totalJobCount DESC";
 
         $result = mysql_query($query);
@@ -899,7 +899,7 @@ class Project {
             return false;
         }
     }
-    
+
     /**
      * Get the Reviewers for current project
      * @return unknown|boolean
@@ -921,9 +921,9 @@ class Project {
         WHERE project_id = " . $this->getProjectId() . "
         )
         ORDER BY totalJobCount DESC";
-       
+
         $result = mysql_query($query);
-        
+
         if (is_resource($result) && mysql_num_rows($result) > 0) {
             while($row = mysql_fetch_assoc($result)) {
                 $row['owner'] = ($row['id'] == $this->getOwnerId());
@@ -934,14 +934,14 @@ class Project {
             return array();
         }
     }
-    /* 
+    /*
      Get the list of allowed runners for Project
      */
     public static function getAllowedRunnerlist($project_id) {
         $runnerlist = array();
         $sql = 'SELECT `u`.*
-        FROM `' . USERS . '` u 
-        INNER JOIN `' . PROJECT_RUNNERS . '` `pr` ON (`u`.`id` = `pr`.`runner_id`) 
+        FROM `' . USERS . '` u
+        INNER JOIN `' . PROJECT_RUNNERS . '` `pr` ON (`u`.`id` = `pr`.`runner_id`)
         WHERE `pr`.`project_id` = ' . $project_id;
         $result = mysql_query($sql);
         if (mysql_num_rows($result) > 0) {
@@ -956,15 +956,15 @@ class Project {
         return ((!empty($runnerlist)) ? $runnerlist : false);
     }
 
-    /* 
+    /*
      Check if a Runner can run a specified project.
      */
     public static function isAllowedRunnerForProject($runner_id, $project_id) {
         $sql = 'SELECT `u`.*
-        FROM `' . USERS . '` u 
-        INNER JOIN `' . PROJECT_RUNNERS . '` `pr` ON (`u`.`id` = `pr`.`runner_id`) 
+        FROM `' . USERS . '` u
+        INNER JOIN `' . PROJECT_RUNNERS . '` `pr` ON (`u`.`id` = `pr`.`runner_id`)
         WHERE `pr`.`project_id` = ' . $project_id . ' AND `u`.`id` = ' . $runner_id;
-        
+
         $result = mysql_query($sql);
         if (mysql_num_rows($result) > 0) {
           return true;
@@ -994,11 +994,11 @@ class Project {
         }
             return false;
     }
-    
+
     public function getRunnersLastActivity($userId) {
-        $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s 
-                LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id 
-                LEFT JOIN " . PROJECT_RUNNERS . " p on p.project_id = w.project_id 
+        $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s
+                LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id
+                LEFT JOIN " . PROJECT_RUNNERS . " p on p.project_id = w.project_id
                 WHERE s.user_id = '$userId' AND p.project_id = " . $this->getProjectId() . " ";
         $res = mysql_query($sql);
         if($res && $row = mysql_fetch_row($res)){
@@ -1011,8 +1011,8 @@ class Project {
             }
         }
         return false;
-    } 
-    
+    }
+
     public function getFundName() {
         $query = "SELECT `name` FROM `" . FUNDS . "` WHERE `id` = {$this->getFundId()}";
         if ($result = mysql_query($query)) {
@@ -1022,12 +1022,12 @@ class Project {
             return false;
         }
     }
-    
+
     public function getTotalJobs() {
         $query = "
             SELECT COUNT(w.id) jobCount
-            FROM " . WORKLIST . " w 
-            LEFT JOIN " . PROJECTS . " p ON w.project_id = p.project_id  
+            FROM " . WORKLIST . " w
+            LEFT JOIN " . PROJECTS . " p ON w.project_id = p.project_id
             WHERE
                 w.status NOT IN ('Draft', 'Pass') AND
                 p.project_id = " . $this->getProjectId();
@@ -1039,11 +1039,11 @@ class Project {
             return 0;
         }
     }
-    
+
     public function getAvgBidFee() {
-        $query = "SELECT AVG(b.bid_amount) AS avgBidFeePerProject FROM " . BIDS . " b 
-                  LEFT OUTER JOIN " . WORKLIST . " w on b.worklist_id = w.id 
-                  LEFT OUTER JOIN " . PROJECTS . " p on w.project_id = p.project_id 
+        $query = "SELECT AVG(b.bid_amount) AS avgBidFeePerProject FROM " . BIDS . " b
+                  LEFT OUTER JOIN " . WORKLIST . " w on b.worklist_id = w.id
+                  LEFT OUTER JOIN " . PROJECTS . " p on w.project_id = p.project_id
                   WHERE p.project_id = " . $this->getProjectId() . " AND b.accepted = 1";
         if($result = mysql_query($query)) {
             $count = mysql_fetch_assoc($result);
@@ -1052,55 +1052,55 @@ class Project {
             return 0;
         }
     }
-    
+
     public function getAvgJobTime() {
-        $query = "SELECT AVG(TIME_TO_SEC(TIMEDIFF(doneDate, workingDate))) as avgJobTime FROM 
+        $query = "SELECT AVG(TIME_TO_SEC(TIMEDIFF(doneDate, workingDate))) as avgJobTime FROM
                     (SELECT w.id, s.change_date AS doneDate,
-                        ( SELECT MAX(`date`) AS workingDate FROM fees 
-                          WHERE worklist_id = w.id AND `desc` = 'Accepted Bid') as workingDate 
-                    FROM status_log s 
-                    LEFT JOIN worklist w ON s.worklist_id = w.id 
-                    LEFT JOIN projects p on p.project_id = w.project_id 
+                        ( SELECT MAX(`date`) AS workingDate FROM fees
+                          WHERE worklist_id = w.id AND `desc` = 'Accepted Bid') as workingDate
+                    FROM status_log s
+                    LEFT JOIN worklist w ON s.worklist_id = w.id
+                    LEFT JOIN projects p on p.project_id = w.project_id
                     WHERE s.status = 'Done' AND p.project_id = " . $this->getProjectId() . ") AS x";
         if($result = mysql_query($query)) {
             $row = mysql_fetch_array($result);
             return ($row['avgJobTime'] > 0) ? relativeTime($row['avgJobTime'], false, true, false) : '';
         } else {
             return false;
-        } 
+        }
     }
-    
+
     public function getDevelopers() {
         $query = "
-                SELECT DISTINCT u.id, u.nickname, 
+                SELECT DISTINCT u.id, u.nickname,
                     (
-                        SELECT COUNT(*) 
-                        FROM " . WORKLIST . " w 
-                            LEFT JOIN " . PROJECTS . " p on w.project_id = p.project_id 
-                        WHERE ( w.mechanic_id = u.id OR w.creator_id = u.id) 
-                            AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done') 
+                        SELECT COUNT(*)
+                        FROM " . WORKLIST . " w
+                            LEFT JOIN " . PROJECTS . " p on w.project_id = p.project_id
+                        WHERE ( w.mechanic_id = u.id OR w.creator_id = u.id)
+                            AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')
                         AND p.project_id = "  . $this->getProjectId() . "
                     ) as totalJobCount,
                     (
-                        SELECT SUM(F.amount) 
-                        FROM " . FEES . " F 
-                            LEFT OUTER JOIN " . WORKLIST . " w on F.worklist_id = w.id 
-                            LEFT JOIN " . PROJECTS . " p on p.project_id = w.project_id 
+                        SELECT SUM(F.amount)
+                        FROM " . FEES . " F
+                            LEFT OUTER JOIN " . WORKLIST . " w on F.worklist_id = w.id
+                            LEFT JOIN " . PROJECTS . " p on p.project_id = w.project_id
                         WHERE (F.paid = 1 AND F.withdrawn = 0 AND F.expense = 0 AND F.user_id = u.id)
-                            AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')                 
+                            AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')
                             AND p.project_id = " . $this->getProjectId() . "
                     ) as totalEarnings
-                    
-                FROM " . BIDS . " b 
-                    LEFT JOIN " . WORKLIST . " w ON b.worklist_id = w.id 
-                    LEFT JOIN " . PROJECTS . " p ON p.project_id = w.project_id 
-                    LEFT JOIN " . USERS . " u ON b.bidder_id = u.id 
-                WHERE b.accepted = 1 
+
+                FROM " . BIDS . " b
+                    LEFT JOIN " . WORKLIST . " w ON b.worklist_id = w.id
+                    LEFT JOIN " . PROJECTS . " p ON p.project_id = w.project_id
+                    LEFT JOIN " . USERS . " u ON b.bidder_id = u.id
+                WHERE b.accepted = 1
                     AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')
-                    AND p.project_id = " . $this->getProjectId() . " 
+                    AND p.project_id = " . $this->getProjectId() . "
                 ORDER BY totalEarnings DESC";
         if($result = mysql_query($query)) {
-            $developers = array(); 
+            $developers = array();
             if(mysql_num_rows($result) > 0) {
                 while($row = mysql_fetch_assoc($result)) {
                     $developers[$row['id']] = $row;
@@ -1113,15 +1113,15 @@ class Project {
         }
         return $developers;
     }
-  
+
     public function getContributors() {
         $query = "
                 SELECT DISTINCT u.id, u.nickname
-                FROM " . FEES . " f 
-                    LEFT JOIN " . WORKLIST . " w ON f.worklist_id = w.id 
-                    LEFT JOIN " . PROJECTS . " p ON p.project_id = w.project_id 
-                    LEFT JOIN " . USERS . " u ON f.user_id = u.id 
-                WHERE f.paid = 1 
+                FROM " . FEES . " f
+                    LEFT JOIN " . WORKLIST . " w ON f.worklist_id = w.id
+                    LEFT JOIN " . PROJECTS . " p ON p.project_id = w.project_id
+                    LEFT JOIN " . USERS . " u ON f.user_id = u.id
+                WHERE f.paid = 1
                     AND w.status IN ('Working', 'Functional', 'SvnHold', 'Review', 'Completed', 'Done')
                     AND p.project_id = " . $this->getProjectId() . "
                 ORDER BY f.date DESC";
@@ -1163,11 +1163,11 @@ class Project {
         }
         return $jobs;
     }
-    
+
     public function getDevelopersLastActivity($userId) {
-        $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s 
-                LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id 
-                LEFT JOIN " . PROJECTS . " p on p.project_id = w.project_id 
+        $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s
+                LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id
+                LEFT JOIN " . PROJECTS . " p on p.project_id = w.project_id
                 WHERE s.user_id = '$userId' AND p.project_id = " . $this->getProjectId();
         $res = mysql_query($sql);
         if($res && $row = mysql_fetch_row($res)){
@@ -1184,8 +1184,8 @@ class Project {
             }
         }
         return false;
-    } 
-    
+    }
+
     public function getPaymentStats() {
         $query = "SELECT u.id, u.nickname, f.worklist_id, f.amount, f.paid FROM " . FEES . " f
                   LEFT JOIN " . WORKLIST . " w ON f.worklist_id = w.id
@@ -1205,8 +1205,8 @@ class Project {
             }
         } else {
             return false;
-        }                
-    }    
+        }
+    }
 
     /**
      * Return project_id based on project name
@@ -1223,7 +1223,7 @@ class Project {
             return false;
         }
     }
-    
+
     function getOwnerCompany() {
         if (!$this->getInternal()) {
             return $this->getName();
@@ -1244,7 +1244,7 @@ class Project {
         $data = false;
         $postString = '';
         $headers = array('Accept: application/json', 'User-Agent: Worklist.net');
-        
+
         // Define variables required for API
         if ($path == 'login/oauth/access_token') {
             $apiURL = 'https://github.com/' . $path;
@@ -1256,7 +1256,7 @@ class Project {
             'client_id' => urlencode($this->github_id),
             'client_secret' => urlencode($this->github_secret)
         );
-        
+
         $postArray = array_merge($params, $credentials);
         if ($json) {
             $postString = json_encode($params);
@@ -1266,10 +1266,10 @@ class Project {
             }
             rtrim($postString,'&');
         }
-        
+
         // Initialize cURL
         $curl = curl_init();
-        
+
         if ($method == 'POST') {
             if ($token && $path != 'login/oauth/access_token') {
                 $headers[] = 'Authorization: token ' . $token;
@@ -1282,12 +1282,12 @@ class Project {
                 $apiURL .= (!empty($postString) ? '&' : '') . 'access_token=' . $token;
             }
         }
-        
+
         //set the url, number of POST vars, POST data
         curl_setopt($curl, CURLOPT_URL, $apiURL);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        
+
         try {
             $apiResponse = curl_exec($curl);
             if ($apiResponse && !curl_errno($curl)) {
@@ -1308,13 +1308,13 @@ class Project {
                 'error' => $ex
             );
         };
-        
+
         return array(
             'error' => $error,
             'message' => $message,
             'data' => $data);
     }
-    
+
     public function extractOwnerAndNameFromRepoURL() {
         $repoDetails = array();
         // Get rid of protocol, domain and .git extension
@@ -1330,7 +1330,7 @@ class Project {
         $repoDetails['name'] = $explodedRepoURL[2];
         return $repoDetails;
     }
-    
+
     public function pull_request($payload) {
         $headLabel = $payload->pull_request->head->label;
         $labelComponents = explode(':', $headLabel);
@@ -1343,20 +1343,20 @@ class Project {
             // journal
             if ($workItem->idExists($jobNumber)
                 && $payload->pull_request->state == 'closed') {
-                
+
                 $workItem->loadById($jobNumber);
                 $pullRequestNumber = $payload->pull_request->number;
                 $pullRequestURL = $payload->pull_request->html_url;
                 $pullRequestBase = $payload->pull_request->base->label;
-                $pullRequestStatus = $payload->pull_request->merged == 'true' 
+                $pullRequestStatus = $payload->pull_request->merged == 'true'
                     ? "closed and merged"
                     : "closed but not merged";
-                $message = 
+                $message =
                     "#{$jobNumber} - Pull request {$pullRequestNumber}\n\n" .
                     "({$pullRequestURL}) has been {$pullRequestStatus} into {$pullRequestBase}";
 
                 sendJournalNotification($message);
-                
+
                 if ($payload->pull_request->merged == 'true') {
                     $journal_message = "Job #" . $jobNumber . ' has been automatically set to *Completed*';
                     sendJournalNotification($journal_message);

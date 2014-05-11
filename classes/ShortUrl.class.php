@@ -1,9 +1,9 @@
 <?php
 //  Copyright (c) 2010, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 
-/** 
+/**
  * ShortUrl
  *
  * @package ShortUrl
@@ -15,13 +15,13 @@ class ShortUrl {
     protected $shortUrl = '';
 
     protected $version = '2.0.1';
-    
+
     /**
      * Constructor
-     * 
-     * @param String $url The url to be shortened 
+     *
+     * @param String $url The url to be shortened
      */
-    public function __construct($url) 
+    public function __construct($url)
     {
         if (defined('BITLY_USERNAME')) {
             $this->login = BITLY_USERNAME;
@@ -31,7 +31,7 @@ class ShortUrl {
         }
         $this->longUrl = $url;
     }
-    
+
     /**
      * Fetch the short url from google shortener
      */
@@ -41,8 +41,6 @@ class ShortUrl {
             if (strlen($this->shortUrl) > 0) {
                 return $this->shortUrl;
             }
-            
-            
             $params = http_build_query (array(
                 'version'   => $this->version,
                 'login'     => $this->login,
@@ -50,15 +48,15 @@ class ShortUrl {
                 'longUrl'   => $this->longUrl,
                 'format'    => 'json'
             ));
-            
+
             $url = 'http://api.bit.ly/shorten?' . $params;
-            
+
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_URL, $url);
             $contents = curl_exec ($curl);
             curl_close($curl);
-            
+
             $data = json_decode($contents);
             if (! count($data->results) > 0) {
                 return '';
@@ -71,5 +69,5 @@ class ShortUrl {
         } else {
             return null;
         }
-    }    
+    }
 }

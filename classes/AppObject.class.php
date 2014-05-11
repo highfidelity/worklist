@@ -2,9 +2,9 @@
 
 class AppObject {
     static protected $values = array();
-    
+
     /**
-     * Read a value added from controller/logic side, 
+     * Read a value added from controller/logic side,
      * should be called from the view side
      */
     public function read($key, $default = null) {
@@ -15,7 +15,7 @@ class AppObject {
     }
 
     /**
-     * Add/overwrites a value to be read in the view, 
+     * Add/overwrites a value to be read in the view,
      * should be called from a controller/logic side
      */
     public function write($key, $value) {

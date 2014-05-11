@@ -102,7 +102,7 @@ class Session {
         $db = $this->getDbHandle();
         // new session-expire-time
         $newExp = time() + $this->lifeTime;
-        
+
         // is a session with this id in the database?
         $res = mysql_query("SELECT * FROM ".WS_SESSIONS."
                             WHERE session_id = '".mysql_real_escape_string($sessID)."'",$db);

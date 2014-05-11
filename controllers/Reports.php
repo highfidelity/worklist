@@ -52,7 +52,7 @@ class ReportsController extends Controller {
         $this->write('filter', $filter);
 
         if(isset($_POST['paid']) && !empty($_POST['paidList']) && !empty($_SESSION['is_payer'])) {
-            
+
             // we need to decide if we are dealing with a fee or bonus and call appropriate routine
             $fees_id = explode(',', trim($_POST['paidList'], ','));
             foreach($fees_id as $id) {
@@ -60,7 +60,7 @@ class ReportsController extends Controller {
                 $result = mysql_query($query);
                 $row = mysql_fetch_assoc($result);
                 if($row['bonus']) {
-                    bonus::markPaidById($id,$user_paid=0, $paid=1, true, $fund_id=false);           
+                    bonus::markPaidById($id,$user_paid=0, $paid=1, true, $fund_id=false);
                 } else {
                     Fee::markPaidById($id, $user_paid=0, $paid_notes='', $paid=1, true, $fund_id=false);
                 }

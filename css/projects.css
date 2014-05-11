@@ -1,9 +1,9 @@
 /*
 * Copyright (c) 2011, High Fidelity Inc.
 * All Rights Reserved.
-* 
+*
 * http://highfidelity.io
-* 
+*
 * Development History:
 * 2011-07-30   #14907      Leo
 *
@@ -149,11 +149,11 @@
         margin: 0 auto 25px;
         float: none;
     }
-    
+
     section#projects {
         text-align: center;
     }
-    
+
     #add-project,
     #all-projects {
         font-size: 16px;
@@ -198,7 +198,7 @@
 
 .headerButtons  input{
     font-weight: bold;
-} 
+}
 
 #save_project {
     float: right;
@@ -266,10 +266,10 @@
 }
 
 #popup-addproject div.addproject {
-    padding-top: 9px; 
-    padding-bottom: 9px;  
-    background-color: #E8EFF0; 
-    position: relative; 
+    padding-top: 9px;
+    padding-bottom: 9px;
+    background-color: #E8EFF0;
+    position: relative;
     float: left;
     width: 539px;
     margin-left: -22px;
@@ -278,7 +278,7 @@
 }
 
 #popup-addproject div.addproject input {
-    margin: 10px 22px !important; 
+    margin: 10px 22px !important;
     font-size: 18px;
     font-weight: normal !important;
     padding: 0 18px;
@@ -351,7 +351,7 @@
 }
 
 .addproject_img {
-    cursor: auto;  
+    cursor: auto;
 }
 
 .LV_validation_message {

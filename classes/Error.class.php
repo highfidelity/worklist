@@ -1,7 +1,7 @@
 <?php
 
 class Error {
-    
+
     protected $error;
     protected $errorMessage;
     public function __construct(){

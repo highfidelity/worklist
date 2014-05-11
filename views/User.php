@@ -162,7 +162,7 @@ class UserView extends View {
                     $feeRangeTitle ='Number of jobs the reviewer has worked on';
                     $feeText = "From a user involved in <span class='feeRange' title='" . $feeRangeTitle . "'>" .$feeRange . "</span> Worklist jobs ...";
                 }
-                $res .= 
+                $res .=
                     '<div class="listReviewElement ' . $classColor . '" title="' . $title . '">' .
                     $feeText . "<div class='reviewText'>" . $review['review'] . "</div>" .
                     '</div>' ;
@@ -174,8 +174,8 @@ class UserView extends View {
     public function disableGiveBudget() {
         $reqUser = $this->read('reqUser');
         $reqUserId = $this->read('reqUserId');
-        return 
-             (!$reqUser->isRunner() || $reqUserId == $this->profileUser->getId()) 
+        return
+             (!$reqUser->isRunner() || $reqUserId == $this->profileUser->getId())
           &&  strpos(BUDGET_AUTHORIZED_USERS, "," . $reqUserId . ",") === false;
     }
 
@@ -217,7 +217,7 @@ class UserView extends View {
     }
 
     public function userIsActive() {
-        return $this->profileUser->getIs_active() == 1;        
+        return $this->profileUser->getIs_active() == 1;
     }
 
     public function userIsSecured() {
@@ -231,11 +231,11 @@ class UserView extends View {
     public function projectsList() {
         $ret = '';
         foreach ($this->projects as $project) {
-            $ret .= 
+            $ret .=
                 '<div class="quarter-column">' .
                   '<input ';
-            if (($this->has_sandbox) && $this->profileUser->isProjectCheckedOut($project['id'])) { 
-                $ret .= 'checked="checked"  disabled="disabled" '; 
+            if (($this->has_sandbox) && $this->profileUser->isProjectCheckedOut($project['id'])) {
+                $ret .= 'checked="checked"  disabled="disabled" ';
             }
             $ret .= 'type="checkbox" id="' . $project['id'] . '" />';
             $ret .= '<input type="hidden" class="repo" value="' . $project['repo'] . '" />' . $project['name'] . '</div>';
@@ -247,7 +247,7 @@ class UserView extends View {
         $ret = '';
         if ($runnerWorkers = $this->userStats->getDevelopersForRunner()) {
             foreach($runnerWorkers as $runnerWorker) {
-                $ret .= 
+                $ret .=
                     '<tr class="row-runner-developer-list-live">' .
                         '<td class="runnerWorker">' . $runnerWorker['nickname'] . '</td>' .
                         '<td class="workerJobCount">' . $runnerWorker['totalJobCount'] . '</td>' .
@@ -262,7 +262,7 @@ class UserView extends View {
         $ret = '';
         if ($runnerProjects = $this->userStats->getProjectsForRunner()) {
             foreach($runnerProjects as $runnerProject) { +
-                $ret .= 
+                $ret .=
                     '<tr class="row-runner-project-list-live">' .
                         '<td class="runnerProject">' .$runnerProject['name'] . '</td>' .
                         '<td class="projectJobCount">' . $runnerProject['totalJobCount'] . '</td>' .

@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (saveAdmin($_POST['password'], $_POST['old_password'])) {
 	    echo 'Password Changed!';
 	} else {
-	    echo 'Error - Password NOT Changed.'; 
+	    echo 'Error - Password NOT Changed.';
 	}
     }
-} 
+}
 
 //only display the form if the page is accessed stand-alone (testing and updating only)
 if (basename($_SERVER['PHP_SELF'])=='paypal-password.php') {
@@ -50,5 +50,3 @@ if (basename($_SERVER['PHP_SELF'])=='paypal-password.php') {
 </body>
 </html>
 <?php } ?>
-
-

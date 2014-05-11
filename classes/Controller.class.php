@@ -19,7 +19,7 @@ class Controller extends AppObject {
             $this->view = new $viewName();
         }
     }
-    
+
     public function __destruct() {
         if (!$this->internal && !is_null($this->view)) {
             echo $this->view->render();

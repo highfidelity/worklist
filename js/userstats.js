@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -78,10 +78,6 @@ $(function(){
     });
 
 });
-
-
-
-
 var stats = {
 
     stats_page: 1,
@@ -223,7 +219,7 @@ var stats = {
                 if (job_type == 'following') {
                     toAppend += '<td><a href="#" id="unfollow-' + jsonjob.id + '">Un-Follow</a></td>';
                 }
-                
+
             }
             toAppend += '</tr>';
             table.append(toAppend);
@@ -232,7 +228,7 @@ var stats = {
             table.data('func', func);
             stats.appendStatsPagination(json.page, json.pages, table);
         }
-        
+
         makeWorkitemTooltip($('.workitem'));
     },
 

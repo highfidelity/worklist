@@ -89,12 +89,12 @@ var Projects = {
     },
 
     addProject: function() {
-        $('#popup-addproject').dialog({ 
-            autoOpen: false, 
+        $('#popup-addproject').dialog({
+            autoOpen: false,
             dialogClass: 'white-theme',
-            show: 'fade', 
+            show: 'fade',
             hide: 'fade',
-            maxWidth: 555, 
+            maxWidth: 555,
             width: 555,
             resizable: false
         });
@@ -216,7 +216,7 @@ var Projects = {
                         }
                     }
                 });
-            
+
                 $(this).removeAttr('disabled');
                 return false;
             });

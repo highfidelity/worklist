@@ -47,7 +47,7 @@
     color: #009999;
 }
 
-.ln-letters a.ln-selected, 
+.ln-letters a.ln-selected,
 .ln-pages a.ln-selected {
     font-weight: bold;
     background-color: #EAEAEA;

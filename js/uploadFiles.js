@@ -7,7 +7,7 @@
             }
             return this.each(function() {
                 var $this = $(this), fdata = $this.data('fileUpload');
-                if(!fdata) {  
+                if(!fdata) {
                     fdata = {};
                     fdata.user = (typeof(user_id) != 'undefined') ? user_id : '';
                     fdata.workitem = (typeof(workitem_id) != 'undefined') ? workitem_id : null;
@@ -99,15 +99,15 @@
                                         var files = $('#uploadPanel').data('files');
                                         if (data.filetype == 'image') {
                                             if(typeof(files) != "undefined") {
-                                                files.images.push(data); 
-                                            } else { 
+                                                files.images.push(data);
+                                            } else {
                                                 fdata.images.push(data.fileid);
                                             }
                                         } else {
                                             if(typeof(files) != "undefined") {
-                                                files.documents.push(data); 
-                                            } else { 
-                                                fdata.documents.push(data.fileid); 
+                                                files.documents.push(data);
+                                            } else {
+                                                fdata.documents.push(data.fileid);
                                             }
                                         }
                                         if(typeof(files) != "undefined") {
@@ -239,11 +239,11 @@
                                 };
                                 if(typeof(files) == "undefined") {
                                     $(oThis).parent().remove()
-                                }   
+                                }
                             } else {
                                 alert(json.message);
                             }
-                            
+
                         }
                     });
                 });

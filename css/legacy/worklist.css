@@ -1,6 +1,6 @@
-/*  
+/*
     Copyright (c) 2009-2010, LoveMachine Inc.
-    All Rights Reserved. 
+    All Rights Reserved.
     http://www.lovemachineinc.com
 */
 #confirmation{
@@ -105,7 +105,7 @@
 
 .rowrunner,
 .roweven.rowrunner {
-    background: #B1E1F3;    
+    background: #B1E1F3;
 }
 
 .rowmechanic,
@@ -190,7 +190,7 @@ color:#98AAB2;
 #ui-datepicker-div,
 #ui-timepicker-div
 {
-    z-index: 1100; 
+    z-index: 1100;
 }
 
 #sharethis_0    {
@@ -262,8 +262,6 @@ color:#98AAB2;
 #search-filter-section  td.textAlignReport div div{
     text-align: left;
 }
-
-
 td.textAlignReport {
     text-align: right;
     padding-top:4px;
@@ -578,7 +576,7 @@ input.button-disabled ,
     width: 420px;
     height: 180px;
 }
-#login-form .LV_validation_message, 
+#login-form .LV_validation_message,
 #phone-confirm-form .LV_validation_message {
     text-align: left;
 }
@@ -606,8 +604,6 @@ input.button-disabled ,
 #more-panel.ui-widget-content {
     background-image: none;
 }
-
-
 #w2checkbox {
     padding-top:5px;
 }
@@ -695,7 +691,7 @@ input.button-disabled ,
     height: auto;
     padding: 5px 10px;
     text-shadow: 0 1px 1px rgba(0,0,0,.3);
-    -webkit-border-radius: 1em; 
+    -webkit-border-radius: 1em;
     -moz-border-radius: 1em;
     border-radius: 1em;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
@@ -815,7 +811,7 @@ a#addJobButton {
     height: 28px;
     border-bottom: 1px solid #e5e5e5;
 }
-#worklist #left, 
+#worklist #left,
 #worklist #right {
     display: none;
 }

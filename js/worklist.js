@@ -1,7 +1,7 @@
 //  vim:ts=4:et
 //
-//  Copyright (c) 2010, LoveMachine Inc.  
-//  All Rights Reserved.  
+//  Copyright (c) 2010, LoveMachine Inc.
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 
 var activeUsersFlag=1;
@@ -15,7 +15,7 @@ function getQueryVariable(variable) {
         if (pair[0] == variable) {
           return pair[1];
         }
-    } 
+    }
 }
 
 function formatTime(x){
@@ -32,7 +32,7 @@ function formatTime(x){
     month[9] = '10';
     month[10] = '11';
     month[11] = '12';
-    
+
     today = new Date();
     today = today.setTime(x);
     return month[today.getMonth()] + '/' + today.getDate() + '/' + today.getFullYear();
@@ -46,13 +46,13 @@ function formatTime(x){
  *
  * Parameters: popupId - The id element for the block holding the popup's html
  *             titleString - The title for the popup box
- *             urlString - The URL to issue the Ajax call to 
+ *             urlString - The URL to issue the Ajax call to
  *             keyId - The database id that will be mapped to 'itemid' in the form
  *             fieldArray - An array containing the list of fields that need
  *                          to be updated on the popup box.
  *                array[0] - Type of element being populated [input|textbox|checkbox|span]
  *                array[1] - Type if of the element being populated
- *                array[2] - The value to be inserted into the element 
+ *                array[2] - The value to be inserted into the element
  *                array[3] - undefined or 'eval' - If eval the array[2] item will
  *                           be passed to eval() for working with json return objects
  *             successFunc - An optional function that gets executed after populating the fields.
@@ -73,7 +73,7 @@ function AjaxPopup(popupId,
       dataType: 'json',
       success: function(json) {
 
-        $.each(fieldArray, 
+        $.each(fieldArray,
            function(key,value){
              if(value[0] == 'input') {
                if(value[3] != undefined && value[3] == 'eval')  {
@@ -82,7 +82,7 @@ function AjaxPopup(popupId,
              $('.popup-body form input[name="' + value[1] +'"]').val( value[2] );
                }
              }
-             
+
              if(value[0] == 'textarea') {
                if(value[3] != undefined && value[3] == 'eval')  {
              $('.popup-body form textarea[name="' + value[1] +'"]').val( eval(value[2]) );
@@ -90,15 +90,15 @@ function AjaxPopup(popupId,
              $('.popup-body form textarea[name="' + value[1] +'"]').val( value[2] );
                }
              }
-             
+
              if(value[0] == 'checkbox') {
                if(value[3] != undefined && value[3] == 'eval')  {
-             $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ eval(value[2])+'"]').prop('checked', true);         
+             $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ eval(value[2])+'"]').prop('checked', true);
                } else {
-             $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ value[2] +'"]').prop('checked', true);         
+             $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ value[2] +'"]').prop('checked', true);
                }
              }
-             
+
              if(value[0] == 'span')  {
                if(value[3] != undefined && value[3] == 'eval')  {
              $('.popup-body form ' + value[1]).text( eval(value[2]) );
@@ -113,14 +113,12 @@ function AjaxPopup(popupId,
         }
             }
     });
-
-  
 }
 
 /*
  *   Function: SimplePopup
  *
- *    Purpose: This function is used for popups that do not require additional 
+ *    Purpose: This function is used for popups that do not require additional
  *             calls to the server to grab data.
  *
  * Parameters: popupId - The id element for the block holding the popup's html
@@ -130,7 +128,7 @@ function AjaxPopup(popupId,
  *                          to be updated on the popup box.
  *                array[0] - Type of element being populated [input|textbox|checkbox|span]
  *                array[1] - Type if of the element being populated
- *                array[2] - The value to be inserted into the element 
+ *                array[2] - The value to be inserted into the element
  *                array[3] - undefined or 'eval' - If eval the array[2] item will
  *                           be passed to eval() for working with json return objects
  *             successFunc - An optional function that gets executed after populating the fields.
@@ -144,7 +142,7 @@ function SimplePopup(popupId,
 {
   $(popupId).data('title.dialog', titleString);
 
-  $.each(fieldArray, 
+  $.each(fieldArray,
      function(key,value){
        if(value[0] == 'input') {
          if(value[3] != undefined && value[3] == 'eval')  {
@@ -153,7 +151,7 @@ function SimplePopup(popupId,
            $('.popup-body form input[name="' + value[1] +'"]').val( value[2] );
          }
        }
-       
+
        if(value[0] == 'textarea') {
          if(value[3] != undefined && value[3] == 'eval')  {
            $('.popup-body form textarea[name="' + value[1] +'"]').val( eval(value[2]) );
@@ -161,15 +159,15 @@ function SimplePopup(popupId,
            $('.popup-body form textarea[name="' + value[1] +'"]').val( value[2] );
          }
        }
-       
+
        if(value[0] == 'checkbox') {
          if(value[3] != undefined && value[3] == 'eval')  {
-           $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ eval(value[2])+'"]').prop('checked', true);         
+           $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ eval(value[2])+'"]').prop('checked', true);
          } else {
-           $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ value[2] +'"]').prop('checked', true);         
+           $('.popup-body form checkbox[name="' + value[1] +'"] option[value="'+ value[2] +'"]').prop('checked', true);
          }
        }
-       
+
        if(value[0] == 'span')  {
          if(value[3] != undefined && value[3] == 'eval')  {
            $('.popup-body form ' + value[1]).text( eval(value[2]) );
@@ -177,7 +175,7 @@ function SimplePopup(popupId,
            $('.popup-body form ' + value[1]).text( value[2] );
          }
        }
-       
+
      });
 
   if(successFunc !== undefined) {
@@ -197,7 +195,7 @@ var getPosFromHash = function(){
             hash = hashes[i].split('=');
             vars.push(hash[0]);
             vars[hash[0]] = unescape(hash[1]);
-        }            
+        }
     }
     return vars;
 };
@@ -210,11 +208,9 @@ $(function() {
             window.location = './user/' + newHash['userid'];
         },2000);
     }
-    
+
 });
-
-
-// function to bind hide and show events for the active only divs 
+// function to bind hide and show events for the active only divs
 // bind to the showing and hiding of project and user lists
 $(function() {
 /*
@@ -232,7 +228,7 @@ $(function() {
 
 function applyPopupBehavior() {
 
-    $('a.attachment').unbind('click');    
+    $('a.attachment').unbind('click');
     $('a.attachment').live('click', function(e) {
         var dialogUrl = $(this).attr('href');
         e.preventDefault();
@@ -241,7 +237,7 @@ function applyPopupBehavior() {
         } else if ($('#dialogImage').length == 0) {
             $('<img id="dialogImage" src="'+dialogUrl+'" title="Preview">').dialog({
                     modal: true,
-                    hide: 'drop', 
+                    hide: 'drop',
                     resizable: false,
                     width: 'auto',
                     height: 'auto',
@@ -249,15 +245,15 @@ function applyPopupBehavior() {
                     open:function(evt){
                         $(this).parent().css('opacity','0');
                         storeCursorStatus = new Array();
-                        
+
                         $(evt.target).load(function() {
                                 var image = $(this);
                                 // get image size
-                                var origWidt = parseInt(image.naturalWidth);  
+                                var origWidt = parseInt(image.naturalWidth);
                                 var origHeig = parseInt(image.naturalHeight);
                                 if (!origWidt || !origHeig) {
                                     var origWidt = parseInt(image.width());
-                                    var origHeig = parseInt(image.height()); 
+                                    var origHeig = parseInt(image.height());
                                 }
                                 var padding = 20;
                                 var imageMargin = 12;
@@ -272,7 +268,7 @@ function applyPopupBehavior() {
                                 var left = ($(window).width() - image.width())/2 - imageMargin;
                                 dialog.css({
                                     'top': top,
-                                    'left': left 
+                                    'left': left
                                 });
                                 if (ratio < 1) {
                                     zoom='('+Math.round(ratio*100)+'%)';
@@ -294,19 +290,19 @@ function applyPopupBehavior() {
                         });
                     },
                     resizeStart : function(){
-                        $(this).parent().find('.dialogZoom').html(''); 
+                        $(this).parent().find('.dialogZoom').html('');
                     },               // hide srink percentage on resize
                     dragStop : function(evt){
                         var dialog = $(evt.target);                                     // check if not out of screen
                     },
                     close: function(event, ui) {
                         $(this).dialog('destroy').remove();
-                    } 
-                }); 
+                    }
+                });
             }
             return false;
     });
-    
+
     $('a.docs').live('click', function(e) {
         if ($(this).attr('href') == "javascript:;") {
             alert($(this).data('error_message'));
@@ -334,7 +330,7 @@ function createActiveFilter(elId, filter, active) {
         el.data('filterCreated', 'true');
         el.bind({
             'beforeshow newlist': function(e, o) {
-                
+
                 // check if the div for the active only button has already been created
                 // create it if it hasn't
                 var cbId = $(this).attr('id');
@@ -342,7 +338,7 @@ function createActiveFilter(elId, filter, active) {
                     $(this).data('filterName', '.worklist');
                     $(this).data('activeFlag', active);
                     var div = $('<div/>').attr('id', 'activeBox-' + cbId);
-    
+
                     div.attr('class', 'activeBox');
                     // now we add a function which gets called on click
                     div.click(function(e) {
@@ -367,10 +363,10 @@ function createActiveFilter(elId, filter, active) {
                             // on success we update the list
                             success: $.proxy(o.setupNewList, o)
                         });
-                    });                    
+                    });
                     $(this).next().append(div);
                 }
-                
+
                 // set up the label and checkbox to be placed in the div
                 var label = $('<label/>').css('color', '#ffffff').attr('for', 'onlyActive-'+ cbId);
                 var checkbox = $('<input/>').attr({
@@ -378,19 +374,19 @@ function createActiveFilter(elId, filter, active) {
                     id: 'onlyActive-' + cbId,
                     class: 'onlyActiveCheckbox'
                 });
-    
+
                 // update the checkbox
                 if (el.data('activeFlag')) {
                     checkbox.prop('checked', true);
                 } else {
                     checkbox.prop('checked', false);
                 }
-                
+
                 // put the label + checkbox into the div
                 label.text(' Active only');
                 label.prepend(checkbox);
                 $('#activeBox-' + cbId).html(label);
-                
+
                 // add fading effect to the selected item shown as the list caption
                 if ($('#container-' + cbId + ' > .fading').length == 0) {
                     $('#container-' + cbId).append('<div class="fading"></div>');
@@ -408,7 +404,7 @@ function createActiveFilter(elId, filter, active) {
                     width: $('#activeBox-' + cbId).prev().outerWidth()
                 });
                 $('#activeBox-' + cbId).show();
-            } 
+            }
         });
         el.bind({
             'listClose': function(e,o) {

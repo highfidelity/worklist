@@ -8,7 +8,7 @@ $(function() {
 var Workitem = {
 
     sandbox_url: '',
-    
+
     init: function() {
         $("#view-sandbox").click(function() {
             if (repo_type == 'git') {
@@ -19,12 +19,12 @@ var Workitem = {
                     workitem_id: workitem_id
                 });
             }
-        });       
+        });
     },
-    
+
     openDiffPopup: function(options) {
         if ($("#diffUrlDialog").length == 0) {
-            $("<div id='diffUrlDialog' class='popup-body'><div class='content'>Loading ...</div></div>").appendTo("body"); 
+            $("<div id='diffUrlDialog' class='popup-body'><div class='content'>Loading ...</div></div>").appendTo("body");
             $("#diffUrlDialog").data("options", options);
             $('#diffUrlDialog').dialog({
                 dialogClass: 'white-theme',
@@ -47,7 +47,7 @@ var Workitem = {
                                 Workitem.fillDiffPopup();
                             } else {
                                 $(this).dialog("close");
-                            }                           
+                            }
                         }
                     }
                 ],
@@ -60,11 +60,11 @@ var Workitem = {
             });
         } else {
             $("#diffUrlDialog").data("options", options);
-            $("#diffUrlDialog .content").html("");                       
+            $("#diffUrlDialog .content").html("");
         }
         $("#diffUrlDialog").dialog("open");
     },
-    
+
     fillDiffPopup: function() {
         var options = $("#diffUrlDialog").data("options");
         $("#diffUrlDialog .content").load("api.php #urlContent", {
@@ -72,8 +72,6 @@ var Workitem = {
             method: 'getDiffUrlView',
             sandbox_url: options.sandbox_url,
             workitem_id: options.workitem_id
-        });        
+        });
     }
-    
-    
 }

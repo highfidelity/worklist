@@ -26,9 +26,9 @@ var Budget = {
                         setTimeout(function() {
                             alert(json.message);
                             Budget.budgetHistory({
-                                inDiv: "tabs", 
-                                id: $('#userid').val(), 
-                                page: 1 
+                                inDiv: "tabs",
+                                id: $('#userid').val(),
+                                page: 1
                             });
                         }, 50);
                         $("#isrunner").prop('checked', true);
@@ -92,7 +92,7 @@ var Budget = {
         });
         $('#budget-source-combo').chosen({width: 'auto'});
     },
-    
+
     budgetHistory: function(options) {
         if (!options.page) {
             var lastPage = $("#" + options.inDiv + " #budgetHistoryContent").data("lastPage");
@@ -123,7 +123,7 @@ var Budget = {
         });
 
     },
-    
+
     initAddFunds: function() {
         var budget_seed = $('#add-funds-modal input[name="budget-seed"]').val() != 0 ? 1 : 0;
         if (budget_seed) {
@@ -134,7 +134,7 @@ var Budget = {
             $('#add-funds-modal #budget-source-combo-area').show();
         }
         $('#add-funds-modal select[name="budget-source-combo"]').chosen({width: 'auto'});
-        $("#amountToAdd").blur(function(){ 
+        $("#amountToAdd").blur(function(){
             var amountToAdd = parseFloat($("#amountToAdd").val()),
                 budgetAmount = parseFloat($('#budget-update-modal input[name="amount"]').val().replace('$', ''));
             if (!isNaN(amountToAdd + budgetAmount)) {
@@ -169,9 +169,9 @@ var Budget = {
                         setTimeout(function() {
                             alert(json.message);
                             Budget.budgetHistory({
-                                inDiv: "tabs", 
-                                id: $('#userid').val(), 
-                                page: 1 
+                                inDiv: "tabs",
+                                id: $('#userid').val(),
+                                page: 1
                             });
                         }, 50);
                         $("#isrunner").prop('checked', true);
@@ -191,7 +191,7 @@ var Budget = {
         });
 
     },
-    
+
     initUpdateDialog: function() {
         $('#addFundsButton').click(function(){
             $('#budget-update-modal').modal('hide');
@@ -220,7 +220,7 @@ var Budget = {
                 }
             });
             return false;
-        });  
+        });
         $("#updateButton").click(function() {
             $.ajax({
                 type: "POST",
@@ -237,7 +237,7 @@ var Budget = {
                     if (json && json.succeeded) {
                         $('#budget-update-modal').modal("hide");
                         Budget.budgetHistory({
-                            inDiv: "tabs", 
+                            inDiv: "tabs",
                             id: $('#userid').val()
                         });
                      } else {
@@ -263,7 +263,7 @@ var Budget = {
                     if (json && json.succeeded) {
                         $('#budget-update-modal').modal("hide");
                         Budget.budgetHistory({
-                            inDiv: "tabs", 
+                            inDiv: "tabs",
                             id: $('#userid').val()
                         });
                      } else {
@@ -276,7 +276,7 @@ var Budget = {
             });
         });
     },
-    
+
     initBudgetList: function() {
         $('#budgetAllocated > td').click(function() {
             var budgetId = $('#budget-update-modal').data("budgetId");
@@ -318,17 +318,17 @@ var Budget = {
                         $('#budget-sources-table > table > tbody > tr').remove();
                         for(var i=0; i< data.sources.length; i++) {
                             var source = data.sources[i];
-                            html = 
+                            html =
                                 '<tr>' +
                                 '  <td>' + source.transfer_date + '</td>' +
                                 '  <td>' + source.nickname + '</td>' +
                                 '  <td>' + source.amount_granted + '</td>' +
-                                '  <td>' + 
+                                '  <td>' +
                                     (
-                                        data.seed == 0 
+                                        data.seed == 0
                                             ?  'Budget ID: ' + source.budget_id + ' - ' + source.reason
                                             :  'Seed Budget: ' + source.source_data
-                                    ) + 
+                                    ) +
                                 '</td>' +
                                 '</tr>';
                             $(html).appendTo('#budget-sources-table > table > tbody');
@@ -361,12 +361,12 @@ var Budget = {
             return false;
         });
     },
-    
+
     displayHistory: function(user_id) {
         $('#budgetPopup').dialog('close');
         window.location = './user/' + user_id + '&tab=tabBudgetHistory';
     },
-        
+
     /**
     * Show a dialog with expanded info on the selected @section
     * Sections:
@@ -383,7 +383,7 @@ var Budget = {
         $('#be-search-field').keyup(function() {
             // Search current text in the table by hiding rows
             var search = $(this).val().toLowerCase();
-            
+
             $('.data_row').each(function() {
                 var html = $(this).text().toLowerCase();
                 // If the Row doesn't contain the pattern hide it
@@ -400,7 +400,7 @@ var Budget = {
         $('#bet-search-field').keyup(function() {
             // Search current text in the table by hiding rows
             var search = $(this).val().toLowerCase();
-            
+
             $('.data_row').each(function() {
                 var html = $(this).text().toLowerCase();
                 // If the Row doesn't contain the pattern hide it
@@ -469,7 +469,7 @@ var Budget = {
         $('#budget-transfer').dialog('option', 'position', ['center', 'center']);
         $('#budget-transfer').dialog('option', 'dialogClass', 'white-theme');
         $('#budget-transfer').addClass('table-popup');
-        $('#budget-transfer').dialog('open'); 
+        $('#budget-transfer').dialog('open');
     },
 
     be_attachEvents: function(section, budget_id) {
@@ -525,12 +525,12 @@ var Budget = {
 		} else {
 			table = '#table-budget-expanded';
 		}
-		
+
         var header = $(table).children()[0];
         $(table).children().remove();
         $(table).append(header);
         Budget.be_attachEvents(section, budget_id);
-        
+
         var params = '?action=manageBudget&section=' + section + '&budget_id=' + budget_id;
         var sortby = '';
         // If we've got an item sort by it
@@ -542,12 +542,12 @@ var Budget = {
             // Fill the table
             for (var i = 0; i < data.length; i++) {
                 if (section == 3 ) {
-                    var row = 
+                    var row =
                         '<tr class="data_row">' +
                         '    <td>#' + data[i].id + '</td>' +
                         '    <td title="' + data[i].budget_title + '">' +
                         '        ' + data[i].budget_title +
-                        '    </td>' + 
+                        '    </td>' +
                         '    <td>' + data[i].notes + '</td>' +
                         '    <td>' +
                         '        <a href="./user/' + data[i].receiver_id + '" >' + data[i].who + '</a>' +
@@ -570,15 +570,15 @@ var Budget = {
                         who_link += who[z];
                     }
 
-                    var row = 
+                    var row =
                         '<tr class="data_row">' +
                         '    <td>' + link + '#' + data[i].id + '</a></td>' +
                         '    <td title="' + data[i].budget_title + '">' +
-                        '        ' + data[i].budget_id + 
-                        '    </td>' + 
-                        '    <td>' + link + data[i].summary + '</a></td>' + 
-                        '    <td>' + who_link + '</td>' + 
-                        '    <td>$' + data[i].amount + '</td>' + 
+                        '        ' + data[i].budget_id +
+                        '    </td>' +
+                        '    <td>' + link + data[i].summary + '</a></td>' +
+                        '    <td>' + who_link + '</td>' +
+                        '    <td>$' + data[i].amount + '</td>' +
                         '    <td>' + data[i].status + '</td>' +
                         '    <td>' + data[i].created + '</td>' +
                         '    <td>' + data[i].paid + '</td>' +
@@ -600,12 +600,12 @@ var Budget = {
         if (item.hasClass('desc')) {
             desc = false;
         }
-        
+
         // Cleanup sorting
         Budget.be_cleaupTableSorting();
         item.removeClass('asc');
         item.removeClass('desc');
-        
+
         // Add arrow
         var arrow_up = '<div style="float:right;">'+
                        '<img src="images/arrow-up.png" height="15" width="15" alt="arrow"/>'+
@@ -629,7 +629,7 @@ var Budget = {
 
     be_cleaupTableSorting: function() {
         $('#be-id').children().remove();
-        $('#be-budget').children().remove();		
+        $('#be-budget').children().remove();
         $('#be-summary').children().remove();
         $('#be-who').children().remove();
         $('#be-amount').children().remove();
@@ -637,7 +637,7 @@ var Budget = {
         $('#be-created').children().remove();
         $('#be-paid').children().remove();
         $('#bet-id').children().remove();
-        $('#bet-budget').children().remove();		
+        $('#bet-budget').children().remove();
         $('#bet-notes').children().remove();
         $('#bet-who').children().remove();
         $('#bet-amount').children().remove();

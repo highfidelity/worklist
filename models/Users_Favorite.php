@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -13,24 +13,24 @@ class Users_Favorite extends DataObject {
     public $user_id;
     public $favorite_user_id;
     public $enabled;
-    
+
     public $table_name;
-    
+
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct();
-        
+
         $this->table_name = USERS_FAVORITES;
     }
-    
+
     /**
      * Destructor
      */
     public function __destruct() {
         parent::__destruct();
-    }   
+    }
 
     /* return the number of people who have this user as a favourite */
     public function getUserFavoriteCount($userid) {
@@ -50,7 +50,7 @@ class Users_Favorite extends DataObject {
         }
         return $userData;
     }
-    
+
     /* return an array with ids of $user_id's favorite users */
     public function getFavoriteUsers($user_id) {
         $user_id = (int)$user_id;
@@ -63,7 +63,7 @@ class Users_Favorite extends DataObject {
         }
         return $userData;
     }
-    
+
     public function getMyFavoriteForUser($my_userid, $userid) {
         $my_userid = intval($my_userid);
         $userid = intval($userid);
@@ -80,7 +80,7 @@ class Users_Favorite extends DataObject {
                 if ($length > 0) {
                     $ret['favorite'] = $objectData['data'][0]['enabled'];
                     $ret['record'] = true;
-                } 
+                }
             }
         } else {
             $ret['error'] = "dbFetchArray returns null value";
@@ -92,7 +92,7 @@ class Users_Favorite extends DataObject {
         $my_userid = intval($my_userid);
         $userid = intval($userid);
         $favorite = intval($favorite);
-        
+
         // make sure the user isn't favoriting himself/herself
         if ($my_userid == $userid) {
             return "You cannot be a favorite of yourself!";
@@ -103,22 +103,22 @@ class Users_Favorite extends DataObject {
             return $current['error'];
         }
         if ( isset($current['record']) && $current['record'] == true ) {
-            $sql = "UPDATE " . $this->table_name . " SET  enabled = {$favorite} 
+            $sql = "UPDATE " . $this->table_name . " SET  enabled = {$favorite}
                         WHERE favorite_user_id = {$userid} AND user_id = {$my_userid};";
         } else {
             $sql = "INSERT INTO " . $this->table_name . " (user_id, favorite_user_id, enabled) VALUES
                         ({$my_userid}, {$userid}, {$favorite});";
-        }        
+        }
         if ($this->dbUpdate($sql)!== true) {
             $this->handleError($this->link->error, $sql);
         }
         return "";
     }
-    
+
     public function insertNewSkill($values) {
         return $this->dbInsert($values);
     }
-    
+
     public function updateSkill($sql) {
         return $this->dbUpdate($sql);
     }

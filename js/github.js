@@ -2,11 +2,11 @@ var GitHub = {
     isConnected: false,
     token: false,
     applicationKey: false,
-    
+
     validate: function() {
         return GitHub.isConnected;
     },
-    
+
     handleUserConnect: function(autoclose) {
         var client_id = GitHub.applicationKey;
         var redirect_uri = worklistUrl + 'github/connect?job=' + workitem_id;

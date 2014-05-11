@@ -1,7 +1,7 @@
 /**
- * Legacy css behaviors, in transition, this code were copied from old common js files 
+ * Legacy css behaviors, in transition, this code were copied from old common js files
  * and should be moved/chaged the right way, but will temporarily live here until that.
- */  
+ */
 
 function gradient(id, level)
 {
@@ -13,9 +13,7 @@ function gradient(id, level)
 	box.style.display="block";
 	return;
 }
-
-
-function fadein(id) 
+function fadein(id)
 {
 	var level = 0;
 	while(level <= 1)
@@ -24,31 +22,25 @@ function fadein(id)
 		level += 0.01;
 	}
 }
-
-
 // Open the lightbox
-
-
 function openbox(formtitle, fadin)
 {
-  var box = document.getElementById('box'); 
+  var box = document.getElementById('box');
   document.getElementById('filter').style.display='block';
 
  // var btitle = document.getElementById('boxtitle');
   //btitle.innerHTML = formtitle;
-  
+
   if(fadin)
   {
 	 gradient("box", 0);
 	 fadein("box");
   }
   else
-  { 	
+  {
     box.style.display='block';
-  }  	
+  }
 }
-
-
 // Close the lightbox
 
 function closebox()

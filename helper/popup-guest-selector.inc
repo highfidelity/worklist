@@ -18,4 +18,4 @@ I talk too much!
 I talk too much!
 	    </div>
 	</div>
-    </div><!-- End of popup for penalize user --> 
+    </div><!-- End of popup for penalize user -->

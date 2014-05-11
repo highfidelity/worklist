@@ -133,14 +133,12 @@ body > .container-fluid h3 {
 .about {
     margin-top: -3px;
 }
-
-
 #globalinfo > div > .info-label:first-child {
     color: #007F7C;
     font-size: 14px;
     margin-top: 21px;
     line-height: 17px;
-    padding-bottom: 12px;    
+    padding-bottom: 12px;
 }
 
 #globalinfo > div > .info-label:first-child a,

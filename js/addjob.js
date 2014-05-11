@@ -1,4 +1,4 @@
-$(function() {    
+$(function() {
     var submitIsRunning;
 
     $("#bug_job_id").blur(function() {
@@ -48,22 +48,22 @@ $(function() {
             }
         }
     });
-    
+
     $('select[name="itemProject"]').chosen();
     $('select[name="status"]').chosen();
-    
+
     var imageArray = new Array();
     var documentsArray = new Array();
     $('#addaccordion').fileUpload({images: imageArray, documents: documentsArray});
 
     var autoArgs = autocompleteMultiple('getuserslist', null);
     $("#invite").bind("keydown", autoArgs.bind);
-    $("#invite").autocomplete(autoArgs);  
-    
+    $("#invite").autocomplete(autoArgs);
+
     var autoArgsSkills = autocompleteMultiple('getskills', skillsSet),
         hasAutocompleter = false;
     $("#skills").bind("keydown", autoArgsSkills.bind);
-    $("#skills").autocomplete(autoArgsSkills);  
+    $("#skills").autocomplete(autoArgsSkills);
     hasAutocompleter = true;
 
     $('form#addJob').submit(function(event){
@@ -78,7 +78,7 @@ $(function() {
 
         var itemProject = new LiveValidation('itemProjectCombo');
         itemProject.add(Validate.Exclusion, {
-            within: ['select'], 
+            within: ['select'],
             partialMatch: true,
             failureMessage: "You have to choose a project!"
         });
@@ -89,7 +89,7 @@ $(function() {
             submitIsRunning = false;
             return false;
         }
-        
+
         $.ajax({
             url: 'api.php',
             dataType: 'json',

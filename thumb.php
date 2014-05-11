@@ -35,8 +35,6 @@ class thumber {
       * @var string
       */
      var $updated;
-     
-     
      /**
       * This is the requested width
       * @var int
@@ -52,13 +50,13 @@ class thumber {
       * @var int 1|0
       */
      var $zoom_crop;
-     
+
      /**
       * This is the database object used to query the database
       * @var $db OBJECT
       */
      var $db;
-     
+
      /**
       * This var holds an array of finerControl objects that represents
       * settings which we should NOT cache
@@ -71,7 +69,7 @@ class thumber {
       * @var array
       */
      var $whitelist;
-     
+
      /***
       * Constructor
       * Handles file requests, does initial checking to the server
@@ -79,20 +77,20 @@ class thumber {
      public function __construct() {
           // make sure the system has support for what we need
           $this->initialChecks();
-          
+
           $this->width = ( int ) $_REQUEST ["w"];
           $this->height = ( int ) $_REQUEST ["h"];
           $this->zoom_crop = isset($_REQUEST ["zc"]) ? 1 : 0;
-          
+
           /**
           // example of files that the script will NOT cache
           $this->blacklist = array (
                // don't cache files with width = 0 and height =0
-               new finerControl(0,0), 
+               new finerControl(0,0),
                // don't cache any files that are request from IP 10.10.10.10
                new finerControl(NULL,NULL,"10.10.10.10")
           );
-          
+
           // example of files that the script will cache
           $this->whitelist = array (
                // cache files with width = 150 and height = 150 from any IP
@@ -105,7 +103,7 @@ class thumber {
           $this->db = new Database();
           $this->getImage();
      }
-     
+
      /**
       * Does checks to find out of system has support for us
       * and also makes sure that the request has all the info we need
@@ -128,7 +126,7 @@ class thumber {
                $this->displayError('Dimensions exceed '.MAX_THUMB_SIZE.'px');
           }
      }
-     
+
      /**
       * This function looks if the image exists in the database
       * with the added requirements. If it exists the image is outputed.
@@ -170,7 +168,7 @@ class thumber {
                }
           }
      }
-     
+
      /**
       * Compares the image to the passed list
       * @param array $list
@@ -192,7 +190,7 @@ class thumber {
                if (isset($fControl->height) && $fControl->height == $this->height) {
                     $hMatch = true;
                }
-               
+
                if ($ipMatch && $wMatch && $hMatch) {
                     return true;
                } else if ($ipMatch && $wMatch) {
@@ -223,7 +221,7 @@ class thumber {
           }
           return false;
      }
-     
+
      /**
       * Checks to see if we should cache file
       */
@@ -236,7 +234,7 @@ class thumber {
                return false;
           }
      }
-     
+
      /**
       * Saves the cache to the database
       * @param string $image
@@ -244,10 +242,10 @@ class thumber {
      protected function createCache($image) {
 	//GJ:BUG?:WHere is this image value being untainted? should value be bound/encdoed?
           $sql = "INSERT INTO " . ALL_ASSETS . " " . "(`app`, `content_type`, `content`, `filename`, `created`,) " . "VALUES('".WORKLIST."', 'image/png','" . $image . "', '" . $this->buildImageName($this->filename) . "', NOW())";
-          
+
           $this->db->query($sql);
      }
-     
+
      /**
       * Builds the image name
       * @param string $im
@@ -256,7 +254,7 @@ class thumber {
      protected function buildImageName($im) {
           return $im . "w:" . $this->width . "h:" . $this->height;
      }
-     
+
      /**
       * Checks to see if image exists in the database
       * @param string $imageName
@@ -265,7 +263,7 @@ class thumber {
      protected function imageExists($imageName) {
           $sql = "SELECT * FROM " . ALL_ASSETS . " WHERE filename = '" . mysql_real_escape_string($imageName,$this->db->getLink()) . "'";
           $res = $this->db->query($sql);
-          
+
           if (mysql_num_rows($res) > 0) {
                $this->assignImageProperties(mysql_fetch_assoc($res));
                return true;
@@ -273,7 +271,7 @@ class thumber {
                return false;
           }
      }
-     
+
      /**
       * Populates class data members
       * @param array $properties
@@ -285,7 +283,7 @@ class thumber {
                }
           }
      }
-     
+
      /**
       * Outputs the image to the browser with proper header
       * @param bool|image resource $im
@@ -306,18 +304,18 @@ class thumber {
                imagedestroy($im);
           }
      }
-     
+
      /**
       * generic error message
       */
      protected function displayError($errorString = '') {
-          
+
           header('HTTP/1.1 400 Bad Request');
           echo '<pre>' . $errorString . '</pre>';
           die();
-     
+
      }
-     
+
      /*
 	 * The code below is based on:
  	 * TimThumb script created by Tim McDaniels and Darren Hoyt with tweaks by Ben Gillbanks
@@ -327,21 +325,21 @@ class thumber {
           // Get original width and height
           $width = imagesx($im);
           $height = imagesy($im);
-          
+
           // generate new w/h if not provided
           if ($this->width && ! $this->height) {
-               
+
                $this->height = $height * ($this->width / $width);
-          
+
           } elseif ($this->height && ! $this->width) {
-               
+
                $this->width = $width * ($this->height / $height);
-          
+
           } elseif (! $this->width && ! $this->height) {
-               
+
                $this->width = $width;
                $this->height = $height;
-          
+
           }
           // create a new true color image
           $canvas = imagecreatetruecolor($this->width,$this->height);
@@ -352,35 +350,33 @@ class thumber {
           imagefill($canvas,0,0,$color);
           // Restore transparency blending
           imagesavealpha($canvas,true);
-          
+
           if ($this->zoom_crop == 1) {
-               
+
                $src_x = $src_y = 0;
                $src_w = $width;
                $src_h = $height;
-               
+
                $cmp_x = $width / $this->width;
                $cmp_y = $height / $this->height;
-               
-               // calculate x or y coordinate and width or height of source
-               
 
+               // calculate x or y coordinate and width or height of source
                if ($cmp_x > $cmp_y) {
-                    
+
                     $src_w = round(($width / $cmp_x * $cmp_y));
                     $src_x = round(($width - ($width / $cmp_x * $cmp_y)) / 2);
-               
+
                } elseif ($cmp_y > $cmp_x) {
-                    
+
                     $src_h = round(($height / $cmp_y * $cmp_x));
                     $src_y = round(($height - ($height / $cmp_y * $cmp_x)) / 2);
-               
+
                }
-               
+
                imagecopyresampled($canvas,$im,0,0,$src_x,$src_y,$this->width,$this->height,$src_w,$src_h);
-          
+
           } else {
-               
+
                if ($width > $height) {
                     $factor = ( float ) $this->width / ( float ) $width;
                     $newer_height = $factor * $height;
@@ -390,13 +386,13 @@ class thumber {
                     $newer_width = $factor * $width;
                     $newer_height = $this->height;
                }
-               
+
                $new_x = ($this->width - $newer_width) / 2;
                $new_y = ($this->height - $newer_height) / 2;
-               
+
                // copy and resize part of an image with resampling
                imagecopyresampled($canvas,$im,$new_x,$new_y,0,0,$newer_width,$newer_height,$width,$height);
-          
+
           }
           return $canvas;
      }

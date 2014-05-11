@@ -14,9 +14,9 @@ var dateChangedUsingField = false; // True  if the date was changed using date f
     *
     */
     function withdraw_fee(fee_id) {
-        var ajax_connection = $.get('api.php', 
+        var ajax_connection = $.get('api.php',
             {
-                action: 'wdFee', 
+                action: 'wdFee',
                 wd_fee_id: fee_id
             },
             function(data) {
@@ -76,8 +76,6 @@ function AppendPagination(page, cPages, table) {
         $('.table-' + table).append(pagination);
     }
 }
-
-
 // json row fields: id, summary, status, payee, fee
 function AppendRow(json, odd) {
     var pre = '', post = '';
@@ -605,7 +603,7 @@ $(document).ready(function(){
             toDate = fmtDate(_toDate);
         }
         if(currentTab == 0) {
-            location.href = 
+            location.href =
                 './reports?reload=false&view=details&user=' + $('select[name=user]').val()
               + '&status=' + $('select[name=status]').val()
               + '&project_id=' + $('select[name=project]').val()
@@ -621,7 +619,7 @@ $(document).ready(function(){
               + '&activeRunners=0'
               + '&activeUsers=0';
         } else if(currentTab == 1) {
-            location.href = 
+            location.href =
                 './reports?reload=false&view=chart&user=' + $('select[name=user]').val()
               + '&status=' + $('select[name=status]').val()
               + '&project_id=' + $('select[name=project]').val()
@@ -637,7 +635,7 @@ $(document).ready(function(){
               + '&activeRunners=0'
               + '&activeUsers=0';
         } else if(currentTab == 2) {
-            location.href = 
+            location.href =
                 './reports?reload=false&view=payee&user=' + $('select[name=user]').val()
               + '&status=' + $('select[name=status]').val()
               + '&project_id=' + $('select[name=project]').val()

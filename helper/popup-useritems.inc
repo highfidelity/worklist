@@ -4,4 +4,4 @@
 		    <div class = "item-entry">
 		    </div>
 		</div>
-    </div><!-- End of popup-useritems --> 
+    </div><!-- End of popup-useritems -->

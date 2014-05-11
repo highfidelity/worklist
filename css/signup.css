@@ -10,15 +10,13 @@
 }
 
 /**
- * validation messages 
+ * validation messages
  */
 .LV_validation_message {
     position: absolute;
     font-size: .8em;
     color: #ff5582;
 }
-
-
 @media (max-width: 480px) {
     select {
         width: 100% !important;

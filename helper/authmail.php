@@ -1,6 +1,6 @@
 <?php
 //  Copyright (c) 2009-2011, LoveMachine Inc.
-//  All Rights Reserved. 
+//  All Rights Reserved.
 //  http://www.lovemachineinc.com
 //
 
@@ -9,8 +9,6 @@
 require_once ("Mail.php");
 
 //send_authmail(array('server'=>'localhost','sender'=>'authuser'),$to,$subject,$body,'');
-
-
 function send_authmail($auth,$to,$subject,$body,$headers) {
  if ((empty($to)) || !is_array($auth) || (!empty($headers) && !is_array($headers)) || empty($to) || empty($body)) {
   error_log("failing send_auth: ".json_encode(array('auth'=>$auth,'to'=>$to,'subject'=>$subject,'headers'=>$headers)));
@@ -27,8 +25,6 @@ global $mail_user;
 
 //error_log("sender: ".$auth['sender']);
 //error_log("mailuser: ".$mail_user[$auth['sender']]['from']);
-
-
 if (!empty($mail_auth)) {reset($mail_auth);}
 if (!empty($mail_user)) {reset($mail_user);}
 
@@ -97,10 +93,6 @@ if (!isset($headers['Content-Type'])) {
   //error_log("Content-Type defined before authmail called");
   $oldheaders.="Content-Type: ".$headers['Content-Type']."\n";;
 }
-
-  
-
-
 if (isset($auth['server']) && isset($mail_auth[$auth['server']])) {
   //error_log("authmail imported using mailauth=".$auth['server']);
   $smtpauth=$mail_auth[$auth['server']];
@@ -114,11 +106,9 @@ error_log("smtp by sendmail - this should probably be fixed");
   $ret = mail($to,$subject,$body,$oldheaders);
   return $ret;
 }
-
-
 //  error_log("debug send_auth: ".json_encode(array('config'=>$smtpauth,'auth'=>$auth,'to'=>$to,'subject'=>$subject,'headers'=>$headers)));
 
-    if (class_exists('Mail')) {   
+    if (class_exists('Mail')) {
         $smtp = Mail::factory('smtp',$smtpauth);
         $mail = $smtp->send($to, $headers, $body);
         //@$smtp->send($to, $headers, $body);
@@ -129,7 +119,7 @@ error_log("smtp by sendmail - this should probably be fixed");
             error_log($mail->getMessage());
             //error_log("false");
             return false;
-         }  
+         }
             //error_log("mail: true".$mail);
        return true;
     } else { error_log("authsmtp.php: Mail class does not existi - email is failing");

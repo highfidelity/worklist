@@ -34,6 +34,6 @@ class PasswordController extends Controller {
             }
         }
         $this->write('msg', $msg);
-        parent::run();        
+        parent::run();
     }
 }

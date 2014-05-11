@@ -10,8 +10,8 @@
     text-align: left;
 }
 
-#tooltip h3, #tooltip div { 
-    margin: 0; 
+#tooltip h3, #tooltip div {
+    margin: 0;
 }
 #tooltip h3, #livetip {
     padding: 5px 10px;
@@ -22,9 +22,9 @@
     font-size: 16px;
 }
 
-#tooltip.content { 
+#tooltip.content {
     font-size: 16px;
-    width: 400px; 
+    width: 400px;
     border: 3px solid #ccc;
     background-color: white;
 }

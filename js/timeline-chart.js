@@ -390,7 +390,7 @@ TimelineChart.prototype.getSeriesMax = function (seriesData, initialMax) {
 	}
 	return max;
 };
-    
+
 TimelineChart.prototype.normalizeSeries = function (seriesData, maxValue) {
 	var normalizedData = [];
 	for (var i = 0; i < seriesData.length; i++) {
@@ -411,14 +411,12 @@ TimelineChart.prototype.updateAxisMax = function (seriesData, targetSeriesData) 
 	    var dataValue = seriesData[i];
 	    if(dataValue == undefined || dataValue <= targetSeriesData[i]) {
 	      normalizedData[i] = targetSeriesData[i];
-	    } else { 
+	    } else {
 		normalizedData[i] = dataValue;
 	    }
 	}
 	return normalizedData;
 };
-
-
 TimelineChart.prototype.setBottomLabels = function (attrs, labels) {
     this.setAxisLabelsAreaHeight(labels.length * 10 + 10);
 
@@ -549,8 +547,6 @@ LoveChart = {
             }, 500);
         };
     },
-
-
     load:function (from, to, username) {
         this.getData(from, to, username, function (data) {
 	   var leftMax = LoveChart.chart.getSeriesMax(data.messages,5);
@@ -629,9 +625,9 @@ LoveChart = {
             };
         });
     },
-    
+
     fetchData:undefined,
-    
+
     forceWeeklyLabels: function(forceWeekly) {
     	this.forceWeekly = forceWeekly;
     },
@@ -666,7 +662,7 @@ LoveChart = {
 	} else {
 	  callback(LoveChart.cache[key]);
 	}
-	   
+
     },
     /**
      * Set the User type ( as Sender or Receiver )

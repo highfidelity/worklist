@@ -64,11 +64,11 @@ class ProjectController extends Controller {
             $project->setHipchatNotificationToken($_REQUEST['hipchat_notification_token']);
             $project->setHipchatRoom($_REQUEST['hipchat_room']);
             $project->setHipchatColor($_REQUEST['hipchat_color']);
-            
+
             if ($user->getIs_admin()) {
                 $project->setInternal($internal);
             }
-            
+
             if ($_REQUEST['logoProject'] != "") {
                 $project->setLogo($_REQUEST['logoProject']);
             }
@@ -105,7 +105,7 @@ class ProjectController extends Controller {
                 $role_id = mysql_real_escape_string($_POST['role_id']);
                 $res = $project->deleteRole($role_id);
             }
-            
+
         }
 
         /* Prevent reposts on refresh */

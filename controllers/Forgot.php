@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -12,8 +12,8 @@ class ForgotController extends Controller {
         extract($_REQUEST);
 
         $msg = '';
-        if(!empty($_POST['username'])) { 
-            
+        if(!empty($_POST['username'])) {
+
             $token = md5(uniqid());
             $user = new User();
             if ($user->findUserByUsername($_POST['username'])) {
@@ -27,7 +27,7 @@ class ForgotController extends Controller {
                 $msg = '<p class="LV_invalid">Sorry, unable to send password reset information. Try again or contact an administrator.</p>';
             }
         }
-        $this->write('msg', $msg);    
+        $this->write('msg', $msg);
         parent::run();
     }
 }

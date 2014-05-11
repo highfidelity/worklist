@@ -32,7 +32,7 @@ Status = {
         }
         var bidding = (json.bidding == 0 || json.bidding == null) ? 'no jobs' : (json.bidding == 1 ? '1 job' : json.bidding + ' jobs');
         var review = (json.review == 0 || json.review == null) ? 'no jobs' : (json.review == 1 ? '1 job' : json.review + ' jobs');
-        
+
         $('#need-review ul li').remove();
         $('#need-review ul + a').remove();
         if (parseInt(review) > 0 && json.need_review) {
@@ -89,12 +89,12 @@ Status = {
         if (!Status.recentWorklistEntryDate) {
             Status.recentWorklistEntryDate = Status.findRecentGithubEntryDate();
         }
-        $.ajax({ 
-            url: "./status", 
-            dataType: "json", 
-            type: "post", 
+        $.ajax({
+            url: "./status",
+            dataType: "json",
+            type: "post",
             complete: function() {
-                // start a new longpoll after 500 ms so we give some time advantage on the success 
+                // start a new longpoll after 500 ms so we give some time advantage on the success
                 // event to update recent entries date and then use it on next request
                 setTimeout(Status.longPoll, 500);
             },
@@ -114,7 +114,7 @@ Status = {
                     if (Status.recentWorklistEntryDate < entry.date) {
                         Status.recentWorklistEntryDate = entry.date
                     }
-                    ret += 
+                    ret +=
                           '<li entryid="' + entry.id + '" date="' + entry.date + '" type="worklist">'
                         +     '<h4>' + entry.relativeDate + '</h4>'
                         +     entry.content

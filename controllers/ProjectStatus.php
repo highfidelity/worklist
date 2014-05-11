@@ -45,7 +45,7 @@ class ProjectStatusController extends Controller {
         $this->write('nickname', $nickname);
         $this->write('unixname',  $unixname);
         $this->write('newUser',  $newUser);
-        $this->write('db_user', $db_user); 
+        $this->write('db_user', $db_user);
         $this->write('templateEmail', $templateEmail);
         $this->write('isGitHubConnected', $isGitHubConnected);
         $this->write('errorOut', $errorOut);

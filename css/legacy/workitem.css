@@ -233,8 +233,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     left: 4px;
     top: 0;
 }
-
-
 #for_view > ul {
     list-style:none!important;
     width:100%;
@@ -329,8 +327,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 .filesDescription h3:hover, .filesDescription p:hover {
     background: #FFFFFF;
 }
-
-
 #uploadPanel .fileimagecontainer, .filedocumentcontainer{
     border-top: 2px solid #e1e8ea;
     margin: 4px 0 20px 0;
@@ -774,8 +770,8 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     text-align: left;
 }
 
-.popup-body input[type="text"], 
-.popup-body textarea, 
+.popup-body input[type="text"],
+.popup-body textarea,
 .popup-body select {
     font-size: 14px;
     font-family: proxima-nova, sans-serif;
@@ -934,8 +930,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 .depth-6 {
     margin-left: 185px;
 }
-
-
 .desc {
     margin-top:0px !important;
     margin-bottom:2px !important;
@@ -1005,8 +999,6 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
    font-size: 18px;
    margin: 0 0 5px 0;
 }
-
-
 .feesum {
     cursor: pointer;
 }
@@ -1038,7 +1030,7 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     text-decoration:none;
 }
 
-#summary, 
+#summary,
 #edit-notes {
     width: 425px;
 }
@@ -1394,8 +1386,6 @@ h1.newProject {
 #popup-multiple-bid-form #accept_bid_select_budget {
     width: 165px;
 }
-
-
 #popup-form-endreview,
 #popup-endreview .field,
 #popup-reviewurl .field {
@@ -1412,121 +1402,119 @@ h1.newProject {
     text-decoration:none !important;
     color: #000 !important;
 }
-
-
 #bid_amount_conatiner {
-    width: 100%; 
-    margin-bottom: 4px; 
+    width: 100%;
+    margin-bottom: 4px;
     margin-top: 23px;
 }
 .bid_amount_p {
     padding-right: 28px;
 }
 #bid_notes .bid_amount_heading, .bid_amount_heading {
-    font-weight: bold; 
-    font-size:18px !important; 
+    font-weight: bold;
+    font-size:18px !important;
     color: #666666 !important;
-    font-family: proxima-nova,sans-serif; 
+    font-family: proxima-nova,sans-serif;
 }
 .bid_amount_textfield {
-    width: 73px !important; 
-    margin-top: 6px; 
+    width: 73px !important;
+    margin-top: 6px;
 }
 #place_bid_usd {
-    float: left; 
+    float: left;
     margin-top: 40px;
     position: relative;
 }
 #bid_amount_description {
-    padding-top: 20px; 
-    width: 401px; 
-    float: left; 
+    padding-top: 20px;
+    width: 401px;
+    float: left;
     font-family: proxima-nova;
     padding-left: 25px;
     color: #666666;
     font-size: .9em;
 }
 .place_bid_divider {
-    width: 109%; 
-    height: 5px; 
-    background-color: #E8EFF0; 
-    position: relative; 
+    width: 109%;
+    height: 5px;
+    background-color: #E8EFF0;
+    position: relative;
     left: -22px;
 }
 #bid_notes {
-    width: 100%; 
-    padding-top: 17px; 
-    margin-bottom: 19px; 
+    width: 100%;
+    padding-top: 17px;
+    margin-bottom: 19px;
 }
 .bid_notes_required {
     color: #999999;
 }
 .bid_notes_textarea {
-    font-family: proxima-nova !important; 
-    width: 415px !important; 
-    float: left; 
-    margin-right: 19px; 
-    height: 180px !important; 
+    font-family: proxima-nova !important;
+    width: 415px !important;
+    float: left;
+    margin-right: 19px;
+    height: 180px !important;
     margin-top: 0;
 }
 #bid_notes_decsription {
-    font-family: proxima-nova; 
+    font-family: proxima-nova;
     color: #666666;
     font-size: .8em;
 }
 #bid_done_container {
-    width: 100%; 
+    width: 100%;
     margin-bottom: 22px;
 }
 #bidDone {
     width: 100%;
 }
 #bid_done_description {
-    width: 220px; 
-    float: left; 
+    width: 220px;
+    float: left;
     margin-right: 44px;
 }
 #bid_done_explanation {
-    margin-top: 3px; 
+    margin-top: 3px;
     font-family: proxima-nova;
     width: 220px;
     color: #666666;
     font-size: .9em;
 }
 #time_slider_container {
-    float: left; 
+    float: left;
     padding-top: 12px;
 }
 #right_border {
-    width: 281px; 
-    height: 12px; 
-    position: relative; 
-    top: 12px; 
-    border-left: 1px solid grey; 
+    width: 281px;
+    height: 12px;
+    position: relative;
+    top: 12px;
+    border-left: 1px solid grey;
     border-right: 1px solid grey
 }
 #submit_bid_button {
-    padding-top: 9px; 
-    padding-bottom: 19px; 
-    width: 109%; 
-    background-color: #E8EFF0; 
-    position: relative; 
+    padding-top: 9px;
+    padding-bottom: 19px;
+    width: 109%;
+    background-color: #E8EFF0;
+    position: relative;
     left: -22px
 }
 #submit_bid_btn_holder {
-    padding-left: 22px; 
-    padding-right: 14px; 
-    float: left; 
+    padding-left: 22px;
+    padding-right: 14px;
+    float: left;
 }
 .place_bid_button {
-    height: 44px !important; 
+    height: 44px !important;
     font-size: 18px !important;
 }
 
 #submit_bid_description {
-    padding-top: 10px; 
-    width: 435px; 
-    float: left; 
+    padding-top: 10px;
+    width: 435px;
+    float: left;
     font-family: proxima-nova;
     color: #666666;
     font-size: .9em;

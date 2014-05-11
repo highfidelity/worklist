@@ -14,7 +14,7 @@ class WorkitemSandbox extends Ajax {
             $username = $sandbox_array[3];
             $username = substr($username, 1); // eliminate the tilde
 
-            $sandbox = $sandbox_array[4];        
+            $sandbox = $sandbox_array[4];
 
             try {
                 $url = SandBoxUtil::pasteSandboxDiff($username, $workitem_id, $sandbox);
@@ -32,7 +32,7 @@ class WorkitemSandbox extends Ajax {
                            <input type="text" id="diff-sandbox-url" class="text-field"/>
                        </p>';
         }
-        
+
         echo '<div id="urlContent">' . $result . '</div>';
     }
 }

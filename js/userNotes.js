@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2014, High Fidelity Inc.
- * All Rights Reserved. 
+ * All Rights Reserved.
  *
  * http://highfidelity.io
  */
@@ -12,16 +12,16 @@ var userNotes = {
             userNotes.saveUserNotes();
         });
     },
-    
+
     saveUserNotes: function(fAfter) {
         $.ajax({
             type: 'POST',
             url: userNotes.base_url + 'api.php',
-            data: { 
+            data: {
                 action: 'userNotes',
                 method: 'saveUserNotes',
                 userNotes: $(".userNotes").val(),
-                userId: $("#userid").val() 
+                userId: $("#userid").val()
             },
             dataType: 'json',
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -40,7 +40,7 @@ var userNotes = {
                     fAfter(true);
                 }
             }
-                                     
+
         });
     }
 

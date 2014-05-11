@@ -20,15 +20,13 @@ $(function() {
 
     if (confirmTxt.length > 0) {
         Utils.emptyModal({
-            title: 'Email confirmation', 
-            content: confirmTxt, 
+            title: 'Email confirmation',
+            content: confirmTxt,
             close: function() {
                 window.location = './';
             }
         });
     }
-
-
     $('#signupForm input[type="submit"]').submit(function(event) {
         console.log('a');
         if (!LiveValidation.massValidate([username, password, confirmpassword, nickname, about])) {
