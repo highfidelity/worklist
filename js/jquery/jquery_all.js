@@ -2,10 +2,12 @@
  * the way things currently work your code won't be deployed
  * this file gets overwritten on checkin :(
  * you need to make your changes both in this file so it will work in
- * your sandbox for developing and testing and then also in the
+ * your sandbox for developing and testing and then also in the 
  * plugins directory before you commit as that's what ends up being used
  * to create the jscode.min.js
  * */
+
+
 /* jQuery ui.toaster.js - 0.2
  *
  * (c) Maxime Haineault <haineault@gmail.com>
@@ -54,7 +56,7 @@ $.widget('ui.toaster', {
                 else {
                         self.resume();
                 }
-
+               
                 // Delay
                 if (!!self.options.delay) {
                    setTimeout(function(){
@@ -116,7 +118,7 @@ $.ui.toaster.defaults = {
 };
 }
 /* Copyright (c) 2006 Brandon Aaron (http://brandonaaron.net)
- * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
  * $LastChangedDate: 2007-06-20 03:23:36 +0200 (Mi, 20 Jun 2007) $
@@ -128,21 +130,21 @@ $.ui.toaster.defaults = {
 (function($){
 
 /**
- * The bgiframe is chainable and applies the iframe hack to get
- * around zIndex issues in IE6. It will only apply itself in IE
+ * The bgiframe is chainable and applies the iframe hack to get 
+ * around zIndex issues in IE6. It will only apply itself in IE 
  * and adds a class to the iframe called 'bgiframe'. The iframe
- * is appeneded as the first child of the matched element(s)
+ * is appeneded as the first child of the matched element(s) 
  * with a tabIndex and zIndex of -1.
- *
+ * 
  * By default the plugin will take borders, sized with pixel units,
  * into account. If a different unit is used for the border's width,
  * then you will need to use the top and left settings as explained below.
  *
  * NOTICE: This plugin has been reported to cause perfromance problems
  * when used on elements that change properties (like width, height and
- * opacity) a lot in IE6. Most of these problems have been caused by
- * the expressions used to calculate the elements width, height and
- * borders. Some have reported it is due to the opacity filter. All
+ * opacity) a lot in IE6. Most of these problems have been caused by 
+ * the expressions used to calculate the elements width, height and 
+ * borders. Some have reported it is due to the opacity filter. All 
  * these settings can be changed if needed as explained below.
  *
  * @example $('div').bgiframe();
@@ -151,18 +153,18 @@ $.ui.toaster.defaults = {
  *
  * @param Map settings Optional settings to configure the iframe.
  * @option String|Number top The iframe must be offset to the top
- * 		by the width of the top border. This should be a negative
- *      number representing the border-top-width. If a number is
+ * 		by the width of the top border. This should be a negative 
+ *      number representing the border-top-width. If a number is 
  * 		is used here, pixels will be assumed. Otherwise, be sure
- *		to specify a unit. An expression could also be used.
- * 		By default the value is "auto" which will use an expression
+ *		to specify a unit. An expression could also be used. 
+ * 		By default the value is "auto" which will use an expression 
  * 		to get the border-top-width if it is in pixels.
  * @option String|Number left The iframe must be offset to the left
- * 		by the width of the left border. This should be a negative
- *      number representing the border-left-width. If a number is
+ * 		by the width of the left border. This should be a negative 
+ *      number representing the border-left-width. If a number is 
  * 		is used here, pixels will be assumed. Otherwise, be sure
- *		to specify a unit. An expression could also be used.
- * 		By default the value is "auto" which will use an expression
+ *		to specify a unit. An expression could also be used. 
+ * 		By default the value is "auto" which will use an expression 
  * 		to get the border-left-width if it is in pixels.
  * @option String|Number width This is the width of the iframe. If
  *		a number is used here, pixels will be assume. Otherwise, be sure
@@ -177,7 +179,7 @@ $.ui.toaster.defaults = {
  * @option Boolean opacity This is a boolean representing whether or not
  * 		to use opacity. If set to true, the opacity of 0 is applied. If
  *		set to false, the opacity filter is not applied. Default: true.
- * @option String src This setting is provided so that one could change
+ * @option String src This setting is provided so that one could change 
  *		the src of the iframe to whatever they need.
  *		Default: "javascript:false;"
  *
@@ -317,8 +319,8 @@ jQuery.cookie = function(name, value, options) {
 /* http://keith-wood.name/countdown.html
    Countdown for jQuery v1.5.6.
    Written by Keith Wood (kbwood{at}iinet.com.au) January 2008.
-   Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and
-   MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
+   Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and 
+   MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses. 
    Please attribute the author if you use it. */
 
 /* Display a countdown timer.
@@ -380,12 +382,12 @@ var S = 6; // Seconds
 $.extend(Countdown.prototype, {
 	/* Class name added to elements to indicate already configured with countdown. */
 	markerClassName: 'hasCountdown',
-
+	
 	/* Shared timer for all countdowns. */
 	_timer: setInterval(function() { $.countdown._updateTargets(); }, 980),
 	/* List of currently active countdown targets. */
 	_timerTargets: [],
-
+	
 	/* Override the default settings for all instances of the countdown widget.
 	   @param  options  (object) the new settings to use as defaults */
 	setDefaults: function(options) {
@@ -586,7 +588,7 @@ $.extend(Countdown.prototype, {
 			}
 		}
 	},
-
+	
 	/* Calculate interal settings for an instance.
 	   @param  target  (element) the containing division
 	   @param  inst    (object) the current settings for this instance */
@@ -656,7 +658,7 @@ $.extend(Countdown.prototype, {
 				inst[inst._since ? '_since' : '_until'] =
 					this._determineTime(sign + inst._periods[0] + 'y' +
 						sign + inst._periods[1] + 'o' + sign + inst._periods[2] + 'w' +
-						sign + inst._periods[3] + 'd' + sign + inst._periods[4] + 'h' +
+						sign + inst._periods[3] + 'd' + sign + inst._periods[4] + 'h' + 
 						sign + inst._periods[5] + 'm' + sign + inst._periods[6] + 's');
 				this._addTarget(target);
 			}
@@ -715,7 +717,7 @@ $.extend(Countdown.prototype, {
 					case 'd': day += parseInt(matches[1], 10); break;
 					case 'w': day += parseInt(matches[1], 10) * 7; break;
 					case 'o':
-						month += parseInt(matches[1], 10);
+						month += parseInt(matches[1], 10); 
 						day = Math.min(day, $.countdown._getDaysInMonth(year, month));
 						break;
 					case 'y':
@@ -778,8 +780,8 @@ $.extend(Countdown.prototype, {
 		return (layout ? this._buildLayout(inst, show, layout, compact) :
 			((compact ? // Compact version
 			'<span class="countdown_row countdown_amount' +
-			(inst._hold ? ' countdown_holding' : '') + '">' +
-			showCompact(Y) + showCompact(O) + showCompact(W) + showCompact(D) +
+			(inst._hold ? ' countdown_holding' : '') + '">' + 
+			showCompact(Y) + showCompact(O) + showCompact(W) + showCompact(D) + 
 			(show[H] ? this._minDigits(periods[H], 2) : '') +
 			(show[M] ? (show[H] ? timeSeparator : '') +
 			this._minDigits(periods[M], 2) : '') +
@@ -882,7 +884,7 @@ $.extend(Countdown.prototype, {
 		show[S] = (format.match('s') ? '?' : (format.match('S') ? '!' : null));
 		return show;
 	},
-
+	
 	/* Calculate the requested periods between now and the target time.
 	   @param  inst  (object) the current settings for this instance
 	   @param  show  (string[7]) flags indicating which periods are requested/required
@@ -1028,33 +1030,33 @@ $.countdown = new Countdown(); // singleton instance
  * to offer multiple easing options
  *
  * TERMS OF USE - jQuery Easing
- *
- * Open source under the BSD License.
- *
+ * 
+ * Open source under the BSD License. 
+ * 
  * Copyright Â© 2008 George McGinley Smith
  * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list of
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
  * conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
  * provided with the distribution.
- *
- * Neither the name of the author nor the names of contributors may be used to endorse
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
  * or promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
  *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
 */
 
@@ -1170,7 +1172,7 @@ jQuery.extend( jQuery.easing,
 		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 	},
 	easeInOutBack: function (x, t, b, c, d, s) {
-		if (s == undefined) s = 1.70158;
+		if (s == undefined) s = 1.70158; 
 		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
 		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 	},
@@ -1197,33 +1199,33 @@ jQuery.extend( jQuery.easing,
 /*
  *
  * TERMS OF USE - EASING EQUATIONS
- *
- * Open source under the BSD License.
- *
+ * 
+ * Open source under the BSD License. 
+ * 
  * Copyright Â© 2001 Robert Penner
  * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list of
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
  * conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
  * provided with the distribution.
- *
- * Neither the name of the author nor the names of contributors may be used to endorse
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
  * or promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
  *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
  */
 /* Menu Popup Extension for jQuery
@@ -1297,7 +1299,7 @@ jQuery.extend( jQuery.easing,
                 $(document).mouseup(popupHide);
 
                 return false;
-              }
+              } 
 
             });
         });
@@ -1318,7 +1320,7 @@ jQuery.extend( jQuery.easing,
  * Thanks to: Seamus Leahy for adding deltaX and deltaY
  *
  * Version: 3.0.6
- *
+ * 
  * Requires: 1.2.2+
  */
 
@@ -1342,7 +1344,7 @@ $.event.special.mousewheel = {
             this.onmousewheel = handler;
         }
     },
-
+    
     teardown: function() {
         if ( this.removeEventListener ) {
             for ( var i=types.length; i; ) {
@@ -1358,36 +1360,38 @@ $.fn.extend({
     mousewheel: function(fn) {
         return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
     },
-
+    
     unmousewheel: function(fn) {
         return this.unbind("mousewheel", fn);
     }
 });
+
+
 function handler(event) {
     var orgEvent = event || window.event, args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true, deltaX = 0, deltaY = 0;
     event = $.event.fix(orgEvent);
     event.type = "mousewheel";
-
+    
     // Old school scrollwheel delta
     if ( orgEvent.wheelDelta ) { delta = orgEvent.wheelDelta/120; }
     if ( orgEvent.detail     ) { delta = -orgEvent.detail/3; }
-
+    
     // New school multidimensional scroll (touchpads) deltas
     deltaY = delta;
-
+    
     // Gecko
     if ( orgEvent.axis !== undefined && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
         deltaY = 0;
         deltaX = -1*delta;
     }
-
+    
     // Webkit
     if ( orgEvent.wheelDeltaY !== undefined ) { deltaY = orgEvent.wheelDeltaY/120; }
     if ( orgEvent.wheelDeltaX !== undefined ) { deltaX = -1*orgEvent.wheelDeltaX/120; }
-
+    
     // Add event and delta to the front of the arguments
     args.unshift(event, delta, deltaX, deltaY);
-
+    
     return ($.event.dispatch || $.event.handle).apply(this, args);
 }
 
@@ -1408,20 +1412,20 @@ function handler(event) {
 //		$("#selector").rightClick( function(e) {
 //			// Do something
 //		});
-//
+//		
 //		// Capture right mouse down
 //		$("#selector").rightMouseDown( function(e) {
 //			// Do something
 //		});
-//
+//		
 //		// Capture right mouseup
 //		$("#selector").rightMouseUp( function(e) {
 //			// Do something
 //		});
-//
+//		
 //		// Disable context menu on an element
 //		$("#selector").noContext();
-//
+// 
 // History:
 //
 //		1.01 - Updated (20 December 2008)
@@ -1433,14 +1437,14 @@ function handler(event) {
 //		1.00 - Released (13 May 2008)
 //
 // License:
-//
+// 
 // This plugin is dual-licensed under the GNU General Public License and the MIT License
-// and is copyright 2008 A Beautiful Site, LLC.
+// and is copyright 2008 A Beautiful Site, LLC. 
 //
 if(jQuery) (function(){
-
+	
 	$.extend($.fn, {
-
+		
 		rightClick: function(handler) {
 			$(this).each( function() {
 				$(this).mousedown( function(e) {
@@ -1460,8 +1464,8 @@ if(jQuery) (function(){
 				}
 			});
 			return $(this);
-		},
-
+		},		
+		
 		rightMouseDown: function(handler) {
 			$(this).each( function() {
 				$(this).mousedown( function(e) {
@@ -1478,7 +1482,7 @@ if(jQuery) (function(){
 			});
 			return $(this);
 		},
-
+		
 		rightMouseUp: function(handler) {
 			$(this).each( function() {
 				$(this).mouseup( function(e) {
@@ -1495,7 +1499,7 @@ if(jQuery) (function(){
 			});
 			return $(this);
 		},
-
+		
 		noContext: function() {
 			$(this).each( function() {
 				$(this)[0].oncontextmenu = function() {
@@ -1504,9 +1508,9 @@ if(jQuery) (function(){
 			});
 			return $(this);
 		}
-
+		
 	});
-
+	
 })(jQuery);	/**
  * jQuery.ScrollTo - Easy element scrolling using jQuery.
  * Copyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com
@@ -1519,30 +1523,32 @@ if(jQuery) (function(){
  */
 ;(function(d){var k=d.scrollTo=function(a,i,e){d(window).scrollTo(a,i,e)};k.defaults={axis:'xy',duration:parseFloat(d.fn.jquery)>=1.3?0:1};k.window=function(a){return d(window)._scrollable()};d.fn._scrollable=function(){return this.map(function(){var a=this,i=!a.nodeName||d.inArray(a.nodeName.toLowerCase(),['iframe','#document','html','body'])!=-1;if(!i)return a;var e=(a.contentWindow||a).document||a.ownerDocument||a;return d.browser.safari||e.compatMode=='BackCompat'?e.body:e.documentElement})};d.fn.scrollTo=function(n,j,b){if(typeof j=='object'){b=j;j=0}if(typeof b=='function')b={onAfter:b};if(n=='max')n=9e9;b=d.extend({},k.defaults,b);j=j||b.speed||b.duration;b.queue=b.queue&&b.axis.length>1;if(b.queue)j/=2;b.offset=p(b.offset);b.over=p(b.over);return this._scrollable().each(function(){var q=this,r=d(q),f=n,s,g={},u=r.is('html,body');switch(typeof f){case'number':case'string':if(/^([+-]=)?\d+(\.\d+)?(px|%)?$/.test(f)){f=p(f);break}f=d(f,this);case'object':if(f.is||f.style)s=(f=d(f)).offset()}d.each(b.axis.split(''),function(a,i){var e=i=='x'?'Left':'Top',h=e.toLowerCase(),c='scroll'+e,l=q[c],m=k.max(q,i);if(s){g[c]=s[h]+(u?0:l-r.offset()[h]);if(b.margin){g[c]-=parseInt(f.css('margin'+e))||0;g[c]-=parseInt(f.css('border'+e+'Width'))||0}g[c]+=b.offset[h]||0;if(b.over[h])g[c]+=f[i=='x'?'width':'height']()*b.over[h]}else{var o=f[h];g[c]=o.slice&&o.slice(-1)=='%'?parseFloat(o)/100*m:o}if(/^\d+$/.test(g[c]))g[c]=g[c]<=0?0:Math.min(g[c],m);if(!a&&b.queue){if(l!=g[c])t(b.onAfterFirst);delete g[c]}});t(b.onAfter);function t(a){r.animate(g,j,b.easing,a&&function(){a.call(this,n,b)})}}).end()};k.max=function(a,i){var e=i=='x'?'Width':'Height',h='scroll'+e;if(!d(a).is('html,body'))return a[h]-d(a)[e.toLowerCase()]();var c='client'+e,l=a.ownerDocument.documentElement,m=a.ownerDocument.body;return Math.max(l[h],m[h])-Math.min(l[c],m[c])};function p(a){return typeof a=='object'?a:{top:a,left:a}}})(jQuery);/*
     tabSlideOUt v1.3
-
+    
     By William Paoli: http://wpaoli.building58.com
 
     To use you must have an image ready to go as your tab
     Make sure to pass in at minimum the path to the image and its dimensions:
-
+    
     example:
-
+    
         $('.slide-out-div').tabSlideOut({
                 tabHandle: '.handle',                         //class of the element that will be your tab -doesnt have to be an anchor
                 pathToTabImage: 'images/contact_tab.gif',     //relative path to the image for the tab
                 imageHeight: '133px',                         //height of tab image
-                imageWidth: '44px',                           //width of tab image
+                imageWidth: '44px',                           //width of tab image   
         });
 
     or you can leave out these options
     and set the image properties using css
-
+    
 */
+
+
 (function($){
     $.fn.tabSlideOut = function(callerSettings) {
         var settings = $.extend({
             tabHandle: '.handle',
-            speed: 300,
+            speed: 300, 
             action: 'click',
             tabLocation: 'left',
             topPos: '200px',
@@ -1552,7 +1558,7 @@ if(jQuery) (function(){
             pathToTabImage: null,
             imageHeight: null,
             imageWidth: null,
-            onLoadSlideOut: false
+            onLoadSlideOut: false                       
         }, callerSettings||{});
 
         settings.tabHandle = $(settings.tabHandle);
@@ -1562,14 +1568,16 @@ if(jQuery) (function(){
         } else {
             settings.positioning = 'absolute';
         }
-
+        
         //ie6 doesn't do well with the fixed option
         if (document.all && !window.opera && !window.XMLHttpRequest) {
             settings.positioning = 'absolute';
         }
+        
 
+        
         //set initial tabHandle css
-
+        
         if (settings.pathToTabImage != null) {
             settings.tabHandle.css({
             'background' : 'url('+settings.pathToTabImage+') no-repeat',
@@ -1577,18 +1585,20 @@ if(jQuery) (function(){
             'height': settings.imageHeight
             });
         }
-
-        settings.tabHandle.css({
+        
+        settings.tabHandle.css({ 
             'display': 'block',
             'textIndent' : '-99999px',
             'outline' : 'none',
             'position' : 'absolute'
         });
-
+        
         obj.css({
             'line-height' : '1',
             'position' : settings.positioning
         });
+
+        
         var properties = {
                     containerWidth: parseInt(obj.outerWidth(), 10) + 'px',
                     containerHeight: parseInt(obj.outerHeight(), 10) + 'px',
@@ -1601,7 +1611,7 @@ if(jQuery) (function(){
             obj.css({'left' : settings.leftPos});
             settings.tabHandle.css({'right' : 0});
         }
-
+        
         if(settings.tabLocation === 'top') {
             obj.css({'top' : '-' + properties.containerHeight});
             settings.tabHandle.css({'bottom' : '-' + properties.tabHeight});
@@ -1610,18 +1620,18 @@ if(jQuery) (function(){
         if(settings.tabLocation === 'bottom') {
             obj.css({'bottom' : '-' + properties.containerHeight, 'position' : 'fixed'});
             settings.tabHandle.css({'top' : '-' + properties.tabHeight});
-
+            
         }
-
+        
         if(settings.tabLocation === 'left' || settings.tabLocation === 'right') {
             obj.css({
                 'height' : properties.containerHeight,
                 'top' : settings.topPos
             });
-
+            
             settings.tabHandle.css({'top' : 0});
         }
-
+        
         if(settings.tabLocation === 'left') {
             obj.css({ 'left': '-' + properties.containerWidth});
             settings.tabHandle.css({'right' : '-' + properties.tabWidth});
@@ -1630,18 +1640,18 @@ if(jQuery) (function(){
         if(settings.tabLocation === 'right') {
             obj.css({ 'right': '-' + properties.containerWidth});
             settings.tabHandle.css({'left' : '-' + properties.tabWidth});
-
+            
             $('html').css('overflow-x', 'hidden');
         }
 
         //functions for animation events
-
+        
         settings.tabHandle.click(function(event){
             event.preventDefault();
         });
-
+        
         var slideIn = function() {
-
+            
             if (settings.tabLocation === 'top') {
                 obj.animate({top:'-' + properties.containerHeight}, settings.speed).removeClass('open');
             } else if (settings.tabLocation === 'left') {
@@ -1650,12 +1660,12 @@ if(jQuery) (function(){
                 obj.animate({right: '-' + properties.containerWidth}, settings.speed).removeClass('open');
             } else if (settings.tabLocation === 'bottom') {
                 obj.animate({bottom: '-' + properties.containerHeight}, settings.speed).removeClass('open');
-            }
-
+            }    
+            
         };
-
+        
         var slideOut = function() {
-
+            
             if (settings.tabLocation == 'top') {
                 obj.animate({top:'-3px'},  settings.speed).addClass('open');
             } else if (settings.tabLocation == 'left') {
@@ -1671,12 +1681,12 @@ if(jQuery) (function(){
             obj.click(function(event){
                 event.stopPropagation();
             });
-
+            
             $(document).click(function(){
                 slideIn();
             });
         };
-
+        
         var clickAction = function(){
             settings.tabHandle.click(function(event){
                 if (obj.hasClass('open')) {
@@ -1685,47 +1695,47 @@ if(jQuery) (function(){
                     slideOut();
                 }
             });
-
+            
             clickScreenToClose();
         };
-
+        
         var hoverAction = function(){
             obj.hover(
                 function(){
                     slideOut();
                 },
-
+                
                 function(){
                     slideIn();
                 });
-
+                
                 settings.tabHandle.click(function(event){
                     if (obj.hasClass('open')) {
                         slideIn();
                     }
                 });
                 clickScreenToClose();
-
+                
         };
-
+        
         var slideOutOnLoad = function(){
             slideIn();
             setTimeout(slideOut, 500);
         };
-
+        
         //choose which type of action to bind
         if (settings.action === 'click') {
             clickAction();
         }
-
+        
         if (settings.action === 'hover') {
             hoverAction();
         }
-
+        
         if (settings.onLoadSlideOut) {
             slideOutOnLoad();
         };
-
+        
     };
 })(jQuery);
 ﻿/**
@@ -1787,49 +1797,49 @@ jQuery.extend({
 		},
 		add: function(element, interval, label, fn, times) {
 			var counter = 0;
-
+			
 			if (jQuery.isFunction(label)) {
-				if (!times)
+				if (!times) 
 					times = fn;
 				fn = label;
 				label = interval;
 			}
-
+			
 			interval = jQuery.timer.timeParse(interval);
 
 			if (typeof interval != 'number' || isNaN(interval) || interval < 0)
 				return;
 
-			if (typeof times != 'number' || isNaN(times) || times < 0)
+			if (typeof times != 'number' || isNaN(times) || times < 0) 
 				times = 0;
-
+			
 			times = times || 0;
-
+			
 			var timers = jQuery.data(element, this.dataKey) || jQuery.data(element, this.dataKey, {});
-
+			
 			if (!timers[label])
 				timers[label] = {};
-
+			
 			fn.timerID = fn.timerID || this.guid++;
-
+			
 			var handler = function() {
 				if ((++counter > times && times !== 0) || fn.call(element, counter) === false)
 					jQuery.timer.remove(element, label, fn);
 			};
-
+			
 			handler.timerID = fn.timerID;
-
+			
 			if (!timers[label][fn.timerID])
 				timers[label][fn.timerID] = window.setInterval(handler,interval);
-
+			
 			this.global.push( element );
-
+			
 		},
 		remove: function(element, label, fn) {
 			var timers = jQuery.data(element, this.dataKey), ret;
-
+			
 			if ( timers ) {
-
+				
 				if (!label) {
 					for ( label in timers )
 						this.remove(element, label, fn);
@@ -1845,16 +1855,16 @@ jQuery.extend({
 							delete timers[label][fn];
 						}
 					}
-
+					
 					for ( ret in timers[label] ) break;
 					if ( !ret ) {
 						ret = null;
 						delete timers[label];
 					}
 				}
-
+				
 				for ( ret in timers ) break;
-				if ( !ret )
+				if ( !ret ) 
 					jQuery.removeData(element, this.dataKey);
 			}
 		}
@@ -1874,7 +1884,7 @@ jQuery(window).bind("unload", function() {
  * Copyright (c) 2006 - 2008 Jörn Zaefferer
  *
  * $Id: jquery.tooltip.js 5741 2008-06-21 15:22:16Z joern.zaefferer $
- *
+ * 
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
@@ -1883,26 +1893,26 @@ show();track=!!settings(this).track;$(document.body).bind('mousemove',update);up
 helper.url.hide();helper.parent.addClass(settings(this).extraClass);if(settings(this).fixPNG)helper.parent.fixPNG();handle.apply(this,arguments);}function show(){tID=null;if((!IE||!$.fn.bgiframe)&&settings(current).fade){if(helper.parent.is(":animated"))helper.parent.stop().show().fadeTo(settings(current).fade,current.tOpacity);else
 helper.parent.is(':visible')?helper.parent.fadeTo(settings(current).fade,current.tOpacity):helper.parent.fadeIn(settings(current).fade);}else{helper.parent.show();}update();}function update(event){if($.tooltip.blocked)return;if(event&&event.target.tagName=="OPTION"){return;}if(!track&&helper.parent.is(":visible")){$(document.body).unbind('mousemove',update)}if(current==null){$(document.body).unbind('mousemove',update);return;}helper.parent.removeClass("viewport-right").removeClass("viewport-bottom");var left=helper.parent[0].offsetLeft;var top=helper.parent[0].offsetTop;if(event){left=event.pageX+settings(current).left;top=event.pageY+settings(current).top;var right='auto';if(settings(current).positionLeft){right=$(window).width()-left;left='auto';}helper.parent.css({left:left,right:right,top:top});}var v=viewport(),h=helper.parent[0];if(v.x+v.cx<h.offsetLeft+h.offsetWidth){left-=h.offsetWidth+20+settings(current).left;helper.parent.css({left:left+'px'}).addClass("viewport-right");}if(v.y+v.cy<h.offsetTop+h.offsetHeight){top-=h.offsetHeight+20+settings(current).top;helper.parent.css({top:top+'px'}).addClass("viewport-bottom");}}function viewport(){return{x:$(window).scrollLeft(),y:$(window).scrollTop(),cx:$(window).width(),cy:$(window).height()};}function hide(event){if($.tooltip.blocked)return;if(tID)clearTimeout(tID);current=null;var tsettings=settings(this);function complete(){helper.parent.removeClass(tsettings.extraClass).hide().css("opacity","");}if((!IE||!$.fn.bgiframe)&&tsettings.fade){if(helper.parent.is(':animated'))helper.parent.stop().fadeTo(tsettings.fade,0,complete);else
 helper.parent.stop().fadeOut(tsettings.fade,complete);}else
-complete();if(settings(this).fixPNG)helper.parent.unfixPNG();}})(jQuery);/*
+complete();if(settings(this).fixPNG)helper.parent.unfixPNG();}})(jQuery);/*	
 	Watermark plugin for jQuery
 	Version: 3.0.3
 	http://jquery-watermark.googlecode.com/
 
 	Copyright (c) 2009 Todd Northrop
 	http://www.speednet.biz/
-
+	
 	November 30, 2009
 
 	Requires:  jQuery 1.2.3+
-
+	
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version, subject to the following conditions:
-
+	
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-
+	
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -1926,27 +1936,27 @@ var
 	dataMaxLen = "watermarkMaxLength",
 	dataPassword = "watermarkPassword",
 	dataText = "watermarkText",
-
+	
 	// Includes only elements with watermark defined
 	selWatermarkDefined = ":data(" + dataFlag + ")",
 
 	// Includes only elements capable of having watermark
 	selWatermarkAble = ":text,:password,:search,textarea",
-
+	
 	// triggerFns:
 	// Array of function names to look for in the global namespace.
 	// Any such functions found will be hijacked to trigger a call to
 	// hideAll() any time they are called.  The default value is the
 	// ASP.NET function that validates the controls on the page
 	// prior to a postback.
-	//
+	// 
 	// Am I missing other important trigger function(s) to look for?
 	// Please leave me feedback:
 	// http://code.google.com/p/jquery-watermark/issues/list
 	triggerFns = [
 		"Page_ClientValidate"
 	],
-
+	
 	// Holds a value of true if a watermark was displayed since the last
 	// hideAll() was executed. Avoids repeatedly calling hideAll().
 	pageDirty = false;
@@ -1963,12 +1973,12 @@ $.extend($.expr[":"], {
 		var data, parts = /^((?:[^=!^$*]|[!^$*](?!=))+)(?:([!^$*]?=)(.*))?$/.exec(matches[3]);
 		if (parts) {
 			data = $(element).data(parts[1]);
-
+			
 			if (data !== undefined) {
 
 				if (parts[2]) {
 					data = "" + data;
-
+				
 					switch (parts[2]) {
 						case "=":
 							return (data == parts[3]);
@@ -1986,7 +1996,7 @@ $.extend($.expr[":"], {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
 });
@@ -1995,7 +2005,7 @@ $.watermark = {
 
 	// Current version number of the plugin
 	version: "3.0.3",
-
+		
 	// Default options used when watermarks are instantiated.
 	// Can be changed to affect the default behavior for all
 	// new or updated watermarks.
@@ -2003,15 +2013,15 @@ $.watermark = {
 	// property that was present prior to version 3.0.2 must
 	// be changed to $.watermark.options.className
 	options: {
-
+		
 		// Default class name for all watermarks
 		className: "watermark",
-
+		
 		// If true, plugin will detect and use native browser support for
 		// watermarks, if available. (e.g., WebKit's placeholder attribute.)
 		useNative: true
 	},
-
+	
 	// Hide one or more watermarks by specifying any selector type
 	// i.e., DOM element, string selector, jQuery matched set, etc.
 	hide: function (selector) {
@@ -2021,31 +2031,31 @@ $.watermark = {
 			}
 		);
 	},
-
+	
 	// Internal use only.
 	_hide: function ($input, focus) {
-
+	
 		if ($input.val() == $input.data(dataText)) {
 			$input.val("");
-
+			
 			// Password type?
 			if ($input.data(dataPassword)) {
-
+				
 				if ($input.attr("type") === "text") {
-					var $pwd = $input.data(dataPassword),
+					var $pwd = $input.data(dataPassword), 
 						$wrap = $input.parent();
-
+						
 					$wrap[0].removeChild($input[0]); // Can't use jQuery methods, because they destroy data
 					$wrap[0].appendChild($pwd[0]);
 					$input = $pwd;
 				}
 			}
-
+			
 			if ($input.data(dataMaxLen)) {
 				$input.attr("maxLength", $input.data(dataMaxLen));
 				$input.removeData(dataMaxLen);
 			}
-
+		
 			if (focus) {
 				$input.attr("autocomplete", "off");  // Avoid NS_ERROR_XPC_JS_THREW_STRING error in Firefox
 				window.setTimeout(
@@ -2055,10 +2065,10 @@ $.watermark = {
 				, 0);
 			}
 		}
-
+		
 		$input.removeClass($input.data(dataClass));
 	},
-
+	
 	// Display one or more watermarks by specifying any selector type
 	// i.e., DOM element, string selector, jQuery matched set, etc.
 	// If conditions are not right for displaying a watermark, ensures that watermark is not shown.
@@ -2069,7 +2079,7 @@ $.watermark = {
 			}
 		);
 	},
-
+	
 	// Internal use only.
 	_show: function ($input) {
 		var val = $input.val(),
@@ -2078,31 +2088,31 @@ $.watermark = {
 
 		if (((val.length == 0) || (val == text)) && (!$input.data(dataFocus))) {
 			pageDirty = true;
-
+		
 			// Password type?
 			if ($input.data(dataPassword)) {
-
+				
 				if (type === "password") {
 					var $wm = $input.data(dataPassword),
 						$wrap = $input.parent();
-
+						
 					$wrap[0].removeChild($input[0]); // Can't use jQuery methods, because they destroy data
 					$wrap[0].appendChild($wm[0]);
 					$input = $wm;
 					$input.attr("maxLength", text.length);
 				}
 			}
-
+		
 			// Ensure maxLength big enough to hold watermark (input of type="text" or type="search" only)
 			if ((type === "text") || (type === "search")) {
 				var maxLen = $input.attr("maxLength");
-
+				
 				if ((maxLen > 0) && (text.length > maxLen)) {
 					$input.data(dataMaxLen, maxLen);
 					$input.attr("maxLength", text.length);
 				}
 			}
-
+            
 			$input.addClass($input.data(dataClass));
 			$input.val(text);
 		}
@@ -2110,7 +2120,7 @@ $.watermark = {
 			$.watermark._hide($input);
 		}
 	},
-
+	
 	// Hides all watermarks on the current page.
 	hideAll: function () {
 		if (pageDirty) {
@@ -2118,7 +2128,7 @@ $.watermark = {
 			pageDirty = false;
 		}
 	},
-
+	
 	// Displays all watermarks on the current page.
 	showAll: function () {
 		$.watermark.show(selWatermarkAble);
@@ -2157,20 +2167,20 @@ $.fn.watermark = function (text, options) {
 	///		typically light gray text is used to provide a hint as to what type of input is required. However,
 	///		the appearance of the watermark can be something completely different: simply change the CSS style
 	///		pertaining to the supplied class name.
-	///
+	///		
 	///		The first time watermark() is called on an element, the watermark text and class name are initialized,
 	///		and the focus and blur events are hooked in order to control the display of the watermark.  Also, as
 	/// 	of version 3.0, drag and drop events are hooked to guard against dropped text being appended to the
 	/// 	watermark.  If native watermark support is provided by the browser, it is detected and used, unless
 	/// 	the useNative option is set to false.
-	///
+	///		
 	///		Subsequently, watermark() can be called again on an element in order to change the watermark text
 	///		and/or class name, and it can also be called without any arguments in order to refresh the display.
-	///
+	///		
 	///		For example, after changing the value of the input or textarea element programmatically, watermark()
 	/// 	should be called without any arguments to refresh the display, because the change event is only
 	/// 	triggered by user actions, not by programmatic changes to an input or textarea element's value.
-	///
+	/// 	
 	/// 	The one exception to programmatic updates is for password input elements:  you are strongly cautioned
 	/// 	against changing the value of a password input element programmatically (after the page loads).
 	/// 	The reason is that some fairly hairy code is required behind the scenes to make the watermarks bypass
@@ -2178,9 +2188,9 @@ $.fn.watermark = function (text, options) {
 	/// 	passwords).  It is *possible* to make programmatic changes, but it must be done in a certain way, and
 	/// 	overall it is not recommended.
 	/// </remarks>
-
+	
 	var hasText = (typeof(text) === "string"), hasClass;
-
+	
 	if (typeof(options) === "object") {
 		hasClass = (typeof(options.className) === "string");
 		options = $.extend({}, $.watermark.options, options);
@@ -2192,70 +2202,70 @@ $.fn.watermark = function (text, options) {
 	else {
 		options = $.watermark.options;
 	}
-
+	
 	if (typeof(options.useNative) !== "function") {
 		options.useNative = options.useNative? function () { return true; } : function () { return false; };
 	}
-
+	
 	return this.each(
 		function () {
 			var $input = $(this);
-
+			
 			if (!$input.is(selWatermarkAble)) {
 				return;
 			}
-
+			
 			// Watermark already initialized?
 			if ($input.data(dataFlag)) {
-
+			
 				// If re-defining text or class, first remove existing watermark, then make changes
 				if (hasText || hasClass) {
 					$.watermark._hide($input);
-
+			
 					if (hasText) {
 						$input.data(dataText, text);
 					}
-
+					
 					if (hasClass) {
 						$input.data(dataClass, options.className);
 					}
 				}
 			}
 			else {
-
+			
 				// Detect and use native browser support, if enabled in options
 				if (options.useNative.call(this, $input)) {
-
+					
 					// Placeholder attribute (WebKit)
 					// Big thanks to Opera for the wacky test required
 					if ((("" + $input.css("-webkit-appearance")).replace("undefined", "") !== "") && ($input.attr("tagName") !== "TEXTAREA")) {
-
+						
 						// className is not set because WebKit doesn't appear to have
 						// a separate class name property for placeholders (watermarks).
 						if (hasText) {
 							$input.attr("placeholder", text);
 						}
-
+						
 						// Only set data flag for non-native watermarks (purposely commented-out)
 						// $input.data(dataFlag, 1);
 						return;
 					}
 				}
-
+				
 				$input.data(dataText, hasText? text : "");
 				$input.data(dataClass, options.className);
 				$input.data(dataFlag, 1); // Flag indicates watermark was initialized
-
+				
 				// Special processing for password type
 				if ($input.attr("type") === "password") {
 					var $wrap = $input.wrap("<span>").parent();
 					var $wm = $($wrap.html().replace(/type=["']?password["']?/i, 'type="text"'));
-
+					
 					$wm.data(dataText, $input.data(dataText));
 					$wm.data(dataClass, $input.data(dataClass));
 					$wm.data(dataFlag, 1);
 					$wm.attr("maxLength", text.length);
-
+					
 					$wm.focus(
 						function () {
 							$.watermark._hide($wm, true);
@@ -2278,12 +2288,12 @@ $.fn.watermark = function (text, options) {
 							$.watermark._show($input);
 						}
 					);
-
+					
 					$wm.data(dataPassword, $input);
 					$input.data(dataPassword, $wm);
 				}
 				else {
-
+					
 					$input.focus(
 						function () {
 							$input.data(dataFocus, 1);
@@ -2311,16 +2321,16 @@ $.fn.watermark = function (text, options) {
 						// is merged with the watermark before the drop event is called.
 						function (evt) {
 							var dropText = evt.originalEvent.dataTransfer.getData("Text");
-
+							
 							if ($input.val().replace(dropText, "") === $input.data(dataText)) {
 								$input.val(dropText);
 							}
-
+							
 							$input.focus();
 						}
 					);
 				}
-
+				
 				// In order to reliably clear all watermarks before form submission,
 				// we need to replace the form's submit function with our own
 				// function.  Otherwise watermarks won't be cleared when the form
@@ -2328,21 +2338,21 @@ $.fn.watermark = function (text, options) {
 				if (this.form) {
 					var form = this.form,
 						$form = $(form);
-
+					
 					if (!$form.data(dataFormSubmit)) {
 						$form.submit($.watermark.hideAll);
-
+						
 						// form.submit exists for all browsers except Google Chrome
 						// (see "else" below for explanation)
 						if (form.submit) {
 							$form.data(dataFormSubmit, form.submit);
-
+							
 							form.submit = (function (f, $f) {
 								return function () {
 									var nativeSubmit = $f.data(dataFormSubmit);
-
+									
 									$.watermark.hideAll();
-
+									
 									if (nativeSubmit.apply) {
 										nativeSubmit.apply(f, Array.prototype.slice.call(arguments));
 									}
@@ -2354,7 +2364,7 @@ $.fn.watermark = function (text, options) {
 						}
 						else {
 							$form.data(dataFormSubmit, 1);
-
+							
 							// This strangeness is due to the fact that Google Chrome's
 							// form.submit function is not visible to JavaScript (identifies
 							// as "undefined").  I had to invent a solution here because hours
@@ -2373,7 +2383,7 @@ $.fn.watermark = function (text, options) {
 					}
 				}
 			}
-
+			
 			$.watermark._show($input);
 		}
 	).end();
@@ -2385,11 +2395,11 @@ if (triggerFns.length) {
 	// Wait until DOM is ready before searching
 	$(function () {
 		var i, name, fn;
-
+	
 		for (i=triggerFns.length-1; i>=0; i--) {
 			name = triggerFns[i];
 			fn = window[name];
-
+			
 			if (typeof(fn) === "function") {
 				window[name] = (function (origFn) {
 					return function () {

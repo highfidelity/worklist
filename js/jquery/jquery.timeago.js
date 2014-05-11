@@ -83,14 +83,14 @@
 
       return $.trim([prefix, words, suffix].join(" "));
     },
-	parse: function(iso8601) {
-  if ((iso8601 - 0) == iso8601 && iso8601.length > 0) { // Checks if iso8601 is a unix timestamp
-    var s = new Date(iso8601);
-    if (isNaN(s.getTime())) { // Checks if iso8601 is formatted in milliseconds
-      var s = new Date(iso8601 * 1000); //if not, add milliseconds
+	parse: function(iso8601) {  
+  if ((iso8601 - 0) == iso8601 && iso8601.length > 0) { // Checks if iso8601 is a unix timestamp  
+    var s = new Date(iso8601);  
+    if (isNaN(s.getTime())) { // Checks if iso8601 is formatted in milliseconds  
+      var s = new Date(iso8601 * 1000); //if not, add milliseconds 
     }
-    return s;
-  }
+    return s;  
+  }  
 
   var s = $.trim(iso8601);
   s = s.replace(/-/,"/").replace(/-/,"/");
@@ -98,7 +98,7 @@
   s = s.replace(/([\+-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
   return new Date(s);
 },
-
+    
   datetime: function(elem) {
        // jQuery's `is()` doesn't play well with HTML5 in IE
        var isTime = $(elem).get(0).tagName.toLowerCase() == "time"; // $(elem).is("time");

@@ -11,7 +11,7 @@
  * @requires jQuery 1.4.2, jQuery UI 1.8.1, Class 0.0.2, jQuery.ScrollTo 1.4.2
  *
  * Date: Fri May 21 04:11:00 2010 +0100
- *
+ * 
  * Change by LoveMachine multiple options
  */
 (function($) {
@@ -24,7 +24,7 @@
         values: null,
         settings: {},
         showList: false,
-
+        
         init: function(o,settings) {
             var oThis=$(o),
                 cThis = this;
@@ -55,7 +55,7 @@
                         /** Keep this if we need a button to close the list **/
                         $("li[val=CheckDone]",o.list).html("<input type='button' value='Done' style='display:none;' id='CheckDone'/>")
                             .unbind("mouseover");
-
+                            
                          $(".checkboxLabel",o.list).click(function(event){
                             event.preventDefault();
                             event.stopPropagation();
@@ -64,7 +64,7 @@
                                 var oThis=this;
                                 if ($(oThis).is(':checked') ) {
                                     if ($(this).val() !== "ALL") {
-                                        $(oThis).parent().click();
+                                        $(oThis).parent().click();                                        
                                     }
                                 }
                             });
@@ -74,7 +74,7 @@
                             },500);
                             return true;
                         });
-
+                            
                          $("input[type=checkbox]",o.list).click(function(event){
                             $(event.currentTarget).data("clicked",true);
                         });
@@ -86,7 +86,7 @@
             }
             // fire event initialized
             this.el.trigger('init', this);
-
+            
             // bind click events
             this.container.click($.proxy(this.click, this));
             $(document).click($.proxy(this._outClick, this));
@@ -94,7 +94,7 @@
 /*
     Removed: bug with a textarea in the same page
             $(document).keydown($.proxy(this.keydown, this));
-      */
+      */      
             // setup the combobox
             this.el.trigger('beforesetup', this);
             this._setup();
@@ -171,7 +171,7 @@
             this.container.append(this.textbox).append(this.trigger).append(this.list);
             // add the combobox to the dom
             this.el.after(this.container);
-
+            
         },
         _setupTextbox: function() {
             // as we don't provide autocomplete at the moment simply deactivate the textbox
@@ -207,7 +207,7 @@
                 listItem.text(v.text);
                 listItem.attr('val', v.value);
                 if (v.selected) {
-                    listItem.addClass('ui-combobox-list-selected');
+                    listItem.addClass('ui-combobox-list-selected');    
                 }
                 listItem.hover(
                     function() {
@@ -217,7 +217,7 @@
                 );
                 listItem.click($.proxy(this._listItemClicked, this));
                 this.list.append(listItem);
-
+                
                 // Update the original select with the new option
                 var sel = '';
                 if (v.selected) {
@@ -407,7 +407,7 @@
                         } else {
                             more = " +";
                         }
-                    }
+                    }                        
                 });
                 this.el.val(currentSelectedVal);
                 // update the textbox with the correct text
@@ -463,7 +463,7 @@
             this._outClick();
         }
     });
-
+    
     $.fn.comboBox = function(settings) {
         if (settings && settings.action && settings.action == "val") {
             if ($(this).data('comboBox')) {

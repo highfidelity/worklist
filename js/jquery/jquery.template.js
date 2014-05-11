@@ -6,12 +6,12 @@ $.fn.parseTemplate = function(data)
     /// NOTE: chokes on single quotes in the document in some situations
     ///       use &rsquo; for literals in text and avoid any single quote
     ///       attribute delimiters.
-    /// </summary>
-    /// <param name="str" type="string">The text of the template to expand</param>
+    /// </summary>    
+    /// <param name="str" type="string">The text of the template to expand</param>    
     /// <param name="data" type="var">
     /// Any data that is to be merged. Pass an object and
     /// that object's properties are visible as variables.
-    /// </param>
+    /// </param>    
     /// <returns type="string" />
     var str = (this).html();
     var _tmplCache = {}
