@@ -776,8 +776,8 @@ class Notification {
         }
         
         $itemId = $workitem->getId();
-        $itemLinkShort = '<a href="' . WORKLIST_URL . $itemId . "'>#{$itemId}</a>";
-        $itemLink = "{$itemLinkShort}{$bugJournalMessage}";
+        $itemLinkShort = '<a href="' . WORKLIST_URL . $itemId . '">#' . $itemId . '</a>';
+        $itemLink = $itemLinkShort . $bugJournalMessage;
         
         $message = null;
         $message_format = 'html';
