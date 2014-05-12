@@ -22,6 +22,7 @@ class JobView extends View {
         'js/jquery/jquery.metadata.js',
         'js/jquery/jquery.blockUI.js',
         'js/ajaxupload/ajaxupload.js',
+        'js/dragdealer/dragdealer.js',
         'js/datepicker.js',
         'js/timepicker.js',
         'js/review.js',

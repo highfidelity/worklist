@@ -219,67 +219,57 @@ var Utils = {
     /**
      * Calculates the relative time
      */
-    relativeTime: function(t) {
-        var now = new Date();
-        t = t.replace(/-/g, "/");
-        var x = new Date(t);
-        var days = (x - now) / 1000 / 60 / 60 / 24;
-        var daysRound = Math.floor(days);
-        var hours = (x - now) / 1000 / 60 / 60 - (24 * daysRound);
-        var hoursRound = Math.floor(hours);
-        var minutes = (x - now) / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
-        var minutesRound = Math.floor(minutes);
-        var seconds = (x - now) / 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
-        var secondsRound = Math.round(seconds);
-        var sec = (secondsRound == 1) ? " second" : " seconds";
-        var min = (minutesRound == 1) ? " minute" : " minutes";
-        var hr = (hoursRound == 1) ? " hour and " : " hours and ";
-        var dy = (daysRound == 1)  ? " day " : " days, "
-        
-        var dateFormated;
-        if (daysRound < 0) {
-            dateFormated = "<span class='overdue'>Overdue</span>";
-            return dateFormated;
+    relativeTime: function(time, withIn, justNow, withAgo) {
+        var secs = Math.abs(time);
+        var mins = 60;
+        var hour = mins * 60;
+        var day = hour * 24;
+        var week = day * 7;
+        var month = day * 30;
+        var year = day * 365;
+        segments = {}
+        segments.yr = parseInt(secs / year);
+        secs %= year;
+        segments.mnth = parseInt(secs / month);
+        secs %= month;
+        if (!segments.yr) {
+            segments.day = parseInt(secs / day);
+            secs %= day;
+            if (!segments.mnth) {
+                segments.hr = parseInt(secs / hour);
+                secs %= hour;
+                if (!segments.day) {
+                    segments.min = parseInt(secs / mins);
+                    secs %= mins;
+                    if (!segments.hr && !segments.min) {
+                        segments.sec = secs;
+                    }
+                }
+            }
         }
-        dateFormated = "In ";
-        if (daysRound > 0) dateFormated += daysRound + dy;
-        if (hoursRound > 0) dateFormated += hoursRound + hr;
-        if (minutesRound > 0) dateFormated += minutesRound + min;
-        
-        return dateFormated;
-    },
-    
-    /**
-     * Calculates the relative time
-     */
-    age: function(t) {
-        var now = new Date();
-        t = t.replace(/-/g, "/");
-        var x = new Date(t);
-        var days = (now - x) / 1000 / 60 / 60 / 24;
-        var daysRound = Math.floor(days);
-        var hours = (now - x) / 1000 / 60 / 60 - (24 * daysRound);
-        var hoursRound = Math.floor(hours);
-        var minutes = (now - x) / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
-        var minutesRound = Math.floor(minutes);
-        var seconds = (now - x) / 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
-        var secondsRound = Math.round(seconds);
-        var sec = (secondsRound == 1) ? " second" : " seconds";
-        var min = (minutesRound == 1) ? " minute" : " minutes";
-        var hr = (hoursRound == 1) ? " hour" : " hours";
-        var dy = (daysRound == 1)  ? " day" : " days"
-        
-        var dateFormated = " ";
-        var sep = ", ";
-        
-        if (daysRound > 0) dateFormated += daysRound + dy;
-        if (hoursRound > 0) dateFormated += sep + hoursRound + hr;
-        if (minutesRound > 0) dateFormated += sep + minutesRound + min;
-        if (secondsRound > 0) dateFormated += sep + secondsRound + sec;
-        
-        return dateFormated;
-    },
-    
+        var relTime = '';
+        for (unit in segments) {
+            var cnt = segments[unit];
+            if (cnt) {
+                relTime += cnt + ' ' + unit;
+                if (cnt > 1) {
+                    relTime += 's';
+                }
+                relTime += ', ';
+            }
+        }
+        relTime = relTime.substr(0, relTime.length - 2);
+        if (relTime) {
+            withAgo = typeof(withAgo) == 'undefined' ? true : withAgo;
+            withIn = typeof(withIn) == 'undefined' ? true : withIn;
+            return (time < 0) ? (withAgo ? '' : '-') + (relTime + (withAgo ? ' ago' : '')) : (withIn ? 'in ' + relTime : relTime);
+        } else {
+            justNow = typeof(justNow) == 'undefined' ? true : justNow;
+            return justNow ? 'just now' : '';
+        }
+    },    
+
+
     /**
      * International phone number validation
      */

@@ -1068,9 +1068,52 @@ function showIneligible(problem) {
 }
 
 function showPlaceBidForm() {
-  $('#popup-bid').dialog("option", "width", 695);
-  $('#popup-bid').dialog('open');
-  return false;
+    var minDoneIn = 7200, // in segs = 2 hours,
+        maxDoneIn = 604800; // in segs = 7 days
+    Utils.modal('addbid', {
+        job_id: workitem_id,
+        current_id: userId,
+        open: function(modal) {
+            $('input[name="done_in"]', modal).after($('<div>').addClass('dragdealer'));
+            $('<div>').addClass('handle').text('drag').appendTo('.dragdealer', modal);
+            var a = new Dragdealer($('.dragdealer', modal)[0], {
+                steps: 10,
+                speed: 0.5,
+                animationCallback: function(x, y) {
+                    var text = Utils.relativeTime(Math.round(x * (maxDoneIn - minDoneIn)) + minDoneIn, false, false, false).replace(/,.*/, '');
+                    $('.dragdealer > .handle').text(text);
+                    $('input[name="done_in"]').val(text);
+                }
+            });
+            $('form#addbid').submit(function() {
+                // see http://regexlib.com/REDetails.aspx?regexp_id=318
+                // but without dollar sign 22-NOV-2010 <krumch>
+                var regex_bid = /^(\d{1,3},?(\d{3},?)*\d{3}(\.\d{0,2})?|\d{1,3}(\.\d{0,2})?|\.\d{1,2}?)$/;
+                var regex_date = /^\d{1,2}\/\d{1,2}\/\d{4}$|^\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2} (am|pm)$/;
+
+                var bid_amount = new LiveValidation('bid_amount',{
+                    insertAfterWhatNode: $('label[for="bid_amount"] + .input-group', modal)[0],
+                    onlyOnSubmit: true
+                });
+                bid_amount.add(Validate.Presence, {
+                    failureMessage: "Can't be empty!"
+                });
+                bid_amount.add(Validate.Format, {
+                    pattern: regex_bid, 
+                    failureMessage: "Invalid Input!"
+                });
+
+                var notes = new LiveValidation('notes', {onlyOnSubmit: true});
+                notes.add( Validate.Presence, {failureMessage: "Can't be empty!" });
+                var massValidationBid = LiveValidation.massValidate([bid_amount, notes]);
+                if (!massValidationBid) {
+                    return false;
+                }
+                return true;
+            });            
+        }
+    });
+
 }
 
 function showWithdrawBidReason() {
@@ -1147,11 +1190,11 @@ function showFeeForm() {
                         }
                         return true;
                     });
-               }
+                }
             });
         },
         'json'
-    )
+    );
 }
 
 function CheckCodeReviewStatus() {
