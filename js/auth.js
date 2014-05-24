@@ -120,7 +120,7 @@ var Auth = {
                 massValidation = LiveValidation.massValidate([password]);
                 if (massValidation) {
                     // success log in, let's take it to the worklist
-                    window.location.href = './';
+                    window.location.href = 'github/success';
                 }
 
             }

@@ -13,6 +13,7 @@ class GithubController extends Controller {
             case 'connect':
             case 'authorize':
             case 'signup':
+            case 'success':
                 $method = $action;
                 break;
             default:
@@ -91,14 +92,14 @@ class GithubController extends Controller {
                             // credentials not stored in db and not used by any other user
                             $user->storeCredentials($access_token);
                         }
-                        Utils::redirect('./');
+                        $this->success();
                     } else {
                         // user not logged in in worklist, let's check whether he already has a 
                         // github-linked account in worklist
                         if ($user->findUserByAuthToken($access_token)) {
                             // already linked account, let's log him in
                             if ($user->isActive()) {
-                                User::login($user);
+                                User::login($user, $_SESSION['redirect_url']);
                             }
                             return;
                         } else {
@@ -309,5 +310,12 @@ class GithubController extends Controller {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($headers, array('User-Agent: Worklist.net')));
         $response = curl_exec($ch);
         return json_decode($response);
+    }
+
+    /*
+     * Redirect to user to the right page after a success authentication
+     */
+    public function success() {
+        Utils::redirect($_SESSION['redirect_url']);
     }
 }

@@ -18,6 +18,11 @@ class Controller extends AppObject {
         if (class_exists($viewName)) {
             $this->view = new $viewName();
         }
+        // Set previous url if not GithubView
+        if ($viewName != 'GithubView' && $viewName != 'UserView' && $viewName != 'LogoutView') {
+            $full_url = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+            $_SESSION['redirect_url'] = str_replace(SERVER_URL,"", $full_url);
+        }
     }
     
     public function __destruct() {
