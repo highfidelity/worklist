@@ -201,7 +201,7 @@ section#footer li:nth-child(-n+3) {
     display: inline-block;
 }
 
-/* MoneyZone MAY-26-2014 <victorargote> */
+/* MoneyZone rule moved from workitem.css MAY-26-2014 <victorargote> */
 .moneyZone {
     display:block;
     -moz-border-radius: 6px;
@@ -211,7 +211,7 @@ section#footer li:nth-child(-n+3) {
     padding:0px 8px 19px 8px;
 }
 
-/* Page Content MAY-26-2014 <victorargote> */
+/* Page Content rule moved from workitem.css MAY-26-2014 <victorargote> */
 #page-content {
     margin-top: 15px;
 }
@@ -230,7 +230,7 @@ section#footer li:nth-child(-n+3) {
     padding-bottom: 3px;
 }
 
-/* Comments MAY-26-2014 <victorargote> */
+/* Comments rule moved from workitem.css MAY-26-2014 <victorargote> */
 .comment-container {
     float: left;
     margin-left: 10px;
