@@ -356,7 +356,7 @@ $(document).ready(function(){
             event.preventDefault();
         }
     });
-    $('#following').click(function() {
+    $('#following a').click(function() {
         $.ajax({
             type: 'post',
             url: 'jsonserver.php',
@@ -373,6 +373,8 @@ $(document).ready(function(){
                 }
             }
         });
+
+        return false;
     });
 
     (function($) {
