@@ -201,7 +201,6 @@ section#footer li:nth-child(-n+3) {
     display: inline-block;
 }
 
-/* MoneyZone rule moved from workitem.css MAY-26-2014 <victorargote> */
 .moneyZone {
     display:block;
     -moz-border-radius: 6px;
@@ -211,7 +210,6 @@ section#footer li:nth-child(-n+3) {
     padding:0px 8px 19px 8px;
 }
 
-/* Page Content rule moved from workitem.css MAY-26-2014 <victorargote> */
 #page-content {
     margin-top: 15px;
 }
@@ -230,7 +228,6 @@ section#footer li:nth-child(-n+3) {
     padding-bottom: 3px;
 }
 
-/* Comments rule moved from workitem.css MAY-26-2014 <victorargote> */
 .comment-container {
     float: left;
     margin-left: 10px;
@@ -265,4 +262,30 @@ section#footer li:nth-child(-n+3) {
     position: relative;
     top: -7px;
     right: -10px;
+}
+
+/*  This rule fix tweet button positioning
+    JUN-05-2014 <victorargote> */
+#tweet-link {
+    padding: 10px 24px 7px 30px;
+    float: left;
+    background-position: 0px 8px;
+    margin-left: 10px;
+    border-right: 2px solid #e1e8ea;
+}
+
+/*  Moving #following rule from workitem.css
+    JUN-05-2014 <victorargote> */
+#following {
+    padding: 10px 24px 7px 30px;
+    background-position: 0px 10px;
+    background-repeat: no-repeat;
+    border-right: 2px solid #e1e8ea;
+    float: left;
+}
+
+#following:hover {
+    cursor: pointer;
+    text-decoration: underline !important;
+    color: #608e96 !important;
 }

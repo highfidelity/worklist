@@ -940,27 +940,15 @@ a.profile-link {
     float: left;
 }
 
-#following,
 .switchmode,
 .switchmode-done {
     float: left;
 }
 
-#following:hover,
 .switchmode:hover {
     cursor: pointer;
     text-decoration: underline !important;
     color: #608e96 !important;
-}
-
-#following {
-    padding: 10px 24px 7px 30px;
-    background-position: 0px 10px;
-    background-repeat: no-repeat;
-}
-
-#following {
-    border-right: 2px solid #e1e8ea;
 }
 
 .switchmode,
