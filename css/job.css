@@ -18,7 +18,6 @@
 #commentform {
     background-color: #efefef;
     border-width: 1px;
-    text-align: center;
 }
 
 #commentform,
@@ -40,14 +39,15 @@
 }
 
 #commentform input[type="submit"] {
-    margin-left: 10px;
-    display: inline-block;
+    margin: 0 10px;
+	display: inline-block;
+	float: left;
 }
 
 #commentform .tip {
     color: #777;
-    display: inline-block;
-	padding: 10px;
+	padding-bottom: 10px;
+	display: block;
 }
 
 
