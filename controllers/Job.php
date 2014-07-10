@@ -1041,7 +1041,8 @@ class JobController extends Controller {
         $runner_id = $user->getIs_runner() ? $userId : '';
         $itemid = $_REQUEST['itemid'];
         $summary = $_REQUEST['summary'];
-        $project_id = $_REQUEST['project_id'];
+        $project = Project::find($_REQUEST['project_id']);
+        $project_id = $project->getProjectId();
         $skills = $_REQUEST['skills'];
         $status = $user->getIs_runner() ? $_REQUEST['status'] : 'Suggestion';
         $notes = $_REQUEST['notes'];
