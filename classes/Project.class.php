@@ -27,6 +27,7 @@ class Project {
     protected $cr_job_runner;
     protected $cr_users_specified;
     protected $internal;
+    protected $require_sandbox;
     protected $repo_type;
     protected $creation_date;
     protected $hipchat_enabled;
@@ -134,7 +135,8 @@ class Project {
                 p.cr_project_admin,
                 p.cr_job_runner,
                 p.cr_users_specified,
-                p.internal, 
+                p.internal,
+                p.require_sandbox,
                 p.creation_date,
                 p.hipchat_enabled,
                 p.hipchat_notification_token,
@@ -177,6 +179,7 @@ class Project {
              $this->setCrRunner($row['cr_job_runner']);
              $this->setCrUsersSpecified($row['cr_users_specified']);
              $this->setInternal($row['internal']);
+             $this->setRequireSandbox($row['require_sandbox']);
              $this->setCreationDate($row['creation_date']);
         $this->setHipchatEnabled($row['hipchat_enabled']);
         $this->setHipchatNotificationToken($row['hipchat_notification_token']);
@@ -418,11 +421,16 @@ class Project {
         $this->internal = $internal ? 1 : 0;
         return $this;
     }
-
     public function getInternal() {
         return $this->internal;
     }
-    
+    public function setRequireSandbox($require_sandbox) {
+        $this->require_sandbox = $require_sandbox ? 1 : 0;
+        return $this;
+    }
+    public function getRequireSandbox() {
+        return $this->require_sandbox;
+    }
     public function setCreationDate($creation_date) {
         $this->creation_date = $creation_date;
         return $this;
@@ -563,7 +571,7 @@ class Project {
             (name, description, short_description, website, budget, repository, contact_info, active,
                 owner_id, testflight_enabled, testflight_team_token,
                 logo, last_commit, cr_anyone, cr_3_favorites, cr_project_admin,
-                cr_job_runner,cr_users_specified, internal, creation_date, hipchat_enabled,
+                cr_job_runner, cr_users_specified, internal, require_sandbox, creation_date, hipchat_enabled,
                 hipchat_notification_token, hipchat_room, hipchat_color, repo_type, github_id, github_secret) " .
             "VALUES (".
             "'".mysql_real_escape_string($this->getName())."', ".
@@ -585,6 +593,7 @@ class Project {
             "'" . intval($this->getCrRunner()) . "', " .
             "'" . intval($this->getCrUsersSpecified()) . "', " .
             "'" . intval($this->getInternal()) . "', " .
+            "'" . intval($this->getRequireSandbox()) . "', " .
             "NOW(), " .
             "'" . intval($this->getHipchatEnabled()) . "', " .
             "'" . mysql_real_escape_string($this->getHipchatNotificationToken()) . "', " .
@@ -639,6 +648,7 @@ class Project {
                 cr_job_runner='" . intval($this->getCrRunner()) . "',
                 cr_users_specified='" . intval($this->getCrUsersSpecified()) . "',
                 internal='" . intval($this->getInternal()) . "',
+                require_sandbox='" . intval($this->getRequireSandbox()) . "',
                 hipchat_enabled='" . intval($this->getHipchatEnabled()) . "',
                 hipchat_notification_token='" . mysql_real_escape_string($this->getHipchatNotificationToken()) . "',
                 hipchat_room='" . mysql_real_escape_string($this->getHipchatRoom()) . "',

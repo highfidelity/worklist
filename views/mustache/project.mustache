@@ -24,6 +24,10 @@
                           {{^edit_mode}}disabled="disabled"{{/edit_mode}} 
                           {{#project.getInternal}}checked="checked"{{/project.getInternal}} />
                         <label for="internal">Internal project</label>
+                        <input class="wlcheckbox" type="checkbox" name="require_sandbox" id="require_sandbox"
+                          {{^edit_mode}}disabled="disabled"{{/edit_mode}}
+                          {{#project.getRequireSandbox}}checked="checked"{{/project.getRequireSandbox}} />
+                        <label for="require_sandbox">Requires Sandbox</label>
                     </div>
                 {{/currentUser.is_admin}}
             </div>

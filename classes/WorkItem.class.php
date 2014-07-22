@@ -648,11 +648,12 @@ class WorkItem {
     {
         $query = "SELECT w.id, w.summary,w.creator_id,w.runner_id, w.mechanic_id, ".
                  " u.nickname AS runner_nickname, u.id AS runner_id,".
-                 " uc.nickname AS creator_nickname, w.status, w.notes, ".
+                 " uc.nickname AS creator_nickname, um.nickname AS mechanic_nickname, w.status, w.notes, ".
                  " w.project_id, p.name AS project_name, p.repository AS repository, p.website AS p_website,
                   w.sandbox, w.bug_job_id, w.is_bug, w.budget_id, b.reason AS budget_reason, b.giver_id AS budget_giver_id
                   FROM  " . WORKLIST . " as w
                   LEFT JOIN " . USERS . " as uc ON w.creator_id = uc.id
+                  LEFT JOIN " . USERS . " as um ON w.mechanic_id = um.id
                   LEFT JOIN " . USERS . " as u ON w.runner_id = u.id
                   LEFT JOIN " . PROJECTS . " AS p ON w.project_id = p.project_id
                   LEFT JOIN " . BUDGETS . " AS b ON w.budget_id = b.id
@@ -940,9 +941,17 @@ class WorkItem {
         // Get the repo for this project
         $repository = $this->getRepository();
         $job_id = $this->getId();
-        // Verify whether the user already has this repo forked on his account
-        // If not create the fork
+        /* Verify whether the user already has this repo forked on his account
+        If not create the fork
+        Check for existing unix account in dev.  If new, make call to create account
+        */
         $GitHubUser = new User($bid_info['bidder_id']);
+        $url = TOWER_API_URL;
+        $fields = array(
+                'action' => 'create_unixaccount',
+                'nickname' => $bidder->getNickname()
+        );
+        $result = CURLHandler::Post($url, $fields);
         if (!$GitHubUser->verifyForkExists($project)) {
             $forkStatus = $GitHubUser->createForkForUser($project);
             $bidderEmail = $bidder->getUsername();

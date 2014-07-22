@@ -68,6 +68,7 @@ class ProjectController extends Controller {
             $cr_users_specified = isset($_REQUEST['cr_users_specified']) ? 1 : 0;
             $cr_job_runner = isset($_REQUEST['cr_job_runner']) ? 1 : 0;
             $internal = isset($_REQUEST['internal']) ? 1 : 0;
+            $require_sandbox = isset($_REQUEST['require_sandbox']) ? 1 : 0;
             $hipchat_enabled = isset($_REQUEST['hipchat_enabled']) ? 1 : 0;
             $project->setCrAnyone($cr_anyone);
             $project->setCrFav($cr_3_favorites);
@@ -82,7 +83,9 @@ class ProjectController extends Controller {
             if ($user->getIs_admin()) {
                 $project->setInternal($internal);
             }
-            
+            if ($user->getIs_admin()) {
+                $project->setRequireSandbox($require_sandbox);
+            }
             if ($_REQUEST['logoProject'] != "") {
                 $project->setLogo(basename($_REQUEST['logoProject']));
             }
@@ -171,6 +174,7 @@ class ProjectController extends Controller {
             $project->setOwnerId($user->getId());
             $project->setActive(true);
             $project->setInternal(true);
+            $project->setRequireSandbox(true);
             $project->setLogo($logo);
             $project->setRepo_type('git');
             $project->setRepository($_POST['github_repo_url']);
