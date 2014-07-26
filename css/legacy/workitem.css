@@ -1131,10 +1131,11 @@ h1.newProject {
     .project, .job-budget {
         clear: both;
         width: 100%;
+        margin-right: 0px;
     }
 
     .project {
-        margin: 0 10px;
+        margin: 0px;
     }
 
     .info-data {
@@ -1153,6 +1154,8 @@ h1.newProject {
     }
 
     #following {
-        padding: 10px 5px 7px 25px;
+        background-position: 4px 10px;
+        background-repeat: no-repeat;
+        padding: 10px 5px 7px 30px;
     }
 }

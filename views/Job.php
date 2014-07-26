@@ -65,6 +65,7 @@ class JobView extends View {
             'started' => $this->workitem->getCRStarted(),
             'feeAmount' => $this->crFee()
         );
+        $this->view->referer = array('referer', $_SERVER['HTTP_REFERER']);
 
         return parent::render();
     }

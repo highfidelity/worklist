@@ -183,6 +183,24 @@ var Job = {
                     showWithdrawButton = showWithdrawOrDeclineButtons && (bidData.bidder_id == user_id),
                     showDeclineButton = (is_project_runner || (is_admin && is_runner)) && bidData.bidder_id != user_id;
 
+                /* check if user comes from bid email link*/
+                var referrer = document.referrer
+                var current = window.location.search;
+                var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+                if(referrer != '' && referrer.indexOf("worklist") < 0 && current.indexOf("view_bid") >= 0){
+                    var fromMail = true;
+                }else{
+                    var fromMail = false;
+                }
+                /* coming from bid email link AND on mobile*/
+                if(fromMail && isMobile) {
+                    var displayNotes = false;
+                }else{
+                    var displayNotes = true;
+                }
+
+
+
                 Utils.modal('bidinfo', {
                     job_id: workitem_id,
                     current_id: userId,
@@ -192,6 +210,9 @@ var Job = {
                     canEdit: showEditButton,
                     canWithdraw: showWithdrawButton,
                     canDecline: showDeclineButton,
+                    fromMail: fromMail,
+                    isMobile: isMobile.matches,
+                    displayNotes: displayNotes,
                     open: function(modal) {
                         if (showAcceptBidButton) {
                             $.ajax({

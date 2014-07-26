@@ -456,6 +456,9 @@ button:focus, a:focus {
 }
 
 @media only screen and (max-width: 450px) {
+    #select-budget.dropdown-menu {
+        left: -80px;
+    }
     #footer {
         display: none;
     }
