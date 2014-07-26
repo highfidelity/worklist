@@ -371,5 +371,15 @@ replacement data:
     ## Summary of Worklist activity for the past week:
 
     {text}'
+),
+'job-assigned' => array(
+    'subject' => 'Assigned Job #{job_id} - {summary}',
+    'body' => '
+      <p>Hi {assigned}</p>
+      <p>
+        Just wanted to let you know that {assigner} has assigned you to job:
+        <a href="' . WORKLIST_URL . '{job_id}">{job_id} - {summary}</a>.
+      </p>
+      <p>- Worklist.net</p>'
 )
 );

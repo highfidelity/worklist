@@ -27,7 +27,7 @@ var Project = {
 
         $('#removerunner').click(Project.removeDesigner);
 
-        Project.updateCodeReviewers();
+        Project.refreshCodeReviewers();
 
         $('#removecodereviewer').click(Project.removeCodeReviewer);
 
@@ -353,7 +353,7 @@ var Project = {
                             var designer = designers[i];
                             html =
                                 '<tr class="runner">' +
-                                    ((is_admin || is_owner) ? '<td class="runnerRemove">' + (designer.owner ? '' : '<input type="checkbox" name="runner' + designer.id + '" />') + '</td>' : '') +
+                                    (isCodeReviewAdmin ? '<td class="runnerRemove">' + (designer.owner ? '' : '<input type="checkbox" name="runner' + designer.id + '" />') + '</td>' : '') +
                                     '<td class="runnerName"><a href="./user/' + designer.id + '" >' + designer.nickname + '</a></td>' +
                                     '<td class="runnerJobCount">' + designer.totalJobCount + '</td>' +
                                     '<td class="runnerLastActivity">' + (designer.lastActivity ? designer.lastActivity : '') + '</td>' +
@@ -366,7 +366,7 @@ var Project = {
         });
     },
 
-    updateCodeReviewers: function() {
+    refreshCodeReviewers: function() {
         $('#projectCodeReviewRights tbody').html('Loading ...');
         $.ajax({
             type: 'post',
@@ -382,11 +382,13 @@ var Project = {
                             var codeReviewer = codeReviewers[i];
                             html =
                                 '<tr class="codeReviewer">' +
-                                    ((is_admin || is_owner) ? '<td class="codeReviewerRemove">' + (codeReviewer.owner ? '' : '<input type="checkbox" name="codereviewer' + codeReviewer.id + '" />') + '</td>' : '') +
-                                    '<td class="codeReviewerName"><a href="./user/' + codeReviewer.id + '" >' + codeReviewer.nickname + '</a></td>' +
-                                    '<td class="codeReviewerJobCount">' + codeReviewer.totalJobCount + '</td>' +
-                                    '<td class="codeReviewerLastActivity">' + (codeReviewer.lastActivity ? codeReviewer.lastActivity : '') + '</td>' +
-                                '</tr>'
+                                    '<td class="codeReviewerName">' +
+                                      (isCodeReviewAdmin ? '<input type="checkbox" class="wlcheckbox" id="codereviewer' + codeReviewer.nickname + '" name="codereviewer' + codeReviewer.nickname + '" />' : '') +
+                                      '<label for="codereviewer' + codeReviewer.nickname + '"><a href="./user/' + codeReviewer.nickname + '" >' +
+                                        codeReviewer.nickname +
+                                      '</a></label>' +
+                                    '</td>' +
+                                '</tr>';
                             $('#projectCodeReviewers tbody').append(html);
                         }
                     }
@@ -398,7 +400,7 @@ var Project = {
     removeCodeReviewer: function(event) {
         var codeReviewers = [];
         $('#projectCodeReviewRights input[name^=codereviewer]:checked').each(function() {
-            var codeReviewer = parseInt($(this).attr('name').substring(12));
+            var codeReviewer = $(this).attr('name').substring(12);
             codeReviewers.push(codeReviewer);
         });
         $.ajax({
@@ -407,7 +409,7 @@ var Project = {
             dataType: 'json',
             success: function(data) {
                 if (data.success) {
-                    Project.updateCodeReviewers();
+                    Project.refreshCodeReviewers();
                 }
             }
         });
@@ -504,7 +506,7 @@ var Project = {
                         url: './project/addCodeReviewer/' + projectid + '/' + user,
                         dataType: 'json',
                         success: function(data) {
-                            Project.updateCodeReviewers();
+                            Project.refreshCodeReviewers();
                         }
                     });
                     $(modal).modal('hide')

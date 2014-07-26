@@ -1318,6 +1318,8 @@ defineOnce('GITHUB_ORGANIZATION', 'highfidelity');
 
 defineOnce('PAYPAL_ENVIRONMENT', 'sandbox'); // 'sandbox' or 'beta-sandbox' or 'live'
 
+defineOnce('CODE_REVIEW_ADMINS', 'joanneci,kordero,birarda');
+
 require_once('vendor/autoload.php');
 require_once('functions.php');
 

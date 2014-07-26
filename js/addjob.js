@@ -4,12 +4,37 @@ var AddJob = {
     filesUploading: 0,
 
     init: function() {
-        $('select[name="itemProject"]').chosen({width: '100%'});
-        $('select[name="itemStatus"]').chosen({width: '100%'});
+        $('select[name="itemProject"], select[name="itemStatus"], select[name="assigned"]').chosen({
+            width: '100%',
+            disable_search_threshold: 10
+        });
+        $('select[name="itemProject"]').change(AddJob.showProjectDescription);
+        $('select[name="assigned"]').change(AddJob.checkAssignedUser);
 
         $('form#addJob').submit(AddJob.formSubmit);
 
         AddJob.initFileUpload();
+    },
+
+    showProjectDescription: function() {
+        $.ajax({
+            url: 'project/info/' + $("select[name='itemProject']").val(),
+            dataType: "json",
+            success: function(json) {
+                if (!json.success) {
+                    return;
+                }
+                $("select[name='itemProject']").parent().next().text(json.data.short_description);
+            }
+        });
+    },
+
+    checkAssignedUser: function() {
+        if (parseInt($(this).val()) > 0) {
+            $("input[name='is_internal']").prop('checked', true);
+            $("select[name='itemStatus']").val('Bidding');
+            $("select[name='itemStatus']").trigger("chosen:updated");
+        }
     },
 
     initFileUpload: function() {
@@ -140,7 +165,8 @@ var AddJob = {
                 project_id: $("select[name='itemProject']").val(),
                 status: $("select[name='itemStatus']").val(),
                 skills: skills,
-                fileUpload: {uploads: AddJob.uploadedFiles}
+                fileUpload: {uploads: AddJob.uploadedFiles},
+                assigned: $('select[name="assigned"]').val()
             },
             type: 'POST',
             success: function(json) {

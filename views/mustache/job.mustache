@@ -112,11 +112,32 @@
             <div id="mechanicBox">
                 {{& mechanicBox}}
             </div>
+            {{#userIsInternal}}{{#assigneeNickname}}
+            <div id="assigneeBox">
+                <span class="assigneeName">
+                    Assignee:
+                </span>
+                <a id="ping-btn" href="./user/{{assigneeNickname}}" >{{assigneeNickname}}</a>
+            </div>
+            {{/assigneeNickname}}{{/userIsInternal}}
         </div>
         {{/editing}}
         <div id="for_view">
             {{#editing}}
                 <ul style="margin:0; padding:0; border:none;">
+                    <li>
+                        {{#userIsInternal}}
+                        <span class="inline-label">Assignee</span>
+                        <select name="assigned" data-placeholder="Select assignee">
+                            <option value="0">No one assigned</option>
+                            {{#internalUsers}}
+                                <option value="{{id}}" {{#current}}selected="selected"{{/current}}>
+                                    {{nickname}}
+                                </option>
+                            {{/internalUsers}}
+                        </select>
+                        {{/userIsInternal}}
+                    </li>
                     <li>
                         {{#canReassignRunner}}
                         <div id="runnerBox">
@@ -175,7 +196,7 @@
                     {{#worklist.mechanic_id}}
                     <li>
                         <div class="sandbox-container">
-                            <span class="functional-label" >Sandbox:</span><br />
+                            <span class="functional-label" >Branch:</span><br />
                             {{#canEditSandboxUrlOnEdit}}
                             <input type="text" size="30" class="text-field" name="sandbox" id="sandbox" value="{{worklist.sandbox}}" />
                             {{/canEditSandboxUrlOnEdit}}
@@ -199,10 +220,10 @@
                 {{#worklist.mechanic_id}}
                     <div class="sandbox-container">
                         {{#canEditSandboxUrl}}
-                            <span class="functional-label" id="edit_review_url" title="Click to change your sandbox url." data-toggle="tooltip">Sandbox:</span><br />
+                            <span class="functional-label" id="edit_review_url" title="Click to change your branch url." data-toggle="tooltip">Branch:</span><br />
                         {{/canEditSandboxUrl}}
                         {{^canEditSandboxUrl}}
-                            <span class="functional-label">Sandbox:</span><br />
+                            <span class="functional-label">Branch:</span><br />
                         {{/canEditSandboxUrl}}
                         {{#worklist.sandbox}}
                             <div class="sandboxlink">
@@ -217,6 +238,10 @@
                         {{^worklist.sandbox}}
                             <span>Not assigned</span>
                         {{/worklist.sandbox}}
+                        <div>
+                            <span class="functional-label" >QA URL:</span><br />
+                            <a href="https://dev.worklist.net/~{{worklist.mechanic_nickname}}/{{worklist.project_name}}/">https://dev.worklist.net/~{{worklist.mechanic_nickname}}/{{worklist.project_name}}/</a>
+                        </div>
                     </div>
                 {{/worklist.mechanic_id}}
                 <div id="commentZone">

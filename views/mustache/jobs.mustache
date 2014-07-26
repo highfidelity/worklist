@@ -1,32 +1,22 @@
+<script type="text/javascript">
+    var search_query = '{{filter.getQuery}}';
+    var search_project_id = '{{filter.getProjectId}}';
+    var search_status = '{{filter.getStatus}}';
+</script>
 <form class="row" id="search-filter">
-    <div class="col-sm-3 col-md-3 filter">
-      {{& projectSelect}}
-    </div>
-    <div class="col-sm-3 col-md-3 filter">
-      {{& statusSelect}}
+    <div class="col-sm-12 col-md-12 dd-max-width">
+        <div class="col-sm-6 col-md-6" id="search-filter-status">
+            <div>Project:</div>
+            <div class="filter">
+            {{& projectSelect}}
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 dd-max-width" id="only-jobs-i-participated">
+            <label><input type="checkbox" name="only-jobs-i-participated"/>Only jobs I've participated in</label>
+        </div>
+        <div class="col-sm-3 col-md-3 dd-max-width">
+            <label><input type="checkbox" id="jobs-im-following" name="jobs-im-following" {{#filter.getFollowing}} checked {{/filter.getFollowing}}  />Jobs I'm following</label>
+        </div>
     </div>
 </form>
-<section class="row">
-    <table class="table table-striped table-worklist">
-        <thead>
-            <tr>
-                <th class="clickable project-col">Project</th>
-                <th><span class="clickable">Job ID</span> &amp; <span class="clickable">Summary</span></th>
-                <th class="clickable status-col">Status</th>
-                <th class="clickable who-col">Who</th>
-                <th class="clickable age-col" id="defaultsort">Age</th>
-                <th class="clickable comments-col"><div class="wl-icon-comments wl-icon-comments-dims" title="Comments"></div></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <span id="direction" style="display: none; float: right;"><img src="images/arrow-up.png" /></span>
-</section>
-<script type="text/javascript">
-    var page = {{page}};
-    var dir = '{{filter.getDir}}';
-    var sort = '{{filter.getSort}}';
-    var only_needs_review_jobs = {{review_only}};
-    var search_query = '{{filter.getQuery}}';
-</script>
+<section class="row" id="jobs-sections"></section>

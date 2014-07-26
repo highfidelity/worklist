@@ -17,6 +17,12 @@ body > .container-fluid {
     padding-top: 30px;
 }
 
+#addJob > .row:first-child > p {
+    padding-top: 17px;
+    font-size: 0.85em;
+    color: #666;
+}
+
 #addJob > .row {
     padding: 2px 0 0;
 }
@@ -36,6 +42,43 @@ body > .container-fluid {
 #itemProjectCombo + .chosen-container:before {
     content: 'Job is for this project...';
     color: #666;
+}
+
+/**
+ * Assigned user dropdown customization
+ */
+select[name="assigned"] + .chosen-container-single .chosen-single > span:first-child {
+    color: #666;
+}
+
+select[name="assigned"] + .chosen-container .chosen-results li.highlighted {
+    background: none #666;
+}
+
+select[name="assigned"] + .chosen-container-single .chosen-single {
+    padding-left: 30px;
+    position: relative;
+}
+
+select[name="assigned"] + .chosen-container-single .chosen-single:after {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: 1.3em;
+    font-family: "Glyphicons Halflings";
+    content: '\e127';
+}
+
+select[name="assigned"] + .chosen-container-single .chosen-single > span:first-child {
+    color: #666;
+}
+
+select[name="assigned"] + .chosen-container-single .chosen-single div {
+    display: none;
+}
+
+select[name="assigned"] + .chosen-container-single {
+    margin-bottom: 15px;
 }
 
 #addJob .form-control {
@@ -118,9 +161,6 @@ body > .container-fluid {
 /* Styles the status dropdown: */
 #addJob #itemStatusCombo_chosen {
   text-align: left;
-}
-#addJob #itemStatusCombo_chosen .chosen-search {
-  display: none;
 }
 #addJob #itemStatusCombo_chosen .chosen-drop {
   border: 1px solid #e0e0e0;

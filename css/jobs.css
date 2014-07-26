@@ -2,801 +2,38 @@ body {
     font-size: 14px;
 }
 
-@media (max-width: 960px){
+@media (min-width: 960px) {
     body > .container-fluid {
-        margin: 0 8.33%;
-        max-width: 850px;
+        max-width: 940px;
     }
 }
 
-@media (max-width: 480px){
+@media (max-width: 960px) {
     body > .container-fluid {
-        margin: 0;
+        margin: 0 5%;
+        max-width: 900px;
     }
 }
 
-.popup-body,
-.user-info
-{
-    padding: 0 8px;
-    text-align: left;
+@media (max-width: 480px) {
+    body > .container-fluid {
+        margin: 0 4%;
+    }
 }
-
-.popup-body input[type="text"], .popup-body textarea,
-.user-info input[type="text"], .user-info textarea,
-.user-info select
-{
-    font-size: 14px;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    width: 370px;
-}
-
-.popup-body #bid_fee_desc {
-    width:270px;
-}
-
-.popup-body #bid_fee_amount {
-    width:70px;
-}
-
-.bugJobSummary {
-    display: block;
-    margin: 0;
-    padding: 5px;
-    border-style: none;
-    z-index: 3000;
-    float: right;
-    width: 200px
-}
-
-.popup-body input.date,
-.user-info input.date {
-    width: 130px;
-}
-.popup-body input.money,
-.user-info input.money {
-    width: 50px;
-}
-
-.popup-body p, .user-info p
-{
-    margin: 0 0 2px;
-}
-
-.popup-body .popup-delete-summary {
-    padding: 4px;
-}
-
-.table-userlist tr:hover{
-    cursor: pointer;
-}
-
-.table-userlist thead tr:hover{
-    cursor: default;
-}
-
-.workitem-selected {
-    background: #FFD;
-}
-
-.info-label{
-    font-weight: bold;
-}
-.info-label span{
-    font-weight:normal;
-}
-.info-label textarea {
-    height: 110px;
-}
-
-.info-label textarea,
-.info-label input[type=text] {
-    width: 370px;
-}
-
-#editContainer {
-    width: 380px;
-    border: 0;
-    margin-top: 5px;
-}
-
-#editContainer p,
-#editContainer #buttonHolder,
-#editContainer .accordion {
-    margin-left: -88px !important;
-    width: 100%;
-}
-
-#bid-signup{
-text-align: center;
-}
-#bid-signup a{
-color:#98AAB2;
-}
-.right-button,
-.right-note {
-    float: right;
-    margin-right: 5px;
-}
-.left-button {
-    float: left;
-    margin-left: 5px;
-}
-.required-field {
-    color: #ff0000;
-    font-weight: bold;
-    font-size: larger;
-}
-.left-col{
-    float: left;
-    margin-left: 30px;
-    width: 45%;
-}
-
-.right-col{
-    float: left;
-    margin-left: 30px;
-}
-#popup-bid{
-    z-index: 1200;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-weight: bold;
-    font-size: 13px;
-    color: #666666;
-}
-#ui-datepicker-div,
-#ui-timepicker-div
-{
-    z-index: 1100;
-}
-
-#sharethis_0    {
-    position:absolute;
-    margin-top: 3px;
-    margin-left: 20px;
-}
-
-/* Paypal Reports */
-#pp-filter-box {
-    float:right;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border: 2px #DCD998 solid;
-    background-color:#FFD;
-    padding:8px 8px 19px 8px;
-    height:95px;
-    margin-bottom: 20px;
-}
-
-#pp-filter-rrbox {
-    float:right;
-    text-align:right;
-    margin-top:20px;
-}
-
-#pp-filter-rbox {
-    float:right;
-    text-align:right;
-    margin-top:20px;
-    margin-right:8px;
-}
-
-#pp-filter-lbox {
-    float:right;
-/*    text-align:right;*/
-    margin-right:8px;
-}
-
-#job_id {
-    width:69px;
-}
-.feesum {
-  cursor: pointer;
-}
-
-.second-line {
-    margin-top:10px;
-    margin-bottom:5px;
-}
-
-.clickable { cursor:pointer; }
-
-#search-filter-section select {
-    text-align: left;
-    width:100px;
-}
-#search-filter-section  td.textAlignReport div div{
-    text-align: left;
-}
-
-
-td.textAlignReport {
-    text-align: right;
-    padding-top:4px;
-    margin:1px;
-    width:210px;
-}
-
-.report-label,
-#search-filter-section td.textAlignReport div div.report-label {
-    float: left;
-    width: 35%;
-    text-align: right;
-    padding: 5px 5px 0 0;
-}
-
-.report-input-item {
-    float: left;
-}
-
-.report-item-clear {
-    clear: both;
-    height: 1px;
-}
-
-#search-filter-wrap-reports {
-    width: 720px;
-}
-
-#searchForm  div > p {
-    margin-bottom: 0 !important;
-}
-
-#add {
-    font-weight: bold;
-    color: #6F6F6F;
-    font-size: 12px;
-}
-
 .clear {
     clear: both;
 }
 .hidden {
     display: none;
 }
-#ping-msg {
-    height: 100px;
-    width: 322px;
-}
-#send-ping-btn {
-    margin-top: 8px;
-}
-
-.taskProject span,
-.taskSummaryCell {
-    cursor: pointer;
-}
-
-.table-worklist tr:hover {
-    color: #007F7C;
-}
-
-.table-worklist thead tr:hover{
-    cursor: default;
-    color: #333333;
-}
-
-.table-worklist tr:active {
-    color: #888888;
-}
-
-.table-worklist tbody tr {
-    height: 28px;
-}
-
-.table-worklist td {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.table-worklist td:nth-child(n+2):not(:last-child):before,
-.table-worklist tbody tr:not(:last-child):after {
-    content: ' ';
-    width: 35px;
-    height: 1.5em;
-    position: absolute;
-    margin-left: -35px;
-}
-
-.table-worklist td:nth-child(n+2):not(:last-child):before {
-    float: left;
-}
-
-.table-worklist tbody tr:not(:last-child):after {
-    margin-top: 8px;
-}
-
-/* normal even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child):nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child):nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-}
-
-/* normal odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child):nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child):nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(249,249,249,0) 0%, rgba(249,249,249,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(249,249,249,0)), color-stop(100%,rgba(249,249,249,1)));
-    background: -webkit-linear-gradient(left, rgba(249,249,249,0) 0%,rgba(249,249,249,1) 100%);
-    background: -o-linear-gradient(left, rgba(249,249,249,0) 0%,rgba(249,249,249,1) 100%);
-    background: -ms-linear-gradient(left, rgba(249,249,249,0) 0%,rgba(249,249,249,1) 100%);
-    background: linear-gradient(to right, rgba(249,249,249,0) 0%,rgba(249,249,249,1) 100%);
-}
-
-/* owned jobs odd rows background */
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(odd) > td {
-    background-color: #ffe6cc;
-}
-/* owned jobs odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(255,230,204,0) 0%, rgba(255,230,204,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,230,204,0)), color-stop(100%,rgba(255,230,204,1)));
-    background: -webkit-linear-gradient(left, rgba(255,230,204,0) 0%,rgba(255,230,204,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,230,204,0) 0%,rgba(255,230,204,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,230,204,0) 0%,rgba(255,230,204,1) 100%);
-    background: linear-gradient(to right, rgba(255,230,204,0) 0%,rgba(255,230,204,1) 100%);
-}
-/* owned jobs even rows background */
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(even) > td {
-    background-color: #f7dec6;
-}
-/* owned jobs even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowown:nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(247,222,198,0) 0%, rgba(247,222,198,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(247,222,198,0)), color-stop(100%,rgba(247,222,198,1)));
-    background: -webkit-linear-gradient(left, rgba(247,222,198,0) 0%,rgba(247,222,198,1) 100%);
-    background: -o-linear-gradient(left, rgba(247,222,198,0) 0%,rgba(247,222,198,1) 100%);
-    background: -ms-linear-gradient(left, rgba(247,222,198,0) 0%,rgba(247,222,198,1) 100%);
-    background: linear-gradient(to right, rgba(247,222,198,0) 0%,rgba(247,222,198,1) 100%);
-}
-
-/* jobs with bid odd rows background */
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(odd) > td {
-    background-color: #b5e595;
-}
-/* jobs with bid odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(181,229,149,0) 0%, rgba(181,229,149,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(181,229,149,0)), color-stop(100%,rgba(181,229,149,1)));
-    background: -webkit-linear-gradient(left, rgba(181,229,149,0) 0%,rgba(181,229,149,1) 100%);
-    background: -o-linear-gradient(left, rgba(181,229,149,0) 0%,rgba(181,229,149,1) 100%);
-    background: -ms-linear-gradient(left, rgba(181,229,149,0) 0%,rgba(181,229,149,1) 100%);
-    background: linear-gradient(to right, rgba(181,229,149,0) 0%,rgba(181,229,149,1) 100%);
-}
-/* jobs with bid even rows background */
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(even) > td {
-    background-color: #aedb8e;
-}
-/* jobs with bid even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowbidon:nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(174,219,142,0) 0%, rgba(174,219,142,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(174,219,142,0)), color-stop(100%,rgba(174,219,142,1)));
-    background: -webkit-linear-gradient(left, rgba(174,219,142,0) 0%,rgba(174,219,142,1) 100%);
-    background: -o-linear-gradient(left, rgba(174,219,142,0) 0%,rgba(174,219,142,1) 100%);
-    background: -ms-linear-gradient(left, rgba(174,219,142,0) 0%,rgba(174,219,142,1) 100%);
-    background: linear-gradient(to right, rgba(174,219,142,0) 0%,rgba(174,219,142,1) 100%);
-}
-
-/* jobs with bid expired odd rows background */
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(odd) > td {
-    background-color: #ffb3b3;
-}
-/* jobs with bid expired odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(255,179,179,0) 0%, rgba(255,179,179,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,179,179,0)), color-stop(100%,rgba(255,179,179,1)));
-    background: -webkit-linear-gradient(left, rgba(255,179,179,0) 0%,rgba(255,179,179,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,179,179,0) 0%,rgba(255,179,179,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,179,179,0) 0%,rgba(255,179,179,1) 100%);
-    background: linear-gradient(to right, rgba(255,179,179,0) 0%,rgba(255,179,179,1) 100%);
-}
-/* jobs with bid expired even rows background */
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(even) > td {
-    background-color: #f7afaf;
-}
-/* jobs with bid expired even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowbidexpired:nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(247,175,175,0) 0%, rgba(247,175,175,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(247,175,175,0)), color-stop(100%,rgba(247,175,175,1)));
-    background: -webkit-linear-gradient(left, rgba(247,175,175,0) 0%,rgba(247,175,175,1) 100%);
-    background: -o-linear-gradient(left, rgba(247,175,175,0) 0%,rgba(247,175,175,1) 100%);
-    background: -ms-linear-gradient(left, rgba(247,175,175,0) 0%,rgba(247,175,175,1) 100%);
-    background: linear-gradient(to right, rgba(247,175,175,0) 0%,rgba(247,175,175,1) 100%);
-}
-
-/* jobs as runner odd rows background */
-.table-worklist > tbody > tr.rowrunner:nth-child(odd) > td {
-    background-color: #e2eef3;
-}
-/* jobs as runner odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowrunner:nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowrunner:nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(226,238,243,0) 0%, rgba(226,238,243,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(226,238,243,0)), color-stop(100%,rgba(226,238,243,1)));
-    background: -webkit-linear-gradient(left, rgba(226,238,243,0) 0%,rgba(226,238,243,1) 100%);
-    background: -o-linear-gradient(left, rgba(226,238,243,0) 0%,rgba(226,238,243,1) 100%);
-    background: -ms-linear-gradient(left, rgba(226,238,243,0) 0%,rgba(226,238,243,1) 100%);
-    background: linear-gradient(to right, rgba(226,238,243,0) 0%,rgba(226,238,243,1) 100%);
-}
-/* jobs as runner rows background */
-.table-worklist > tbody > tr:not(:last-child).rowrunner:nth-child(even) > td {
-    background-color: #dae6ea;
-}
-/* jobs as runner even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowrunner:nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowrunner:nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(218,230,234,0) 0%, rgba(218,230,234,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(218,230,234,0)), color-stop(100%,rgba(218,230,234,1)));
-    background: -webkit-linear-gradient(left, rgba(218,230,234,0) 0%,rgba(218,230,234,1) 100%);
-    background: -o-linear-gradient(left, rgba(218,230,234,0) 0%,rgba(218,230,234,1) 100%);
-    background: -ms-linear-gradient(left, rgba(218,230,234,0) 0%,rgba(218,230,234,1) 100%);
-    background: linear-gradient(to right, rgba(218,230,234,0) 0%,rgba(218,230,234,1) 100%);
-}
-
-/* jobs as mechanic odd rows background */
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(odd) > td {
-    background-color: #ffff9e;
-}
-/* jobs as mechanic odd rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(odd) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(odd):after {
-    background: -moz-linear-gradient(left, rgba(255,255,158,0) 0%, rgba(255,255,158,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,158,0)), color-stop(100%,rgba(255,255,158,1)));
-    background: -webkit-linear-gradient(left, rgba(255,255,158,0) 0%,rgba(255,255,158,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,158,0) 0%,rgba(255,255,158,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,158,0) 0%,rgba(255,255,158,1) 100%);
-    background: linear-gradient(to right, rgba(255,255,158,0) 0%,rgba(255,255,158,1) 100%);
-}
-/* jobs as mechanic even rows background */
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(even) > td {
-    background-color: #f7f79c;
-}
-/* jobs as mechanic even rows overflow fading */
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(even) > td:nth-child(n+2):not(:last-child):before,
-.table-worklist > tbody > tr:not(:last-child).rowmechanic:nth-child(even):after {
-    background: -moz-linear-gradient(left, rgba(247,247,156,0) 0%, rgba(247,247,156,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(247,247,156,0)), color-stop(100%,rgba(247,247,156,1)));
-    background: -webkit-linear-gradient(left, rgba(247,247,156,0) 0%,rgba(247,247,156,1) 100%);
-    background: -o-linear-gradient(left, rgba(247,247,156,0) 0%,rgba(247,247,156,1) 100%);
-    background: -ms-linear-gradient(left, rgba(247,247,156,0) 0%,rgba(247,247,156,1) 100%);
-    background: linear-gradient(to right, rgba(247,247,156,0) 0%,rgba(247,247,156,1) 100%);
-}
-
-.table-worklist tbody tr:not(:last-child) {
-    cursor: pointer;
-    border: 0 none;
-}
-
-.table-worklist tbody tr td {
-    border: 0 none;
-    vertical-align: middle;
-}
-
-/* worklist table column sizes */
-.table-worklist tr:not(:last-child) > td:nth-child(1) {
-    max-width: 60px;
-}
-.table-worklist tr:not(:last-child) > td:nth-child(2) {
-    max-width: 350px;
-}
-.table-worklist tr:not(:last-child) > td:nth-child(3) {
-    max-width: 100px;
-    min-width: 60px;
-}
-.table-worklist tr:not(:last-child) > td:nth-child(4) {
-    max-width: 90px;
-}
-.table-worklist tr:not(:last-child) > td:nth-child(5) {
-    max-width: 60px;
-}
-@media (max-width: 768px) {
-    .table-worklist tr:not(:last-child) > td:nth-child(1),
-    .table-worklist tr:not(:last-child) > td:nth-child(2),
-    .table-worklist tr:not(:last-child) > td:nth-child(3) {
-        max-width: auto;
-    }
-    .table-worklist tr:not(:last-child) > td:nth-child(1),
-    .table-worklist tr:not(:last-child) > td:nth-child(3) {
-        min-width: 50px;
-    }
-    .table-worklist tr:not(:last-child) > td:nth-child(2) {
-        min-width: 100px;
-    }
-    .table-worklist tr:not(:last-child) > th:nth-child(4),
-    .table-worklist tr:not(:last-child) > td:nth-child(4) {
-        display: none;
-    }
-    .table-worklist tr:not(:last-child) > th:nth-child(5),
-    .table-worklist tr:not(:last-child) > td:nth-child(5) {
-        display: none;
-    }
-    .table-worklist tr:not(:last-child) > th:nth-child(6),
-    .table-worklist tr:not(:last-child) > td:nth-child(6) {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .table-worklist td {
-        white-space: normal;
-    }
-
-    .table-worklist td h4 {
-        white-space: nowrap;
-    }
-
-    .table-worklist tr:not(:last-child) > td:nth-child(2) {
-        max-width: 200px;
-       white-space: nowrap;
-    }
-}
-
-.table-worklist tr:not(:last-child) > td a {
-    color: #666;
-}
-
-.table-worklist tr:not(:last-child) > td:nth-child(2) > a {
-    font-weight: normal;
-    color: #333;
-}
-
-.table-worklist tr:not(:last-child) > td:nth-child(2) > a + h4 {
-    display: inline-block;
-    font-size: 1em;
-    margin-right: 5px;
-    font-weight: bold;
-}
-.table-worklist tr:not(:last-child) > td:nth-child(2) > a + h4:before {
-    content: ' - ';
-    font-weight: normal;
-}
-
-.table-worklist tr:not(:last-child) > td:nth-child(2) > h4,
-.table-worklist tr:not(:last-child) > td:nth-child(2) > h4 + p {
-    padding: 0;
-    margin-bottom: 0;
-    margin-top: 0;
-    display: inline-block;
-}
-
-.taskAge {
-    font-size: .7em;
-}
-
-.taskWho,
-.taskAge {
-    color: #999999;
-}
-
-.table-worklist td div > span:last-child:after,
-.fading,
-.fadingblue {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 30px;
-    content: "";
-    height: 1.7em;
-}
 
 .ui-combobox > .fading {
     right: 32px;
     height: 2em;
 }
-
-.taskSummaryCell a,
-.taskProject span > a {
-    text-decoration: none;
-}
-
-.taskProject span > a {
-    color: #999999;
-}
-
-.taskSummaryCell a {
-    color: #222222;
-}
-
-.job-status {
-    color: #999999;
-    text-transform: capitalize;
-}
-
-.taskSummary > span {
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.noMargin {
-    margin: 0;
-}
-/*roles section*/
-.buttonContainer-save {
-    margin:15px 0px 20px -8px;
-}
-
-.detailContainer {
-    width: 50%;
-}
-
-.descriptionHolder,
-.detailContainer {
-    margin-left: -25px;
-}
-
-table.tablesorter thead tr .header {
-    background-image: url(../images/bg.gif);
-    background-repeat: no-repeat;
-    background-position: center right;
-    background-position-x: 100%;
-    background-position-y: 50%;
-    cursor: pointer;
-}
-
-table.tablesorter thead tr .headerSortDown {
-    background-image: url(../images/desc.gif);
-}
-
-table.tablesorter thead tr .headerSortUp {
-    background-image: url(../images/asc.gif);
-}
-
-#for_view li .notestext a,
-.comment a {
-    color: rgb(0, 118, 252);
-}
-
-#for_view li .notestext a:hover,
-.comment a:hover {
-    text-decoration:none;
-}
-
-input.button-disabled ,
-.button-disabled {
-    cursor: default;
-    opacity: 0.5;
-    -moz-opacity: 0.5;
-    -webkit-opacity: 0.5;
-}
-#phone-confirm-form {
-    width: 253px;
-}
-#login-form, #phone-confirm-form {
-    border: 1px solid black;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    padding: 8px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 32px;
-}
-
-#login-form h2, #phone-confirm-form h2 {
-    color: #000;
-    margin-top: 8px;
-}
-
-#loginFormHolder, #confirmPhoneFormHolder {
-    position: relative;
-    width: 420px;
-    height: 180px;
-}
-#login-form .LV_validation_message,
-#phone-confirm-form .LV_validation_message {
-    text-align: left;
-}
-
-#login-form .LV_valid,
-#phone-confirm-form .LV_valid {
-    padding-left: 0px;
-}
-
-.profile-link{
-    cursor: pointer;
-}
-
-#more-accordion #more-panel {
-    margin: 0;
-    width: 386px;
-    padding-top: 6px;
-}
-
-#more-panel.ui-accordion-content {
-    margin-top: 5px;
-    padding: 0px;
-    background-color: #FFFFDD;
-}
-#more-panel.ui-widget-content {
-    background-image: none;
-}
-
-
-#w2checkbox {
-    padding-top:5px;
-}
-
-#paypal_email {
-    width: 200px;
-}
-
-#savePayPalEmailDialog,
-#saveLaterDialog {
-    text-align:justify;
-}
-
-.okButton {
-    float: right;
-    margin-top: 20px;
-}
-
-.loading {
-    font-style: italic;
-}
-
-.past-due {
-    color: #000000;
-}
-
-.onlyActiveCheckbox {
-    margin: 0;
-    position: 'relative';
-    top: '1px';
-}
-
-#internal {
-    margin-left: 0px;
-}
-
-|.table-worklist .comments-icon {
-    background: url("../images/primaryIcons-WL.png") no-repeat scroll 0 -685px transparent;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-}
-
-.table-worklist tr td:first-child {
-  padding-left: 10px;
-}
-
-.table-worklist .table-hdng {
-    height: 28px;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-table.table-worklist > tbody > tr.worklist-pagination-row > td {
-    background: transparent none;
-}
-
-.table-worklist .worklist-pagination-row > td > span {
-    display: inline-block;
-    margin-top: 5px;
-}
-
-.table-worklist .worklist-pagination-row .page,
-.table-worklist .worklist-pagination-row .previous,
-.table-worklist .worklist-pagination-row .next {
-    padding: 3px;
-}
-
-.table-worklist .worklist-pagination-row a {
-    text-decoration: none;
-}
-
-.table-worklist .worklist-pagination-row .inactive {
-    color: #888888;
+.filter > div {
+    width: 100%;
+    margin-top: 15px;
 }
 
 select + div,
@@ -805,288 +42,12 @@ input {
     font-size: 1em;
 }
 
-@media (max-width: 768px) {
-    #search {
-        position: relative;
-        padding-bottom: 5px;
-    }
-}
-
-#search select + div,
-#search select {
-    margin-bottom: 13px;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 1em;
-    line-height: 1.45em;
-}
-
-@media (max-width: 767px) {
-    #search select + div,
-    #search select {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-}
-
-@media (max-width: 480px) {
-    #search select {
-        margin: 5px 0;
-        width: 100%;
-    }
-}
-
-
-#query fieldset > input[type="checkbox"] {
-    opacity: 0;
-    width: 10px;
-    height: 10px;
-    margin: 0;
-    padding: 0;
-}
-
-#query fieldset > input[type="checkbox"] + label {
-    display: inline-block;
-    background: url('../images/primaryIcons-WL.png') no-repeat scroll 3px -359px transparent;
-    border-width: 1px 1px 1px 0;
-    border-style: solid;
-    border-color: #ccc;
-    width: 62px;
-    height: 32px;
-    margin-left: -20px;
-}
-@media (max-width: 1024px) {
-    #query fieldset > input[type="checkbox"] + label {
-        height: 29px;
-        width: 47px;
-        margin-left: -21px;
-        background-position: 0px -359px;
-    }
-}
-@media (max-width: 768px) {
-    #query fieldset > input[type="checkbox"] + label {
-        height: 29px;
-        width: 70px;
-        margin-left: -20px;
-        background-position: 10px -359px;
-    }
-}
-
-#query fieldset > input[type="checkbox"] + label:after {
-    content: '\00a0';
-    width: 22px;
-    border-radius: 5px;
-    font-family: FontAwesome;
-    display: inline-block;
-    float: right;
-    margin: 4px;
-    border: 1px solid #ccc;
-    padding: 0 3px;
-    background-color: #fff;
-    color: #999;
-}
-
-#query fieldset > input[type="checkbox"]:checked + label:after {
-    content: '\f00c';
-}
-
-#query > fieldset > input[type="checkbox"]:focus + label:after {
-    border-color: #007F7c;
-}
-
-#projectCombo + div:before {
-    content: 'Which project?';
-}
-
-@media (max-width: 1024px) {
-    #projectCombo + div:before {
-        content: '';
-    }
-}
-
-#userCombo + div:before {
-    content: 'Users involved';
-}
-
-@media (max-width: 1024px) {
-    #userCombo + div:before {
-        display: none;
-    }
-}
-
-.bootstrap-select .btn {
-    border-radius: 0;
-}
-
-#statusCombo + div .btn:hover {
-    background-color: #FFF;
-}
-
-#statusCombo + div:before {
-    content: 'Job status';
-}
-
-@media (max-width: 1024px) {
-    #statusCombo + div:before {
-        display: none;
-    }
-}
-
-.filter > div {
-    width: 100%;
-    margin-top: 15px;
-}
-
-@media (max-width: 767px) {
-    .filter > div {
-        margin-top: 5px;
-    }
-}
-
-#search select {
-    height: 35px;
-    font-size: 13px;
-    display: none;
-}
-
-#search select {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-#search select {
-    border: 1px solid #ccc;
-}
-
-#search select.error {
-    outline: none;
-}
-
-#search select.error,
-#search select.error + div > .chosen-choices,
-#search select.error + div > .chosen-single {
-    color: #007F7C;
-}
-
-#search select.error,
-#search select.error + div > .chosen-choices,
-#search select.error + div > .chosen-single {
-    border-color: #007F7C;
-}
-
-@media (max-width: 480px) {
-
-    td.status-col {
-        width: 15px;
-    }
-
-    td.status-col > span,
-    .who-col,
-    .age-col {
-        display: none;
-    }
-
-}
-
-td.statusDraft > i,
-td.statusSuggestion > i,
-td.statusBidding > i,
-td.statusInProgress > i,
-td.statusQAReady > i,
-td.statusReview > i,
-td.statusNeedsReview > i,
-td.statusInReview > i,
-td.statusReviewed > i,
-td.statusMerged > i,
-td.statusPass > i,
-td.statusDone > i {
-    content: ' ';
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-radius: 10px;
-    margin: -2px 5px 0 0;
-    vertical-align: middle;
-}
-
-td.statusDraft {
-    color: #eddfb4;
-}
-td.statusDraft > i {
-    background-color: #eddfb4;
-}
-td.statusSuggestion {
-    color: #ffcc66;
-}
-td.statusSuggestion > i {
-    background-color: #ffcc66;
-}
-td.statusBidding {
-    color: #ff9900;
-}
-td.statusBidding > i {
-    background-color: #ff9900;
-}
-td.statusInProgress {
-    color: #22bc7a;
-}
-td.statusInProgress > i {
-    background-color: #22bc7a;
-}
-td.statusQAReady {
-    color: #1c658e;
-}
-td.statusQAReady > i {
-    background-color: #1c658e;
-}
-td.statusReview,
-td.statusNeedsReview,
-td.statusInReview,
-td.statusReviewed {
-    color: #ff5582;
-}
-td.statusReview > i,
-td.statusNeedsReview > i,
-td.statusInReview > i,
-td.statusReviewed > i {
-    background-color: #ff5582;
-}
-td.statusMerged {
-    color: #999999;
-}
-td.statusMerged > i {
-    background-color: #999999;
-}
-td.statusPass {
-    color: #cccccc;
-}
-td.statusPass > i {
-    background-color: #cccccc;
-}
-td.statusDone {
-    color: #000000;
-}
-td.statusDone > i {
-    background-color: #000000;
-}
-
-@media (min-width: 768px){
-    .container-fluid .row .filter {
-        padding-left: 0;
-    }
-}
-
-/**
- * Overrides for bootstrap-select
- */
-#search .filter .bootstrap-select {
-    width: 100%;
-}
-
 .bootstrap-select .btn:focus {
     outline: none !important;
 }
 
 .bootstrap-select .btn {
-    padding: 3px 30px 3px 12px;
+    padding: 0px 30px 0px 12px;
 }
 
 .bootstrap-select.btn-group .btn .caret {
@@ -1126,7 +87,7 @@ td.statusDone > i {
 .bootstrap-select .dropdown-menu {
     border-color: #AAAAAA;
     border-radius: 0;
-    color: #000000;
+    color: #333333;
     margin: 0;
     padding: 5px;
 }
@@ -1151,4 +112,367 @@ td.statusDone > i {
 
 .bootstrap-select.open .dropdown-toggle.btn-default {
     color: #007F7C;
+}
+
+#search-filter label {
+    display: block;
+    text-indent: -15px;
+    font-weight: normal;
+    padding-top: 20px;
+}
+
+#search-filter input[type="checkbox"] {
+    width: 20px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -3px;
+    overflow: hidden;
+    outline: none;
+}
+
+#search-filter-status > div {
+    float: left;
+}
+
+#search-filter-status {
+    max-width: 286px;
+    padding-left: 0px;
+}
+
+#search-filter-status div:first-child {
+    margin-top: 20px;
+}
+
+#search-filter div:first-child,
+div.project-header,
+div.project-jobs-pass,
+div.project-jobs-done {
+    padding-left: 0px;
+}
+
+#search-filter div:first-child,
+#search-filter #only-jobs-i-participated {
+    padding-right: 0px;
+}
+
+#search-filter #only-jobs-i-participated {
+    max-width: 208px;
+}
+
+.container-fluid .row .filter {
+    padding-left: 10px;
+}
+
+.container-fluid .row {
+    font-size: 14px;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: #666666;
+    font-weight: normal;
+}
+
+@media (max-width: 767px) {
+    #search-filter-status div:first-child {
+            display: none;
+    }
+    .container-fluid .row .filter {
+        padding-left: 0px;
+    }
+}
+
+.project-header h2 {
+    color: #333333;
+    float: left;
+    padding-right: 5px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.project-header {
+    margin-bottom: 5px;
+}
+
+.project-header p {
+    line-height: 1.4em;
+    padding-top: 14px;
+    height: 33px;
+    font-size: 13px;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-header p:after,
+ul.project-jobs li:nth-child(2):after,
+ul.project-jobs li:nth-child(3):after,
+ul.project-jobs li:nth-child(4):after {
+    content: "";
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 56%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(56%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 56%,rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 56%,rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 56%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 56%,rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+}
+
+.project-header hr {
+    margin: 0px;
+    top: -5px;
+    position: relative;
+}
+
+.project-jobs-status i {
+    content: ' ';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
+    margin: -6px 5px 0 0;
+    vertical-align: middle;
+    background-color: #ff9900;
+}
+.project-jobs-status span {
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+.project-jobs-status span {
+    color: #ff9900;
+}
+
+.project-jobs-status-bidding span {
+    color: #ff9900;
+}
+
+.project-jobs-status-in-progress span {
+    color: #22bc7a;
+}
+
+.project-jobs-status-in-progress i {
+    background-color: #22bc7a;
+}
+
+.project-jobs-status-qa-ready span {
+    color: #1c658e;
+}
+
+.project-jobs-status-qa-ready i {
+    background-color: #1c658e;
+}
+
+.project-jobs-status-suggestion span {
+    color: #ffcc66;
+}
+
+.project-jobs-status-suggestion i {
+    background-color: #ffcc66;
+}
+
+.project-jobs-status-needs-review span,
+.project-jobs-status-in-review span,
+.project-jobs-status-reviewed span {
+    color: #ff5582;
+}
+
+.project-jobs-status-needs-review i,
+.project-jobs-status-in-review i,
+.project-jobs-status-reviewed i {
+    background-color: #ff5582;
+}
+
+.project-jobs-status-merged span {
+    color: #999999;
+}
+
+.project-jobs-status-merged i {
+    background-color: #999999;
+}
+
+.project-jobs-status-pass span {
+    color: #999999;
+}
+
+.project-jobs-status-pass i {
+    background-color: #999999;
+}
+
+.project-jobs-status-done span {
+    color: #333333;
+}
+
+.project-jobs-status-done i {
+    background-color: #333333;
+}
+
+.project-jobs-status {
+    margin-bottom: 10px;
+    padding-left: 0px;
+    margin-left: 11px;
+    padding-top: 6px;
+}
+
+ul.project-jobs {
+    list-style: none;
+    padding-top: 0px;
+    padding-left: 0px;
+    transition: 0s background-color;
+    padding-left: 0px;
+    margin-left: 25px;
+}
+ul.project-jobs li:first-child {
+    max-width: 60px;
+}
+
+ul.project-jobs > li {
+    float: left;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+ul.project-jobs li:first-child a {
+    padding: 2px 7px 2px;
+    background: #dde4e6;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+ul.project-jobs li.project-jobs-skill a {
+    color: #669999;
+    border-radius: 5px;
+    margin-left: 3px;
+    float: left;
+    border: 1px solid #B3E0DC;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+ul.project-jobs .project-jobs-comment-count a {
+    padding: 2px 7px 2px;
+    background: #ffffff;
+    border-radius: 10px;
+    color: #999999;
+    font-size: 13px;
+    border: 1px solid #EAEAEA;
+}
+
+ul.project-jobs:hover  li.project-jobs-comment-count a,
+ul.project-jobs:hover li:nth-child(2) a,
+ul.project-jobs:hover li:nth-child(3) a,
+ul.project-jobs:hover li:nth-child(4) a {
+    color: #007F7C;
+}
+
+ul.project-jobs a {
+    text-decoration: none;
+    color: #666666;
+    padding: 2px 7px 2px;
+}
+
+ul.project-jobs li.project-jobs-comment-count {
+    max-width: 114px;
+}
+
+ul.project-jobs:hover li:nth-child(1) a {
+    color: #ffffff;
+    background: #007F7c;
+}
+
+div.project-jobs-pass i,
+div.project-jobs-done i {
+    content: ' ';
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 10px;
+    margin: -1px 2px 0 0;
+    vertical-align: middle;
+    background-color: #cccccc;
+}
+
+div.project-jobs-pass a,
+div.project-jobs-done a {
+    color: #ccc;
+    text-decoration: none;
+    padding-left: 5px;
+    font-size: 13px;
+}
+
+div.project-jobs-pass a:hover,
+div.project-jobs-done a:hover {
+    text-decoration: underline;
+}
+
+div.project-jobs-done a {
+    color: #333333;
+    font-weight: bold;
+}
+
+div.project-jobs-done {
+    max-width: 137px;
+}
+
+div.project-jobs-done i {
+    background-color: #333333;
+}
+
+div.project-jobs-pass,
+div.project-jobs-done {
+    margin-bottom: 25px;
+}
+
+div.project-jobs-done-pass {
+    margin-left: 11px;
+}
+
+ul.project-jobs li:nth-child(3),
+ul.project-jobs li:nth-child(2),
+ul.project-jobs li:nth-child(4) {
+    overflow: hidden;
+    position: relative;
+    height: 25px;
+}
+
+ul.project-jobs li:nth-child(2) {
+    font-size: 15px;
+}
+
+li.project-jobs-participants a {
+    font-size: 13px;
+    padding: 1px 0px 1px;
+}
+
+ul.project-jobs {
+    cursor: pointer;
+}
+
+@media  (max-width: 767px) and (max-width : 768px) {
+    ul.project-jobs {
+        padding: 5px;
+    }
+
+    ul.project-jobs > li {
+        float: none;
+    }
+
+    ul.project-jobs li:nth-child(2) {
+        padding-left: 5px;
+    }
+
+   ul.project-jobs li:nth-child(4) {
+        clear: both;
+        padding-left: 10px;
+    }
+
+    ul.project-jobs li:nth-child(3),
+    ul.project-jobs li:nth-child(2),
+    ul.project-jobs li:nth-child(4) {
+        height: auto;
+    }
 }

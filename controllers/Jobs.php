@@ -1,17 +1,15 @@
 <?php
 
 class JobsController extends Controller {
-    public function run() {
-        // Get the page number to show, set default to 1
-        $this->write('page', isset($_REQUEST["page"]) ? (int) $_REQUEST['page'] : 1);
 
-        $journal_message = '';
+    public function run($action = null, $param = '') {
+        call_user_func_array(array($this, 'index'), preg_split('/\//', empty($param) ? $action : $action."/".$param));
+    }
 
+    public function index($projectName = null, $filterName = null) {
         // $nick is setup above.. and then overwritten here -- lithium
         $nick = '';
-
         $userId = getSessionUserId();
-
         if ($userId > 0) {
             initUserById($userId);
             $user = new User();
@@ -20,9 +18,10 @@ class JobsController extends Controller {
             $nick = $user->getNickname();
             $userbudget =$user->getBudget();
             $budget = number_format($userbudget);
+            $this->is_internal = $user->isInternal();
         }
 
-        $is_runner = !empty($_SESSION['is_runner']) ? 1 : 0;
+        $this->is_runner = !empty($_SESSION['is_runner']) ? 1 : 0;
         $is_payer = !empty($_SESSION['is_payer']) ? 1 : 0;
         $is_admin = !empty($_SESSION['is_admin']) ? 1 : 0;
 
@@ -33,27 +32,22 @@ class JobsController extends Controller {
         // krumch 20110418 Set to open Worklist from Journal
         $filter->initFilter();
         $filter->setName('.worklist');
-        $project_id = 0;
 
         if (! empty($_REQUEST['status'])) {
             $filter->setStatus($_REQUEST['status']);
         } else {
-            if (array_key_exists('status', $_REQUEST)) {
-                $filter->setStatus('ALL');
-            }
+            $filter->setStatus('ALL');
         }
 
-        if (isset($_REQUEST['project'])) {
-            $project = new Project();
-            try {
-                $project->loadByName($_REQUEST['project']);
-                if ($project_id = $project->getProjectId()) {
-                    $filter->setProjectId($project_id);
-                }
-            } catch(Exception $e) {
+        if ($projectName != null && $projectName != "all") {
+            $project = Project::find($projectName);
+            if ($project) {
+                $filter->setProjectId($project->getProjectId());
+            } else {
                 $filter->setProjectId(0);
             }
-            unset($project);
+        } else {
+            $filter->setProjectId(0);
         }
 
         if (! empty($_REQUEST['user'])) {
@@ -68,6 +62,9 @@ class JobsController extends Controller {
             $filter->setQuery("");
         }
 
+        $filter->setFollowing(($filterName != null && $filterName == "following") ? true : false);
+        $filter->setStatus(($filterName != null && $filterName != "following") ? $filterName : "Bidding,In Progress,QA Ready,Review,Merged,Suggestion");
+
         // Prevent reposts on refresh
         if (! empty($_POST)) {
             unset($_POST);
@@ -81,5 +78,6 @@ class JobsController extends Controller {
         $this->write('filter', $filter);
         $this->write('req_status', isset($_GET['status']) ? $_GET['status'] : '');
         $this->write('review_only', (isset($_GET['status']) &&  $_GET['status'] == 'needs-review') ? 'true' : 'false');
+        parent::run();
     }
 }

@@ -4,7 +4,7 @@
  */
 
 require_once("config.php");
- 
+
 class Dispatcher {
     static public $url = '';
 
@@ -27,6 +27,14 @@ class Dispatcher {
                 'param' => '.*'
             ),
             'default' => array('method' => 'info')
+        ));
+
+        $dispatcher->any('/jobs/:method(/:param)', array('Jobs'), array(
+            'require' => array(
+                'method' => '.*',
+                'param' => '.*'
+            ),
+            'default' => array('method' => 'index')
         ));
 
         $dispatcher->get('/confirmation', array('Confirmation'));
@@ -62,7 +70,7 @@ class Dispatcher {
 
         $dispatcher->get('/help', array('Help'));
         $dispatcher->get('/jobs', array('Jobs'));
-        
+
         $dispatcher->get('/password', array('Password'));
         $dispatcher->post('/password', array('Password'));
         $dispatcher->get('/payments', array('Payments'));
@@ -138,7 +146,7 @@ class Dispatcher {
             $Controller = new $controller();
             call_user_func_array(array($Controller, $method), $params);
         } catch(Exception $e) {
-            
+
         }
     }
 }

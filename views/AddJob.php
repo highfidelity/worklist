@@ -42,4 +42,8 @@ class AddJobView extends View {
         $skill = new SkillModel();
         return $skill->loadAll();
     }
+
+    public function internalUsers() {
+        return User::getInternals();
+    }
 }

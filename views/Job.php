@@ -44,7 +44,7 @@ class JobView extends View {
         $this->action_error = $this->read('action_error');
         $this->classEditable = $this->read('classEditable');
         $this->allowEdit = (int) $this->read('allowEdit');
-        $this->userHasRights = (int) $this->read('userHasRights');
+        $this->userHasCodeReviewRights = (int) $this->read('userHasCodeReviewRights');
         $this->isGitHubConnected = (int) $this->read('isGitHubConnected');
         $this->message = $this->read('message');
         $this->currentUserHasBid = (int) $this->read('currentUserHasBid');
@@ -455,7 +455,7 @@ class JobView extends View {
                    $this->currentUser['id'] > 0
                 && $user->isEligible()
                 && $worklist['mechanic_id'] != $this->currentUser['id']
-                && $this->read('userHasRights')
+                && $this->read('userHasCodeReviewRights')
               )
           && (
                  $worklist['status'] == 'Review' 
@@ -538,8 +538,10 @@ class JobView extends View {
             } else {
                 $expired_class = '';
             }
-            $canSeeBid = $user->getIs_admin() == 1 || $is_project_runner || $user->isRunnerOfWorkitem($workitem) ||
-                         $user->getId() == $bid['bidder_id'];
+            $canSeeBid = ($workitem->getRunnerId($workitem) == 0 && $is_project_runner)
+                         || $user->getIs_admin() == 1
+                         || $user->isRunnerOfWorkitem($workitem)
+                         || $user->getId() == $bid['bidder_id'];
             $row_class = "";
             $row_class .= ($this->currentUser['id']) ? 'row-bidlist-live ' : '' ;
             $row_class .= ($this->read('view_bid_id') == $bid['id']) ? ' view_bid_id ' : '' ;
@@ -688,9 +690,10 @@ class JobView extends View {
         $is_project_runner = $this->read('is_project_runner');
         $user = $this->user;
         return (int) (
-            $is_project_runner 
-          || ($user->getIs_admin() == 1 && $this->currentUser['is_runner']) 
+            $is_project_runner
+          || ($user->getIs_admin() == 1 && $this->currentUser['is_runner'])
           || (isset($worklist['runner_id']) && $this->currentUser['id'] == $worklist['runner_id'])
+          || (isset($worklist['assigned_id']) && $this->currentUser['id'] == $worklist['assigned_id'])
         );
     }
 
@@ -916,5 +919,25 @@ class JobView extends View {
 
     function currentStatus() {
         return $this->worklist['status'] == 'Review' ? 'Code Review' : $this->worklist['status'];
+    }
+
+    function internalUsers() {
+        $worklist = $this->worklist;
+        $users = User::getInternals();
+        $ret = array();
+        foreach($users as $index => $user) {
+            $ret[] = array(
+                'id' => $user->getId(),
+                'nickname' => $user->getNickname(),
+                'current' => $worklist['assigned_id'] == $user->getId()
+            );
+        }
+        return $ret;
+    }
+
+    function assigneeNickname() {
+        $worklist = $this->worklist;
+        $assignedUser = User::find($worklist['assigned_id']);
+        return $assignedUser->getNickname();
     }
 }

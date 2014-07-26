@@ -9,12 +9,25 @@
                 {{/projects}}
             </select>
         </div>
+        <p class="col-sm-6"></p>
     </div>
     <div class="row">
         <div class="col-sm-9">
             <input type="text" id="summary" name="summary" class="form-control" placeholder="Title" />
         </div>
     </div>
+    {{#userIsInternal}}
+    <section class="row">
+        <div class="col-sm-3">
+            <select name="assigned" data-placeholder="Select asignee">
+                <option value="0">No one assigned</option>
+                {{#internalUsers}}
+                    <option value="{{getId}}">{{getNickname}}</option>
+                {{/internalUsers}}
+            </select>
+        </div>
+    </section>
+    {{/userIsInternal}}
     <div class="row">
         <div class="col-md-9 col-sm-9">
             <label for="notes">Description</label>

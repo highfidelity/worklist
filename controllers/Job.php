@@ -8,6 +8,9 @@ require_once('models/Budget.php');
 require_once('models/Users_Favorite.php');
 
 class JobController extends Controller {
+
+    public $is_runner = 0;
+    public $is_internal = 0;
     public function run($action, $param = '') {
         $method = '';
         switch($action) {
@@ -19,6 +22,7 @@ class JobController extends Controller {
             case 'cancelCodeReview':
             case 'endCodeReview':
             case 'updateSandboxUrl':
+            case 'search':
                 $method = $action;
                 break;
             default:
@@ -164,7 +168,8 @@ class JobController extends Controller {
                 'status',
                 'project_id',
                 'sandbox',
-                'budget-source-combo'
+                'budget-source-combo',
+                'assigned'
             );
 
             foreach ($args as $arg) {
@@ -252,9 +257,33 @@ class JobController extends Controller {
             // Sandbox
             if ($workitem->getSandbox() != $sandbox) {
                 $workitem->setSandbox($sandbox);
-                $new_update_message .= "Sandbox changed. ";
-                $job_changes[] = '-sandbox';
+                $new_update_message .= "Branch changed. ";
+                $job_changes[] = '-branch';
             }
+
+            // Assignee
+            $assigneeChanged = false;
+            if ($workitem->getAssigned_id() != $assigned) {
+                if ((int) $assigned == 0) {
+                    $workitem->setAssigned_id(0);
+                    $new_update_message .= "Assignee removed. ";
+                    $job_changes[] = '-assignee';
+                } else {
+                    $assignedUser = User::find($assigned);
+                    if ($assignedUser->isInternal()) {
+                        $assigneeChanged = true;
+                        $workitem->setAssigned_id($assignedUser->getId());
+                        $currentStatus = $workitem->getStatus();
+                        $new_update_message .= "Assignee changed. ";
+                        if ($currentStatus == 'Draft' || $currentStatus == 'Suggestion') {
+                            $workitem->setStatus('Bidding');
+                            $new_update_message .= "Status set to *Bidding*. ";
+                        }
+                        $job_changes[] = '-assignee';
+                    }
+                }
+            }
+
             if (empty($new_update_message)) {
                 $new_update_message = " No changes.";
             } else {
@@ -291,6 +320,18 @@ class JobController extends Controller {
                     'related' => $related
                 );
                 Notification::workitemNotifyHipchat($options, $data);
+            }
+
+            if ($assigneeChanged) {
+                $emailTemplate = 'job-assigned';
+                $data = array(
+                    'job_id' => $workitem->getId(),
+                    'summary' => $workitem->getSummary(),
+                    'assigner' => $user->getNickname(),
+                    'assigned' => $assignedUser->getNickname()
+                );
+                $senderEmail = 'Worklist - ' . $user->getNickname() . ' <contact@worklist.net> ';
+                sendTemplateEmail($assignedUser->getUsername(), $emailTemplate, $data, $senderEmail);
             }
         }
 
@@ -648,8 +689,10 @@ class JobController extends Controller {
                 if (!$budget->loadById($budget_id) ) {
                     $_SESSION['workitem_error'] = "Invalid budget!";
                 }
+                $is_job_runner = $workitem->getRunnerId() == getSessionUserId();
+                $is_assigned = $workitem->getAssigned_id() == getSessionUserId();
                 // only runners can accept bids
-                if (($is_project_runner || $workitem->getRunnerId() == $_SESSION['userid'] || ($user->getIs_admin() == 1
+                if (($is_project_runner || $is_job_runner || $is_assigned || ($user->getIs_admin() == 1
                      && $is_runner) && !$workitem->hasAcceptedBids() && $workitem->getStatus() == "Bidding")) {
                     // query to get a list of bids (to use the current class rather than breaking uniformity)
                     // I could have done this quite easier with just 1 query and an if statement..
@@ -872,7 +915,7 @@ class JobController extends Controller {
                     //break;
                 }
 
-                if (!($user->getId() == $bid['bidder_id'] || $user->isRunnerOfWorkitem($workitem) || $workitem->getIsRelRunner()))  {
+                if (!($user->getId() == $bid['bidder_id'] || $user->isRunnerOfWorkitem($workitem) || $workitem->getIsRelRunner() && !$worklist['runner_id']))  {
                     if ($user->getIs_admin() == 0) {
                         $bid['nickname'] = '*name hidden*';
                         $bid['bid_amount'] = '***';
@@ -968,7 +1011,7 @@ class JobController extends Controller {
 
         $this->write('bids', $bids);
 
-        $this->write('userHasRights', $this->hasRights($user_id, $workitem));
+        $this->write('userHasCodeReviewRights', $this->hasCodeReviewRights($user_id, $workitem));
 
         $this->write('mechanic', $workitem->getUserDetails($worklist['mechanic_id']));
 
@@ -1035,6 +1078,14 @@ class JobController extends Controller {
         $is_internal = $_REQUEST['is_internal'];
         $fileUpload = $_REQUEST['fileUpload'];
 
+        $assigned_id = 0;
+        if ((int) $_REQUEST['assigned']) {
+            $assignedUser = User::find($_REQUEST['assigned']);
+            if ($assignedUser->isInternal()) {
+                $assigned_id = $assignedUser->getId();
+            }
+        }
+
         if (! empty($_POST['itemid'])) {
             $workitem->loadById($_POST['itemid']);
         } else {
@@ -1049,9 +1100,22 @@ class JobController extends Controller {
         $workitem->setNotes($notes);
         $workitem->setWorkitemSkills($skillsArr);
         $workitem->setIs_internal($is_internal);
+        $workitem->setAssigned_id($assigned_id);
         $workitem->save();
         $related = getRelated($notes);
         Notification::massStatusNotify($workitem);
+
+        if ($assigned_id) {
+            $emailTemplate = 'job-assigned';
+            $data = array(
+                'job_id' => $workitem->getId(),
+                'summary' => $workitem->getSummary(),
+                'assigner' => $user->getNickname(),
+                'assigned' => $assignedUser->getNickname()
+            );
+            $senderEmail = 'Worklist - ' . $user->getNickname() . ' <contact@worklist.net> ';
+            sendTemplateEmail($assignedUser->getUsername(), $emailTemplate, $data, $senderEmail);
+        }
 
         // if files were uploaded, update their workitem id
         $file = new File();
@@ -1248,7 +1312,7 @@ class JobController extends Controller {
             $user = User::find(getSessionUserId());
             if (
                 !$user->isEligible() || $workitem->getCRStarted() != 1 ||
-                $workitem->getCRCompleted() == 1 || !$this->hasRights($user->getId(), $workitem)
+                $workitem->getCRCompleted() == 1 || !$this->hasCodeReviewRights($user->getId(), $workitem)
             ) {
                 throw new Exception('Action not allowed');
             }
@@ -1281,7 +1345,7 @@ class JobController extends Controller {
             $user = User::find(getSessionUserId());
             if (
                 !$user->isEligible() || $workitem->getCRStarted() != 1 ||
-                $workitem->getCRCompleted() == 1 || !$this->hasRights($user->getId(), $workitem)
+                $workitem->getCRCompleted() == 1 || !$this->hasCodeReviewRights($user->getId(), $workitem)
             ) {
                 throw new Exception('Action not allowed');
             }
@@ -1338,7 +1402,7 @@ class JobController extends Controller {
                 $fee_category = '';
                 AddFee($itemid, $fee_amount, $fee_category, $fee_desc, $mechanic_id, $is_expense);
             }
-            $journal_message = '\\#' . $workitem->getId() . ' updated by @' . $user->getNickname() . " Sandbox URL: $url";
+            $journal_message = '\\#' . $workitem->getId() . ' updated by @' . $user->getNickname() . " Branch URL: $url";
             sendJournalNotification($journal_message);
             echo json_encode(array(
                 'success' => false,
@@ -1352,34 +1416,13 @@ class JobController extends Controller {
         }
     }
 
-    protected function hasRights($userId, $workitem) {
+    protected function hasCodeReviewRights($userId, $workitem) {
         $project = new Project();
         $project->loadById($workitem->getProjectId());
         $users_favorite = new Users_Favorite();
 
-        if($project->getCrUsersSpecified()) { // if only specified users are allowed
-            if($project->isProjectCodeReviewer($userId)){
-                return true;
-            }
-            return false;
-        } else {
-            if ($project->getCrAnyone()) {
-                return true;
-            } else if ($project->getCrAdmin()) {
-                $admin_fav = $users_favorite->getMyFavoriteForUser($project->getOwnerId(), $userId);
-                if ($admin_fav['favorite']) {
-                    return true;
-                }
-            } else if ($project->getCrFav() && $users_favorite->getUserFavoriteCount($userId) >= 3) {
-                return true;
-            } else if ($project->getCrRunner()) {
-                $runner_fav = $users_favorite->getMyFavoriteForUser($workitem->getRunnerId(),$userId);
-                if ($runner_fav['favorite']) {
-                    return true;
-                }
-            } else if($project->isProjectCodeReviewer($userId)){
-                return true;
-            }
+        if($project->isCodeReviewer($userId)){
+            return true;
         }
         return false;
     }
@@ -1595,5 +1638,16 @@ class JobController extends Controller {
             }
         }
         return 0;
+    }
+
+    public function search() {
+        $this->view = null;
+        $filter = new Agency_Worklist_Filter();
+        $user = User::find(getSessionUserId());
+        $filter->setStatus(!empty($_REQUEST['status']) ? $_REQUEST['status'] : "Bidding,In Progress,QA Ready,Review,Merged,Suggestion");
+        $filter->setProjectId(!empty($_REQUEST['project_id']) ? $_REQUEST['project_id'] : $filter->getProjectId());
+        $filter->setParticipated($_REQUEST['participated']);
+        $filter->setFollowing(empty($_REQUEST["following"]) ? 0 : $_REQUEST["following"]);
+        echo json_encode(Project::getSearch($filter, $_REQUEST['query'], $_REQUEST['offset'], $_REQUEST['limit'],$user->is_runner, !$user->isInternal()));
     }
 }

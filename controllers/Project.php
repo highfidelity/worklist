@@ -5,6 +5,7 @@ class ProjectController extends Controller {
         $method = '';
         switch($action) {
             case 'view':
+            case 'info':
             case 'add':
             case 'addDesigner':
             case 'designers':
@@ -68,6 +69,7 @@ class ProjectController extends Controller {
             $cr_users_specified = isset($_REQUEST['cr_users_specified']) ? 1 : 0;
             $cr_job_runner = isset($_REQUEST['cr_job_runner']) ? 1 : 0;
             $internal = isset($_REQUEST['internal']) ? 1 : 0;
+            $require_sandbox = isset($_REQUEST['require_sandbox']) ? 1 : 0;
             $hipchat_enabled = isset($_REQUEST['hipchat_enabled']) ? 1 : 0;
             $project->setCrAnyone($cr_anyone);
             $project->setCrFav($cr_3_favorites);
@@ -82,7 +84,9 @@ class ProjectController extends Controller {
             if ($user->getIs_admin()) {
                 $project->setInternal($internal);
             }
-            
+            if ($user->getIs_admin()) {
+                $project->setRequireSandbox($require_sandbox);
+            }
             if ($_REQUEST['logoProject'] != "") {
                 $project->setLogo(basename($_REQUEST['logoProject']));
             }
@@ -138,6 +142,32 @@ class ProjectController extends Controller {
         parent::run();
     }
 
+    public function info($id) {
+        $this->view = null;
+        try {
+            $project = Project::find($id);
+            if (!$project->getProjectId()) {
+                throw new Exception('Specified project is invalid or does not exist');
+            }
+            $ret = array(
+                'id' => $project->getProjectId(),
+                'name' => $project->getName(),
+                'description' => $project->getDescription(),
+                'short_description' => $project->getShortDescription(),
+            );
+            echo json_encode(array(
+                'success' => true,
+                'data' => $ret
+            ));
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
+        }
+
+    }
+
     public function add($name) {
         $this->view = null;
         try {
@@ -145,8 +175,8 @@ class ProjectController extends Controller {
             if (!$user->getId() || !$user->getIs_admin()) {
                 throw new Exception('Action not allowed.');
             }
-            if (!ctype_alnum($name) || !ctype_alpha($name[0])) {
-                throw new Exception('The name of the project can only contain letters (A-Z) and numbers (0-9) and must start with a letter.');
+            if (!preg_match('/^\d*[-a-zA-Z][-a-zA-Z0-9]*$/', $name)) {
+                throw new Exception('The name of the project can only contain alphanumeric characters plus dashes and must have 1 alpha character at least');
             }
             try {
                 $project = Project::find($name);
@@ -171,6 +201,7 @@ class ProjectController extends Controller {
             $project->setOwnerId($user->getId());
             $project->setActive(true);
             $project->setInternal(true);
+            $project->setRequireSandbox(true);
             $project->setLogo($logo);
             $project->setRepo_type('git');
             $project->setRepository($_POST['github_repo_url']);
@@ -207,13 +238,14 @@ class ProjectController extends Controller {
             if (! $project->getProjectId()) {
                 throw new Exception('Not a project in our system');
             }
-            if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId())) {
+            $crAdmins = preg_split('/,/', CODE_REVIEW_ADMINS);
+            if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId()) && !in_array($request_user->getNickname(), $crAdmins)) {
                 throw new Exception('Not enough rights');
             }
             if (!$user->getId()) {
                 throw new Exception('Not a user in our system');
             }
-            if ($project->isProjectCodeReviewer($user->getId())) {
+            if ($project->isCodeReviewer($user->getId())) {
                 throw new Exception('Entered user is already a Code Reviewer for this project');
             }
             if (! $project->addCodeReviewer($user->getId())) {
@@ -378,11 +410,7 @@ class ProjectController extends Controller {
             if ($codeReviewers = $project->getCodeReviewers()) {
                 foreach ($codeReviewers as $codeReviewer) {
                     $data[] = array(
-                        'id'=> $codeReviewer['id'],
-                        'nickname' => $codeReviewer['nickname'],
-                        'totalJobCount' => $codeReviewer['totalJobCount'],
-                        'lastActivity' => $project->getCodeReviewersLastActivity($codeReviewer['id']),
-                        'owner' => $codeReviewer['owner']
+                        'nickname' => $codeReviewer['login'],
                     );
                 }
             }
@@ -408,7 +436,8 @@ class ProjectController extends Controller {
                 throw new Exception('Not a project in our system');
             }
             $request_user = User::find(getSessionUserId());
-            if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId())) {
+            $crAdmins = preg_split('/,/', CODE_REVIEW_ADMINS);
+            if (!$request_user->getIs_admin() && !$project->isOwner($request_user->getId()) && !in_array($request_user->getNickname(), $crAdmins)) {
                 throw new Exception('Not enough rights');
             }
             $codeReviewers = array_slice(func_get_args(), 1);

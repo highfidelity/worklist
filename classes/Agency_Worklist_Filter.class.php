@@ -9,7 +9,7 @@ class Agency_Worklist_Filter {
     // Filter for worklist
     protected $user = 0;
     protected $runner = 0;
-    protected $status = 'Bidding';
+    protected $status = 'Bidding,In Progress,QA Ready,Review,Merged,Suggestion';
     protected $query = '';
     protected $sort = 'delta';
     protected $dir = 'ASC';
@@ -18,7 +18,7 @@ class Agency_Worklist_Filter {
     protected $project_id = 0;
     protected $project = "";
     protected $fund_id = -1;
-    
+
     // Additional filter for reports
     protected $paidstatus = 'ALL';
     protected $order = 'name';
@@ -27,59 +27,62 @@ class Agency_Worklist_Filter {
     // Additional filter for type for reports page
     // 30-APR-2010 <Yani>
     protected $type = "ALL";
-    
+
     // Additional filter for job in PayPal reports
     // 30-APR-2010 <Andres>
     protected $job = 0;
-    
+
     // Additional filter for worklist
     // 15-JAN-2011 <Reji>
     protected $subsort = "delta";
     protected $nickname = "";
-    
+    protected $filterMobile = false;
+    protected $following = false;
+    protected $participated = false;
+
     public function getPaidstatus()
     {
         return $this->paidstatus;
     }
-    
+
     public function setPaidstatus($paidStatus)
     {
         $this->paidstatus = $paidStatus;
         return $this;
     }
-    
+
     public function getOrder()
     {
         return $this->order;
     }
-    
+
     public function setOrder($order)
     {
         $this->order = $order;
     }
-    
+
     public function getStart()
     {
-        return$this->start;    
+        return$this->start;
     }
-    
+
     public function setStart($start)
     {
         $this->start = $start;
         return $this;
     }
-    
+
     public function getEnd()
     {
         return $this->end;
     }
-    
+
     public function setEnd($end)
     {
         $this->end = $end;
         return $end;
     }
-    
+
     // getter for $type
     // @return type of the fee
     // 30-APR-2010 <Yani>
@@ -89,20 +92,20 @@ class Agency_Worklist_Filter {
     }
 
     // setter for $type
-    // @param $type type to set  
-    // 30-APR-2010 <Yani>   
+    // @param $type type to set
+    // 30-APR-2010 <Yani>
     public function setType($type)
     {
         $this->type = $type;
     }
-    
+
     // getter for $job
     // @return job_id number
     // 30-APR-2010 <Andres>
     public function getJob() {
        return $this->job;
     }
-    
+
     // setter for $job
     // @param $job job id number
     // 30-APR-2010 <Andres>
@@ -120,15 +123,15 @@ class Agency_Worklist_Filter {
     public function getProject() {
         return $this->project;
     }
-    
+
     public function getInComment() {
         return $this->inComment;
     }
-    
+
     public function getProjectId() {
         return $this->project_id;
     }
-    
+
     public function getFund_id() {
         return $this->fund_id;
     }
@@ -191,21 +194,21 @@ class Agency_Worklist_Filter {
     {
         return $this->dir;
     }
-    
+
     /**
      * @return the $page
      */
     public function getPage()
     {
-        return $this->page; 
+        return $this->page;
     }
-    
+
     /**
      * @return the $name
      */
     public function getName()
     {
-        return $this->name; 
+        return $this->name;
     }
 
     /**
@@ -216,12 +219,12 @@ class Agency_Worklist_Filter {
         $this->project =  $project;
         return $this;
     }
-    
+
     public function setInComment($inComment) {
         $this->inComment = $inComment;
         return $this;
     }
-    
+
     public function setProjectId($project_id) {
         $this->project_id = $project_id;
         return $this;
@@ -335,7 +338,7 @@ class Agency_Worklist_Filter {
         }
         return $this;
     }
-    
+
     // getter for $subsort
     // 15-JAN-2011 <Reji>
     public function getSubSort() {
@@ -350,7 +353,7 @@ class Agency_Worklist_Filter {
     public function getProjectSelectbox($initialMessage = 'ALL',  $active = 1, $projectId = 'projectCombo', $projectName = 'project') {
         $box = '<select id="' . $projectId . '" name="' . $projectName . '" class="project-dropdown" data-placeholder="Select project" data-live-search="true">';
         $box .= '<option value="0"' . (($this->getProjectId() == "") ? ' selected="selected"' : '') . '> ' . $initialMessage . '</option>';
-        
+
         $options = '';
         $found = false;
 
@@ -362,17 +365,17 @@ class Agency_Worklist_Filter {
 
             // handle long project names
             $project_name = $project['name'];
-            $options .= '<option value="' . $project['project_id'] . '"' . 
+            $options .= '<option value="' . $project['project_id'] . '"' .
                 (($this->getProjectId() == $project['project_id']) ? ' selected="selected"' : '') . '>' . $project_name . '</option>';
         }
-        
+
         if (! $found && $this->getProjectId()) {
             $options = '';
 
             foreach ( Project::getProjects(false, array('name', 'project_id')) as $project) {
                 // handle long project names
                 $project_name = $project['name'];
-                $options .= '<option value="' . $project['project_id'] . '"' . 
+                $options .= '<option value="' . $project['project_id'] . '"' .
                     (($this->getProjectId() == $project['project_id']) ? ' selected="selected"' : '') . '>' . $project_name . '</option>';
             }
         }
@@ -391,21 +394,21 @@ class Agency_Worklist_Filter {
 
         $box .= '<option value="0" ' .($this->getFund_id() == 0 ? 'selected="selected"' : '') . '>Not funded</option>';
         $box .= '</select>';
-        
+
         return $box;
     }
 
-    /* 
+    /*
      * Function getUserSelectbox Get a combobox containing all the users
-     * 
+     *
      * @param active If true will return users with at least a fee on the last
      *               45 days.
      * @return html containg the checkbox for active users and the combobox
-     * 
+     *
      * Notes: A reference to utils.js should be included for the auto refreshing
      *        behavior to work properly.
      *        <script type="text/javascript" src="js/utils.js"></script>
-     *        
+     *
      *        Also a global variable named filterName should be set to the
      *        filter name assigned on the php code. This variable needs to
      *        be initialized before including the script above.
@@ -421,7 +424,7 @@ class Agency_Worklist_Filter {
             $box .= '<option value="' . $user->getId() . '"' . (($this->getUser() == $user->getId()) ? ' selected="selected"' : '') . '>' . $user->getNickname() . '</option>';
         }
         $box .= '</select>';
-        
+
         return $box;
     }
 
@@ -436,11 +439,11 @@ class Agency_Worklist_Filter {
             $box .= '<option value="' . $user->getId() . '"' . (($this->getRunner() == $user->getId()) ? ' selected="selected"' : '') . '>' . $user->getNickname() . '</option>';
         }
         $box .= '</select>';
-        
+
         return $box;
     }
 
-    
+
     /**
      * Gets the manager user selection box with style
      */
@@ -452,7 +455,7 @@ class Agency_Worklist_Filter {
             $box .= '<option value="' . $user->getId() . '"' . (($this->getUser() == $user->getId()) ? ' selected="selected"' : '') . '>' . $user->getNickname() . '</option>';
         }
         $box .= '</select>';
-        
+
         return $box;
     }
 
@@ -467,10 +470,10 @@ class Agency_Worklist_Filter {
             $box .= '<option value="' . $user->getId() . '"' . (($this->getUser() == $user->getId()) ? ' selected="selected"' : '') . '>' . $user->getNickname() . '</option>';
         }
         $box .= '</select>';
-        
+
         return $box;
-    }   
-    
+    }
+
     public function getStatusSelectbox($fromReport=false)
     {
         $allDisplay = ($fromReport) ? "ALL" : "All Status";
@@ -498,7 +501,7 @@ class Agency_Worklist_Filter {
                  ->initFilter();
         }
     }
-    
+
     public function initFilter()
     {
         if (getSessionUserId() > 0) {
@@ -546,9 +549,9 @@ class Agency_Worklist_Filter {
         $user = new User();
         $user->findUserById(getSessionUserId());
         $filter = unserialize($user->getFilter());
-        
+
         $filter[$this->getName()] = $cleanOptions;
-        
+
         $user->setFilter(serialize($filter));
         $user->save();
     }
@@ -608,4 +611,56 @@ class Agency_Worklist_Filter {
         $this->nickname = (string)$nickname;
         return $this;
     }
+
+    /**
+     * @return the $filterMobile
+     */
+    public function getFilterMobile()
+    {
+        return $this->filterMobile;
+    }
+
+    /**
+     * @param $filterMobile the $filterMobile to set
+     */
+    public function setfilterMobile($filterMobile)
+    {
+        $this->filterMobile = (boolean)$filterMobile;
+        return $this;
+    }
+
+    /**
+     * @return the $following
+     */
+    public function getFollowing()
+    {
+        return $this->following;
+    }
+
+    /**
+     * @param $following the $following to set
+     */
+    public function setFollowing($following)
+    {
+        $this->following = (boolean)$following;
+        return $this;
+    }
+
+    /**
+     * @return the $participated
+     */
+    public function getParticipated()
+    {
+        return $this->participated;
+    }
+
+    /**
+     * @param $participated the $participated to set
+     */
+    public function setParticipated($participated)
+    {
+        $this->participated = (boolean)$participated;
+        return $this;
+    }
+
 }

@@ -1455,6 +1455,19 @@ class User {
         return false;
     }
 
+    protected function loadUsers($where)
+    {
+        $sql = 'SELECT `id` FROM `' . USERS . '` WHERE ' . $where;
+        if ($result = mysql_query($sql)) {
+            $ret = array();
+            while (($row = mysql_fetch_assoc($result)) !== false) {
+                $ret[] = User::find($row['id']);
+            }
+            return $ret;
+        }
+        return false;
+    }
+
     private function getUserColumns()
     {
         $columns = array();
@@ -1639,14 +1652,14 @@ class User {
         return $this;
     }
 
-    public function isRunnerOfWorkitem($workitem) {
-        if (!is_object($workitem->getRunner())) {
+    public function isRunnerOfWorkitem($workitem, $exclude_assigned = false) {
+        if ($this->getId() == 0) {
             return false;
         }
-        if ($this->id == 0 || $this->id != $workitem->getRunner()->getId()) {
-            return false;
-        }
-        return true;
+        $runner_id = $workitem->getRunner() ? $workitem->getRunner()->getId() : 0;
+        $is_runner = ($this->getId() == $runner_id);
+        $is_assigned = ($this->getId() == $workitem->getAssigned_id());
+        return $is_runner || ($is_assigned && !$exclude_assigned);
     }
 
 /* Updates the current calling user status, saves it to the database and sends a message to the journal
@@ -2615,5 +2628,10 @@ class User {
             $count = $row[0];
         }
         return $count;
+    }
+
+    public static function getInternals() {
+        $user = new User();
+        return $user->loadUsers('`is_internal` = 1');
     }
 }

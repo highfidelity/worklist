@@ -100,4 +100,10 @@ class ProjectView extends View {
         $count = $this->projectActiveJobsCount();
         return $count . ' active job' .  ($count > 1 ? 's' : '');
     }
+
+    public function codeReviewAdmin() {
+        $user = User::find($this->currentUser['id']);
+        $crAdmins = preg_split('/,/', CODE_REVIEW_ADMINS);
+        return $this->adminOrOwner() || in_array($user->getNickname(), $crAdmins);
+    }
 }

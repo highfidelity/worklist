@@ -24,6 +24,10 @@
                           {{^edit_mode}}disabled="disabled"{{/edit_mode}} 
                           {{#project.getInternal}}checked="checked"{{/project.getInternal}} />
                         <label for="internal">Internal project</label>
+                        <input class="wlcheckbox" type="checkbox" name="require_sandbox" id="require_sandbox"
+                          {{^edit_mode}}disabled="disabled"{{/edit_mode}}
+                          {{#project.getRequireSandbox}}checked="checked"{{/project.getRequireSandbox}} />
+                        <label for="require_sandbox">Requires Sandbox</label>
                     </div>
                 {{/currentUser.is_admin}}
             </div>
@@ -162,55 +166,21 @@
             </li>
             <li id="projectCodeReviewRights">
                 <h3>Code Reviews <span>are allowed from</span></h3>
-                <ul>
-                    <li>
-                        <input id="cr_anyone_field" name="cr_anyone" type="checkbox" class="wlcheckbox code_review_chks"
-                          {{^edit_mode}}disabled="disabled"{{/edit_mode}} value="1" 
-                          {{#project.getCrAnyone}}checked="checked"{{/project.getCrAnyone}} />
-                        <label for="cr_anyone_field">Anyone</label>
-                    </li>
-                    <li>
-                        <input id="cr_3_favorites_field" name="cr_3_favorites" type="checkbox" class="wlcheckbox code_review_chks"
-                          {{^edit_mode}}disabled="disabled"{{/edit_mode}} value="1" 
-                          {{#project.getCrFav}}checked="checked"{{/project.getCrFav}} />
-                        <label for="cr_3_favorites_field">Anyone who is trusted by more than [3] people</label>
-                    </li>
-                    <li>
-                        <input id="cr_project_admin_field" name="cr_project_admin" type="checkbox" class="wlcheckbox code_review_chks"
-                          {{^edit_mode}}disabled="disabled"{{/edit_mode}} value="1" 
-                          {{#project.getCrAdmin}}checked="checked"{{/project.getCrAdmin}} />
-                        <label for="cr_project_admin_field">Anyone who is trusted by the project admin</label>
-                    </li>
-                    <li>
-                        <input id="cr_job_runner_field" name="cr_job_runner" type="checkbox" class="wlcheckbox code_review_chks"
-                          {{^edit_mode}}disabled="disabled"{{/edit_mode}} value="1" 
-                          {{#project.getCrRunner}}checked="checked"{{/project.getCrRunner}} />
-                        <label for="cr_job_runner_field">Anyone who is trusted by the job manager</label>
-                    </li>
-                    <li>
-                        <input id="cr_users_specified_field" name="cr_users_specified" type="checkbox" class="wlcheckbox"
-                          {{^edit_mode}}disabled="disabled"{{/edit_mode}} value="1" 
-                          {{#project.getCrUsersSpecified}}checked="checked"{{/project.getCrUsersSpecified}} />
-                        <label for="cr_users_specified_field">Use only code reviewers listed below</label>
-                    </li>
-                </ul>
                 <table class="table table-striped" id="projectCodeReviewers">
                     <thead>
                         <tr>
-                            <th {{#adminOrOwner}}colspan="2"{{/adminOrOwner}}>Who</th>
-                            <th># of Jobs</th>
-                            <th>Last Activity</th>
+                            <th>Who</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
-                {{#adminOrOwner}}
+                {{#codeReviewAdmin}}
                     <div class="buttonContainer">
                         <input type="button" id="addcodereviewer" value="Add" />
                         <input type="button" id="removecodereviewer" value="Remove" />
                     </div>
-                {{/adminOrOwner}}
+                {{/codeReviewAdmin}}
             </li>
             <li id="hipchat">
                 <h3>HipChat</h3>
@@ -360,6 +330,7 @@
     var projectName = '{{project.getName}}';
     var edit_mode = {{#edit_mode}}true{{/edit_mode}}{{^edit_mode}}false{{/edit_mode}};
     var is_owner = {{#is_owner}}true{{/is_owner}}{{^is_owner}}false{{/is_owner}};
+    var isCodeReviewAdmin = {{#codeReviewAdmin}}true{{/codeReviewAdmin}}{{^codeReviewAdmin}}false{{/codeReviewAdmin}};
     $(function() {
         Project.init();
     });

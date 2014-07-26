@@ -87,8 +87,8 @@ var Projects = {
         project += '<h3><a href="' + link + '">' + json.name + '</a></h3>';
         project += '<section class="description">' + description + '</section>';
         project += '<ul class="stats">';
-        project += '<li><a href="./jobs?status=bidding&project=' + json.name + '"><strong>' + json.bCount + ' jobs in bidding</strong></a></li>';
-        project += '<li><a href="./jobs?status=completed&project=' + json.name + '">' + json.cCount+ ' jobs completed</a></li>';
+        project += '<li><a href="./jobs/' + json.name + '"><strong>' + json.bCount + ' jobs in bidding</strong></a></li>';
+        project += '<li><a href="./jobs/' + json.name + '/done">' + json.cCount+ ' jobs completed</a></li>';
         project += '<li>$' + json.feesCount + ' spent</li>';
         project += '</ul>';
         project += '</article>';
@@ -109,7 +109,8 @@ var Projects = {
                         githubClientSecret =  new LiveValidation($('input[name="githubsecret"]', modal)[0], { onlyOnSubmit: true });
 
                     name.add(Validate.Presence, { failureMessage: "Can't be empty!" });
-                    name.add(Validate.Format, { failureMessage: 'Alphanumeric only', pattern: new RegExp(/^[A-Za-z0-9]*$/) });
+                    name.add(Validate.Format, { failureMessage: 'Alphanumeric and dashes characters only', pattern: new RegExp(/^[-A-Za-z0-9]*$/) });
+                    name.add(Validate.Format, { failureMessage: 'Must contain 1 alpha character at least', pattern: new RegExp(/^\d*[-a-zA-Z][-a-zA-Z0-9]*$/) });
                     name.add(Validate.Length, { minimum: 3, tooShortMessage: "Field must contain 3 characters at least!" } );
                     name.add(Validate.Length, { maximum: 32, tooLongMessage: "Field must contain 32 characters at most!" } );
 
