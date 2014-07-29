@@ -12,8 +12,9 @@ var Job = {
         });
 
         if (action == 'edit') {
-            $('select[name="runner"]').chosen({
-                width: '140px'
+            $('select[name="runner"], select[name="status"], select[name="assigned"]').chosen({
+                width: '140px',
+                disable_search_threshold: 10
             });
             $('select[name="status"]').chosen({
                 width: '140px'
@@ -1063,11 +1064,11 @@ var Job = {
 
     reviewUrlModal: function(fAfter) {
         Utils.emptyFormModal({
-            title: 'Sandbox URL',
+            title: 'Branch URL',
             content:
                 '<div class="row">' +
                 '  <div class="col-md-4">' +
-                '    <label for="sburl">QA Reviews URL</label>' +
+                '    <label for="sburl">Branch URL</label>' +
                 '  </div>' +
                 '  <div class="col-md-8">' +
                 '    <input type="text" class="form-control" name="url" ' +

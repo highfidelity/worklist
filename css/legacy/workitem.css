@@ -312,7 +312,7 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     margin-top:8px;
 }
 
-#creatorBox, #runnerBox, #mechanicBox {
+#creatorBox, #runnerBox, #mechanicBox, #assigneeBox {
     float: left;
     width: 130px;
     font-weight: bold;
@@ -340,6 +340,7 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 
 .runnerName,
 .mechanicName,
+.assigneeName,
 .creatorName,
 .skills-label {
     float: left;
@@ -352,6 +353,7 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 .runnerName a,
 .mechanicName a,
 .creatorName a,
+.assigneeName a,
 .skills-label a {
     text-decoration: none;
     color: #007F7C !important;
