@@ -12,9 +12,11 @@ var Job = {
         });
 
         if (action == 'edit') {
-            $('select[name="runner"], select[name="status"], select[name="assigned"]').chosen({
-                width: '140px',
-                disable_search_threshold: 10
+            $('select[name="runner"]').chosen({
+                width: '140px'
+            });
+            $('select[name="status"]').chosen({
+                width: '140px'
             });
         }
 
@@ -914,10 +916,10 @@ var Job = {
     setFollowingText: function(isFollowing) {
         if(isFollowing == true) {
             $('#following').attr('title', 'You are currently following this job');
-            $('#following').html('Un-Follow this job');
+            $('#following').html('<i class="glyphicon glyphicon-eye-close"></i> <span>Un-Follow this job</span>');
         } else {
             $('#following').attr('title', 'Click to receive updates for this job');
-            $('#following').html('Follow this job');
+            $('#following').html('<i class="glyphicon glyphicon-eye-open"></i> <span>Follow this job</span>');
         }
     },
 
@@ -1061,11 +1063,11 @@ var Job = {
 
     reviewUrlModal: function(fAfter) {
         Utils.emptyFormModal({
-            title: 'Branch URL',
+            title: 'Sandbox URL',
             content:
                 '<div class="row">' +
                 '  <div class="col-md-4">' +
-                '    <label for="sburl">Branch URL</label>' +
+                '    <label for="sburl">QA Reviews URL</label>' +
                 '  </div>' +
                 '  <div class="col-md-8">' +
                 '    <input type="text" class="form-control" name="url" ' +
