@@ -1071,29 +1071,6 @@ class Project {
         return false;
     }
 
-    /**
-     * Get the last activity of the reviewer on the current project
-     * @param $userId
-     * @return boolean|string
-     */
-    public function getCodeReviewersLastActivity($userId) {
-        $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s
-            LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id
-            LEFT JOIN " . REL_PROJECT_CODE_REVIEWERS . " p on p.project_id = w.project_id
-            WHERE s.user_id = " . $userId . " AND p.project_id = " . $this->getProjectId() . " ";
-        $res = mysql_query($sql);
-        if($res && $row = mysql_fetch_row($res)){
-            $lastActivity = strtotime($row[0]);
-            $rightNow = time();
-            if($lastActivity == '') {
-                return false;
-            } else {
-                return (formatableRelativeTime($lastActivity, 2) . " ago");
-            }
-        }
-            return false;
-    }
-
     public function getRunnersLastActivity($userId) {
         $sql = "SELECT MAX(change_date) FROM " . STATUS_LOG . " s
                 LEFT JOIN " . WORKLIST . " w ON s.worklist_id = w.id

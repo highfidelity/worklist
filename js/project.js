@@ -353,7 +353,7 @@ var Project = {
                             var designer = designers[i];
                             html =
                                 '<tr class="runner">' +
-                                    (isCodeReviewAdmin ? '<td class="runnerRemove">' + (designer.owner ? '' : '<input type="checkbox" name="runner' + designer.id + '" />') + '</td>' : '') +
+                                    ((is_admin || is_owner) ? '<td class="runnerRemove">' + (designer.owner ? '' : '<input type="checkbox" name="runner' + designer.id + '" />') + '</td>' : '') +
                                     '<td class="runnerName"><a href="./user/' + designer.id + '" >' + designer.nickname + '</a></td>' +
                                     '<td class="runnerJobCount">' + designer.totalJobCount + '</td>' +
                                     '<td class="runnerLastActivity">' + (designer.lastActivity ? designer.lastActivity : '') + '</td>' +
@@ -381,13 +381,15 @@ var Project = {
                         for(var i=0; i < codeReviewers.length; i++) {
                             var codeReviewer = codeReviewers[i];
                             html =
-                                '<tr class="codeReviewer">' +
-                                    '<td class="codeReviewerName">' +
-                                      (isCodeReviewAdmin ? '<input type="checkbox" class="wlcheckbox" id="codereviewer' + codeReviewer.nickname + '" name="codereviewer' + codeReviewer.nickname + '" />' : '') +
-                                      '<label for="codereviewer' + codeReviewer.nickname + '"><a href="./user/' + codeReviewer.nickname + '" >' +
-                                        codeReviewer.nickname +
-                                      '</a></label>' +
-                                    '</td>' +
+                                '<tr>' +
+                                  '<td>' +
+                                    (isCodeReviewAdmin ? '<input type="checkbox" class="wlcheckbox" id="codereviewer' + codeReviewer.nickname + '" name="codereviewer' + codeReviewer.nickname + '" />' : '') +
+                                    '<label for="codereviewer' + codeReviewer.nickname + '"><a href="./user/' + codeReviewer.nickname + '" >' +
+                                      codeReviewer.nickname +
+                                    '</a></label>' +
+                                  '</td>' +
+                                  '<td>' + codeReviewer.totalJobCount + '</td>' +
+                                  '<td>' + (codeReviewer.lastActivity ? codeReviewer.lastActivity : '') + '</td>' +
                                 '</tr>';
                             $('#projectCodeReviewers tbody').append(html);
                         }

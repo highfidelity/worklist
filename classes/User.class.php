@@ -2341,7 +2341,7 @@ class User {
     }
 
     public function uniqueLoveCount() {
-       $data = $this->sendloveApiRequest('getuniquecount');
+        $data = $this->sendloveApiRequest('getuniquecount');
         if ($data){
             return (int) $data['count'];
         }
@@ -2408,7 +2408,7 @@ class User {
         return false;
     }
 
-    public function jobsForProjectCount($status, $project) {
+    public function jobsForProjectCount($status, $project, $alsoAsRunner = false) {
         if (!$status) {
             $status = array('In Progress', 'QA Ready', 'Review', 'Merged', 'Done');
         }
@@ -2418,11 +2418,15 @@ class User {
             $statusCond = "`status` = '{$status}'";
         }
 
+        $userId = $this->getId();
+        $runnerCond = $alsoAsRunner ? "OR `w`.`runner_id` = {$userId}" : '';
+        $roleCond = "(`w`.`mechanic_id` = {$userId} OR `w`.`creator_id` = {$userId} {$runnerCond})";
+
         $count = 0;
         $sql = "
             SELECT COUNT(*)
             FROM `" . WORKLIST . "` `w`
-            WHERE (`w`.`mechanic_id` = " . $this->getId() . " OR `w`.`creator_id` = " . $this->getId() . ")
+            WHERE {$roleCond}
               AND {$statusCond}
               AND `w`.`project_id` = " . $project;
 
@@ -2633,5 +2637,23 @@ class User {
     public static function getInternals() {
         $user = new User();
         return $user->loadUsers('`is_internal` = 1');
+    }
+
+    public function lastActivity($project) {
+        $project = Project::find($project);
+        $projectId = $project->getProjectId();
+        $userId = $this->getId();
+        $sql = "
+            SELECT MAX(`change_date`)
+            FROM `" . STATUS_LOG . "` `s`
+              LEFT JOIN `" . WORKLIST . "` `w`
+                ON `s`.`worklist_id` = `w`.`id`
+            WHERE `s`.`user_id` = {$userId}
+              AND `w`.`project_id` = {$projectId}";
+        $res = mysql_query($sql);
+        if ($res && $row = mysql_fetch_row($res)) {
+            return strtotime($row[0]);
+        }
+        return false;
     }
 }

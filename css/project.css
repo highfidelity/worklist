@@ -36,14 +36,6 @@ td.noroles {
     right: 0px;
 }
 
-#projectCodeReviewers .codeReviewerName,
-#projectCodeReviewers .codeReviewerJobCount {
-    width: 25%;
-}
-#projectCodeReviewers .codeReviewerLastActivity {
-    width: 50%;
-}
-
 
 #add-reviewer-submit {
     margin-top: 0px !important;	
@@ -200,6 +192,10 @@ td.noroles {
 
 #projectCodeReviewRights h3 + ul > li:nth-child(odd) {
     background-color: #d6d6d6;
+}
+
+#projectCodeReviewRights td {
+    vertical-align: middle;
 }
 
 #projectContent h3 {

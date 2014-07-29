@@ -409,8 +409,14 @@ class ProjectController extends Controller {
             $project = Project::find($id);
             if ($codeReviewers = $project->getCodeReviewers()) {
                 foreach ($codeReviewers as $codeReviewer) {
+                    $codeReviewerUser = User::find($codeReviewer['login']);
+                    $projectId = $project->getProjectId();
+                    $lastActivity = $codeReviewerUser->lastActivity($projectId);
+                    $jobsCount = $codeReviewerUser->jobsForProjectCount(array('Bidding', 'In Progress', 'QA Ready', 'Review', 'Merged', 'Done'), $projectId, true);
                     $data[] = array(
-                        'nickname' => $codeReviewer['login'],
+                        'nickname' => $codeReviewerUser->getNickname(),
+                        'lastActivity' => $lastActivity ? formatableRelativeTime($lastActivity, 2) . ' ago' : '',
+                        'totalJobCount' => $jobsCount
                     );
                 }
             }
