@@ -457,6 +457,20 @@ button:focus, a:focus {
 }
 
 @media only screen and (max-width: 450px) {
+
+    #select-budget.dropdown-menu {
+        left: inherit !important;
+        right: 0;
+        min-width: inherit;
+        width: 255%;
+    }
+    .dropdown-menu > li > a {
+        display: inline-block;
+        white-space: inherit;
+    }
+    #select-budget.dropdown-menu li:not(:first-child) {
+        word-wrap: break-word;
+    }
     #footer {
         display: none;
     }
@@ -725,26 +739,6 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
     height: 18px;
 }
 
-.wl-icon-edit,
-.wl-icon-edit\:regular {
-    background-image: url('../images/wl-icons/edit.png');
-    background-image: url('../images/wl-icons/edit.svg');
-    background-repeat: no-repeat;
-}
-
-.wl-icon-edit:hover,
-.wl-icon-edit\:hover {
-    background-image: url('../images/wl-icons/edit~hover.png');
-    background-image: url('../images/wl-icons/edit~hover.svg');
-    background-repeat: no-repeat;
-}
-
-.wl-icon-edit:after {
-    background-image: url('../images/wl-icons/edit~hover.png');
-    background-image: url('../images/wl-icons/edit~hover.svg');
-    display: none;
-}
-
 .wl-icon-edit-dims {
     width: 14px;
     height: 14px;
@@ -802,25 +796,6 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
 .wl-icon-exit-dims {
     width: 16px;
     height: 26px;
-}
-
-.wl-icon-follow,
-.wl-icon-follow\:regular {
-    background-image: url('../images/wl-icons/follow.png');
-    background-image: url('../images/wl-icons/follow.svg');
-    background-repeat: no-repeat;
-}
-
-.wl-icon-follow:hover,
-.wl-icon-follow\:hover {
-    background-image: url('../images/wl-icons/follow~hover.png');
-    background-image: url('../images/wl-icons/follow~hover.svg');
-    background-repeat: no-repeat;
-}
-.wl-icon-follow:after {
-    background-image: url('../images/wl-icons/follow~hover.png');
-    background-image: url('../images/wl-icons/follow~hover.svg');
-    display: none;
 }
 
 .wl-icon-follow-dims {
@@ -1032,7 +1007,7 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
 .wl-icon-tweet\:regular {
     background-image: url('../images/wl-icons/tweet.png');
     background-image: url('../images/wl-icons/tweet.svg');
-    background-size: 21px auto;
+    background-size: 18px auto;
     background-repeat: no-repeat;
 }
 
@@ -1210,7 +1185,8 @@ body > nav.navbar a.navbar-brand.wl-icon-worklist {
     #statusCombo_chosen > a > div > b,
     form#searchForm .chosen-drop .chosen-search input,
     form#searchbar.row #search-filters #days_chosen.chosen-container.chosen-container-single a.chosen-single div b,
-    form#searchbar.row #search-filters #days_chosen.chosen-container.chosen-container-single div.chosen-drop div.chosen-search input {
+    form#searchbar.row #search-filters #days_chosen.chosen-container.chosen-container-single div.chosen-drop div.chosen-search input,
+    form#addJob div#itemProjectCombo_chosen a.chosen-single div b {
         background-image: none !important;
     }
 }

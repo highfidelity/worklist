@@ -13,7 +13,7 @@
             {{^statusDone}}
                 <span class="switchmode wl-icon-edit" id="switchmode_edit">
                     <a title="Switch to Edit Mode" href="./{{worklist.id}}?action=edit">
-                        Edit
+                        <span class="glyphicon glyphicon-pencil"></span> Edit
                     </a>
                 </span>
             {{/statusDone}}
@@ -21,7 +21,7 @@
         {{#editing}}
             <span class="switchmode wl-icon-edit" id="switchmode_edit">
                 <a title="Switch to View Mode" href="./{{worklist.id}}?action=view">
-                    View
+                    <span class="glyphicon glyphicon-ok"></span> View
                 </a>
             </span>
         {{/editing}}
@@ -97,7 +97,7 @@
     <div style="clear:both; float:none;"> </div>
 </div>
 <div id="page-content" class="row">
-    <div class="col-sm-7">
+    <div class="col-sm-7 col-xs-12">
         {{^editing}}
         <div class="people-info">
             <div id="creatorBox">
@@ -113,12 +113,12 @@
                 {{& mechanicBox}}
             </div>
             {{#userIsInternal}}{{#assigneeNickname}}
-            <div id="assigneeBox">
-                <span class="assigneeName">
+                <div id="assigneeBox">
+                    <span class="assigneeName">
                     Assignee:
-                </span>
-                <a id="ping-btn" href="./user/{{assigneeNickname}}" >{{assigneeNickname}}</a>
-            </div>
+                    </span>
+                    <a id="ping-btn" href="./user/{{assigneeNickname}}" >{{assigneeNickname}}</a>
+                </div>
             {{/assigneeNickname}}{{/userIsInternal}}
         </div>
         {{/editing}}
@@ -126,17 +126,17 @@
             {{#editing}}
                 <ul style="margin:0; padding:0; border:none;">
                     <li>
-                        {{#userIsInternal}}
-                        <span class="inline-label">Assignee</span>
+                    {{#userIsInternal}}
+                    <span class="inline-label">Assignee</span>
                         <select name="assigned" data-placeholder="Select assignee">
                             <option value="0">No one assigned</option>
                             {{#internalUsers}}
                                 <option value="{{id}}" {{#current}}selected="selected"{{/current}}>
-                                    {{nickname}}
-                                </option>
-                            {{/internalUsers}}
+                            {{nickname}}
+                            </option>
+                        {{/internalUsers}}
                         </select>
-                        {{/userIsInternal}}
+                    {{/userIsInternal}}
                     </li>
                     <li>
                         {{#canReassignRunner}}
@@ -271,7 +271,7 @@
             {{/editing}}
         </div>  <!-- End of div for_view -->
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-5 col-xs-12">
         {{#editing}}
             <div class="skills">
                 <span class="skills-label">Labels:</span><br/>

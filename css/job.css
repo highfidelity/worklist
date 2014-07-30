@@ -14,7 +14,7 @@
 #tweet-link {
     float: left;
     padding: 10px 17px 7px 28px;
-    background-position: 4px 8px;
+    background-position: 4px 10px;
     background-repeat: no-repeat;
     border-right: 2px solid #e1e8ea;
 }
@@ -25,12 +25,6 @@
     color: #608e96 !important;
     background-image: url('../images/wl-icons/tweet~hover.png');
     background-image: url('../images/wl-icons/tweet~hover.svg');
-}
-
-@media (max-width: 480px) {
-    #tweet-link {
-        padding: 10px 5px 7px 25px;
-    }
 }
 
 #commentZone > .row:first-child > h3 + a {
@@ -301,4 +295,12 @@ section#footer li:nth-child(-n+3) {
 .visits-box .visits {
     font-weight: bold;
     color: #333333;
+}
+
+@media (max-width: 480px) {
+    #tweet-link {
+        padding: 10px 5px 7px 25px;
+    }
+    .visits-box { min-width: 95px; }
+    .info-ID {  }
 }

@@ -312,12 +312,9 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
     margin-top:8px;
 }
 
-#creatorBox,
-#runnerBox,
-#mechanicBox,
-#assigneeBox {
+#creatorBox, #runnerBox, #mechanicBox, #assigneeBox {
     float: left;
-    width: 125px;
+    width: 130px;
     font-weight: bold;
     line-height: 15px;
     padding-top: 1px;
@@ -355,8 +352,8 @@ input[type=password]:active, input[type=password]:hover, input[type=password]:fo
 
 .runnerName a,
 .mechanicName a,
-.assigneeName a,
 .creatorName a,
+.assigneeName a,
 .skills-label a {
     text-decoration: none;
     color: #007F7C !important;
@@ -923,9 +920,7 @@ a.profile-link {
 }
 
 #following {
-    padding: 10px 14px 7px 40px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
+    padding: 10px 14px 7px 10px;
 }
 
 #following {
@@ -934,9 +929,7 @@ a.profile-link {
 
 .switchmode,
 .switchmode-done {
-    padding: 10px 15px 7px 31px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
+    padding: 10px 15px 7px 8px;
 }
 
 .switchmode a,
@@ -1136,10 +1129,11 @@ h1.newProject {
     .project, .job-budget {
         clear: both;
         width: 100%;
+        margin-right: 0px;
     }
 
     .project {
-        margin: 0 10px;
+        margin: 0px;
     }
 
     .info-data {
@@ -1157,7 +1151,4 @@ h1.newProject {
         content: ' ';
     }
 
-    #following {
-        padding: 10px 5px 7px 25px;
-    }
 }
