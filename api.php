@@ -127,6 +127,14 @@ if(validateAction()) {
                 Utils::validateAPIKey();
                 sendJobReport();
                 break;
+            case 'getSummaryReport':
+                Utils::validateAPIKey();
+                getSummaryReport();
+                break;
+            case 'getLovesReport':
+                Utils::validateAPIKey();
+                getLovesReport();
+                break;
             default:
                 die("Invalid action.");
         }
@@ -1193,4 +1201,56 @@ function sendJobReport() {
     if (! Utils::sendTemplateEmail($emails, 'jobs-weekly-report', $email_content, 'contact@highfidelity.io')) {
         error_log('sendJobReport cron: Emails could not be sent.');
     }
+}
+
+function getSummaryReport() {
+    $from_date = mysql_real_escape_string($_REQUEST['from_date']);
+
+    if (empty($from_date)) {
+        return;
+    }
+
+    $sql = "SELECT wl.id, wl.status, wl.summary, wl.runner_id, ru.nickname runner,
+            wl.mechanic_id, mu.nickname mechanic, p.name project_name
+        FROM worklist wl
+        INNER JOIN projects p ON p.project_id = wl.project_id
+        INNER JOIN users ru ON ru.id = wl.runner_id
+        INNER JOIN users mu ON mu.id = wl.mechanic_id
+        WHERE
+            `status` = 'In Progress' OR
+            (`status` IN ('Done','QA Ready', 'Review') AND status_changed > '" . $from_date . "')";
+
+    $report = array();
+    $rtQuery = mysql_query($sql);
+    for ($i = 1; $rtQuery && $row = mysql_fetch_assoc($rtQuery); $i++) {
+        $report[] = $row;
+    }
+    responseJson($report);
+}
+
+function getLovesReport() {
+    $from_date = mysql_real_escape_string($_REQUEST['from_date']);
+
+    if (empty($from_date)) {
+        return;
+    }
+
+    $sql = "SELECT ul.from_id, fu.nickname from_user, ul.to_id, tu.nickname to_user, message, date_sent
+        FROM users_love ul
+        INNER JOIN users fu ON fu.id = ul.from_id
+        INNER JOIN users tu ON tu.id = ul.to_id
+        WHERE date_sent > '" . $from_date . "'";
+
+    $report = array();
+    $rtQuery = mysql_query($sql);
+    for ($i = 1; $rtQuery && $row = mysql_fetch_assoc($rtQuery); $i++) {
+        $report[] = $row;
+    }
+    responseJson($report);
+}
+
+function responseJson($response) {
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    die();
 }
