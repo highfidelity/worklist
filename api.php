@@ -131,10 +131,6 @@ if(validateAction()) {
                 Utils::validateAPIKey();
                 getSummaryReport();
                 break;
-            case 'getLovesReport':
-                Utils::validateAPIKey();
-                getLovesReport();
-                break;
             default:
                 die("Invalid action.");
         }
@@ -1219,27 +1215,6 @@ function getSummaryReport() {
         WHERE
             `status` = 'In Progress' OR
             (`status` IN ('Done','QA Ready', 'Review') AND status_changed > '" . $from_date . "')";
-
-    $report = array();
-    $rtQuery = mysql_query($sql);
-    for ($i = 1; $rtQuery && $row = mysql_fetch_assoc($rtQuery); $i++) {
-        $report[] = $row;
-    }
-    responseJson($report);
-}
-
-function getLovesReport() {
-    $from_date = mysql_real_escape_string($_REQUEST['from_date']);
-
-    if (empty($from_date)) {
-        return;
-    }
-
-    $sql = "SELECT ul.from_id, fu.nickname from_user, ul.to_id, tu.nickname to_user, message, date_sent
-        FROM users_love ul
-        INNER JOIN users fu ON fu.id = ul.from_id
-        INNER JOIN users tu ON tu.id = ul.to_id
-        WHERE date_sent > '" . $from_date . "'";
 
     $report = array();
     $rtQuery = mysql_query($sql);
