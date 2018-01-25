@@ -5,6 +5,8 @@
 //  http://www.lovemachineinc.com
 //
 
+require_once('vendor/autoload.php');
+
 //Joanne added the following line for the journal attachments
 $current_dir = dirname(__FILE__) . '/';
 
@@ -165,14 +167,14 @@ if (!defined("JOURNAL_PICTURE_EMAIL_DOMAIN")) define("JOURNAL_PICTURE_EMAIL_DOMA
 
 //<kordero>
 if(!defined("ADMINS_EMAILS"))
-  define("ADMINS_EMAILS", 
-    "ryan@lovemachineinc.com " . 
-    "garth.johnson@gmail.com " . 
-    "philip@lovemachineinc.com " . 
-    "tj@coffeeandpower.com " . 
-    "danbrown@php.net " . 
-    "heiberger@earthlink.net " . 
-    "fred@lovemachineinc.com " . 
+  define("ADMINS_EMAILS",
+    "ryan@lovemachineinc.com " .
+    "garth.johnson@gmail.com " .
+    "philip@lovemachineinc.com " .
+    "tj@coffeeandpower.com " .
+    "danbrown@php.net " .
+    "heiberger@earthlink.net " .
+    "fred@lovemachineinc.com " .
     "alexi@kostibas.com"
   );
 
@@ -390,7 +392,7 @@ defineOnce('GOOGLE_ANALYTICS_TOKEN', '1/kTlFYUDNtShl_ejOORk1v8fAKhmj3FmIam1i-NTM
 defineOnce('GOOGLE_ANALYTICS_PROFILE_ID', '46390018');
 
 $countryurllist = array(
-    'AF'=>'Afghanistan',                                                        
+    'AF'=>'Afghanistan',
     'AL'=>'Albania',
     'ag'=>'Algeria',
     'Aq'=>'American Samoa',
@@ -1319,5 +1321,4 @@ defineOnce('PAYPAL_ENVIRONMENT', 'sandbox'); // 'sandbox' or 'beta-sandbox' or '
 // hifi,stack-manager,hifi-docs,hifi-website,worklist,data,base8,baseios,DSDNS,love
 defineOnce('PROJECT_LISTING_PRIORITY', '181,231,230,215,99,229,211,217,218,80');
 
-require_once('vendor/autoload.php');
 require_once('lib/Core.php');

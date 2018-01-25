@@ -42,10 +42,10 @@ class Session {
         $this->setDbHandle($link);
     }
     public function getDbHandle(){
-        if($this->dbHandle === null || get_resource_type($this->dbHandle) != "mysql link"){
+        if($this->dbHandle === null || get_class($this->dbHandle) != "mysqli"){
             $this->establishDbConnection();
         }
-        if(get_resource_type($this->dbHandle) != "mysql link"){
+        if(get_class($this->dbHandle) != "mysqli"){
             $this->getDbHandle();
         }
         return $this->dbHandle;

@@ -1,0 +1,59 @@
+---
+- name: deploy dir check
+  stat:
+    path: "/var/www/{{ domain }}"
+  register: deploy_dir
+
+- name: deploy dir present?
+  set_fact:
+    first_deploy: "{{ deploy_dir.stat.exists == false }}"
+
+- name: vagrant dir check
+  stat:
+    path: /vagrant
+  register: vagrant_dir
+
+- name: vagrant dir present?
+  set_fact:
+    vagrant_box: "{{ vagrant_dir.stat.exists == true }}"
+
+- name: "/vagrant -> /var/www/{{ domain }}"
+  file:
+    state: link
+    src: /vagrant
+    path: "/var/www/{{ domain }}"
+  when: first_deploy and vagrant_box
+
+- name: "repo updated with {{ repo.branch }}"
+  git:
+    repo: "{{ repo.url }}"
+    version: "{{ repo.branch }}"
+    dest: "/var/www/{{ domain }}"
+    force: yes
+    key_file: /etc/ssh/deploy_keys/id_rsa
+    accept_hostkey: yes
+  when: vagrant_box == false
+
+- name: deps updated
+  composer:
+    command: update
+    working_dir: "/var/www/{{ domain }}"
+
+- name: phinx configuration
+  template:
+    src: phinx.yml.j2
+    dest: "/var/www/{{ domain }}/phinx.yml"
+
+- name: db migrated
+  shell: vendor/bin/phinx migrate
+  args:
+    chdir: "/var/www/{{ domain }}"
+    executable: /bin/bash
+
+- name: web service owns app dir
+  file:
+    path: "/var/www/{{ domain }}"
+    owner: www-data
+    group: www-data
+    recurse: yes
+  when: vagrant_box == false

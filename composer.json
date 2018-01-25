@@ -5,7 +5,9 @@
         "twilio/twilio-php": "*",
         "michelf/php-markdown": "*",
         "knplabs/github-api": "*",
-        "kriswallsmith/Buzz": "*"
+        "kriswallsmith/Buzz": "*",
+        "robmorgan/phinx": "dev-master",
+        "dshafik/php7-mysql-shim": "dev-master"
     },
     "repositories": [
         {
@@ -26,4 +28,3 @@
     ],
     "minimum-stability": "dev"
 }
-

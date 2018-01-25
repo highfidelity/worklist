@@ -1,6 +1,7 @@
 
 # local install configuration
 /server.local.php
+/phinx.yml
 
 # dependencies & composer.lock
 /vendor

@@ -1,0 +1,67 @@
+---
+
+- name: pkgs installed
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - mysql-client
+    - unzip
+    - apache2
+    - php
+    - libapache2-mod-php
+    - php-curl
+    - php-mysql
+    - php-zip
+    - php-mbstring
+    - libzend-framework-php
+
+- name: ssl dir
+  file: path=/etc/apache2/ssl owner=root mode=0700 state=directory
+
+- name: ssl certs
+  copy:
+    src: ssl/
+    dest: /etc/apache2/ssl
+    owner: root
+    mode: 0700
+
+- name: required modules
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - php7.0
+    - rewrite
+    - ssl
+  notify:
+    - Restart Apache
+
+- shell: ssh-keyscan -H github.com > /etc/ssh/ssh_known_hosts
+  no_log: true
+
+- name: composer ready
+  shell: curl -sS http://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+  register: composerInstalled
+
+- file:
+    path: /usr/local/bin/composer
+    mode: a+x
+    state: file
+  when: composerInstalled.changed
+  no_log: true
+
+- name: "virtualhost {{ domain }}.conf"
+  template:
+    src: vhost.conf.j2
+    dest: "/etc/apache2/sites-available/{{ domain }}.conf"
+  notify:
+    - Restart Apache
+
+- name: "{{ domain }} enabled"
+  command: "a2ensite {{ domain }}"
+  args:
+    creates: /etc/apache2/sites-enabled/{{ domain }}.conf
+  notify:
+    - Restart Apache

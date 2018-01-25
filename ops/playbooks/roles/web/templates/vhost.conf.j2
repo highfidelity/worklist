@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+  ServerAdmin webmaster@{{ domain }}
+  ServerName {{ domain }}
+  ServerAlias www.{{ domain }}
+  ErrorLog ${APACHE_LOG_DIR}/{{ domain }}-error.log
+  CustomLog ${APACHE_LOG_DIR}/{{ domain }}-access.log combined
+  Redirect permanent / https://{{ domain }}/
+</VirtualHost>
+
+<VirtualHost *:443>
+  SSLEngine On
+  SSLCertificateFile /etc/apache2/ssl/ssl.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/ssl.key
+  SSLCACertificateFile /etc/apache2/ssl/ca.crt
+
+  ServerAdmin admin@{{ domain }}
+	ServerName {{ domain }}
+	ServerAlias www.{{ domain }}
+	DocumentRoot /var/www/{{ domain }}
+  ErrorLog ${APACHE_LOG_DIR}/{{ domain }}-ssl-error.log
+  CustomLog ${APACHE_LOG_DIR}/{{ domain }}-ssl-access.log combined
+	<Directory /var/www/{{ domain }}>
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>

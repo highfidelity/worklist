@@ -1,0 +1,82 @@
+---
+- name: check for extra swap file
+  stat: path=/extraswap
+  register: swapfile
+
+- name: extra swap set?
+  set_fact:
+    need_swap: "{{ swapfile.stat.exists == false }}"
+
+- name: extra swap space allocated
+  command: dd if=/dev/zero of=/extraswap bs=1M count=2048
+  when: need_swap == true
+
+- name: extra swap created
+  command: mkswap /extraswap
+  when: need_swap == true
+
+- name: extra swap loaded at boot
+  lineinfile:
+    dest: /etc/fstab
+    regexp: extraswap
+    line: "/extraswap none swap sw 0 0"
+    state: present
+  when: need_swap == true
+
+- name: extra swap up and running
+  command: swapon -a
+  when: need_swap == true
+
+- name: check timezone
+  shell: cat /etc/timezone
+  register: current_zone
+  changed_when: current_zone.stdout != timezone
+
+- name: set timezone
+  copy:
+    content: "{{ timezone }}"
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  when: current_zone.stdout != timezone
+  notify:
+    - update timezone
+
+- name: apt cache updated
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: pkgs installed
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - vim
+
+- name: admins
+  user:
+    name: "{{ item }}"
+    groups: sudo
+    shell: /bin/bash
+  with_items: "{{ admins }}"
+  no_log: true
+
+- name: admins creds
+  authorized_key:
+    user: "{{ item }}"
+    key: "https://github.com/{{ item }}.keys"
+    state: present
+  with_items: "{{ admins }}"
+  no_log: true
+
+- name: painless sudo
+  lineinfile:
+    dest: /etc/sudoers.d/10-sudo-group
+    regexp: 'NOPASSWD:ALL$'
+    line: '%sudo ALL=(ALL) NOPASSWD:ALL'
+    create: yes
+
+- meta: flush_handlers

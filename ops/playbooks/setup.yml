@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: check for python2 presence
+      raw: test -e /usr/bin/python
+      register: python2bin
+      changed_when: False
+      failed_when: False
+
+    - name: python2 installed
+      raw: "apt-get update && apt-get install -y python"
+      when: python2bin.rc != 0
+
+- hosts: all
+  become: yes
+  roles:
+    - common
+
+- hosts: db
+  become: yes
+  roles:
+    - db
+
+- hosts: web
+  become: yes
+  roles:
+    - web
+    - app

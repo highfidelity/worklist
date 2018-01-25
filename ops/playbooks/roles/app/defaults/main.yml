@@ -1,0 +1,12 @@
+---
+domain: worklist.dev
+repo:
+  url: git@github.com:highfidelity-worklist/worklist.git
+  branch: master
+database:
+  port: 3306
+  host: localhost
+  name: worklist
+  creds:
+    user: wl-app
+    pass: unsecur3
