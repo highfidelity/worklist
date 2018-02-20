@@ -22,22 +22,17 @@
                     <div id="user-avatar">
                         <img id="avatar" src="{{& userAvatarUrl}}" title="{{profileUser.getNickname}}'s picture" />
                         <div class="userName" id="userName">{{profileUser.getNickname}}</div>
-                        <div class="profileInfoFavorite" id="profileInfoFavorite">
-                            <div class="{{favoriteClass}}" title="{{favoriteTitle}}">&nbsp;</div>
-                            <span class="profileFavoriteText" data-favorite-count="{{favorite_count}}"></span>
-                        </div>        
-                        {{& profileInfoFavorite}}
                     </div>
                     <div class="row" id="globalinfo">
                         <div class="col-md-6 col-xs-12">
                             <p class="info-label" id="user-location">
                                 Location:<br />
                                 {{#profileUser.getCity}}
-                                    <a class="userInfoLink" href="{{& gMapSearch}}{{profileUser.getCity}}{{countryName}}&z=6"  
+                                    <a class="userInfoLink" href="{{& gMapSearch}}{{profileUser.getCity}}{{countryName}}&z=6"
                                       title="See location on Google Maps">{{profileUser.getCity}}</a>
                                 {{/profileUser.getCity}}
                                 {{#countryCodeUrl}}
-                                    <a class="userInfoLink" href="{{& ciaGovBase}}{{countryCodeUrl}}.html"  
+                                    <a class="userInfoLink" href="{{& ciaGovBase}}{{countryCodeUrl}}.html"
                                       title="{{countryName}}">{{profileUser.getCountry}}</a>
                                 {{/countryCodeUrl}}
                             </p>
@@ -57,33 +52,9 @@
                                 {{/jobs}}
                                 {{^jobs}}0{{/jobs}}
                             </p>
-                            <p class="totals">
-                                <span>Total earned:</span> ${{totalEarnings}}
-                            </p>
-                            <p class="totals">
-                                <span>Last 30 days:</span>
-                                <a href="#" id="latest-earnings">${{latestEarnings}}</a>
-                            </p>
                         </div>
                     </div>
                 </div>
-                <div class='loveTitle title-label-big'>
-                <i class="fa fa-heart"> </i>
-                    Love received
-                        <span id="love">
-                        {{#reqUserId}}{{^ownProfile}}
-                        <a href = "#" data-toggle="modal" data-target="#sendLove">
-                        <input type="submit" title="Send Love" class="send_love" value="Send Love" user="{{profileUser.getNickname}}" />
-                        {{/ownProfile}}{{/reqUserId}}
-                        </a>
-                        </span>
-                </div>
-                <section id="user-loves">
-                    {{> user/loves }}
-                </section>
-                {{#showMoreLoveButton}}
-                    <a href="#" >View more</a>
-                {{/showMoreLoveButton}}
                 <div class='reviewTitle title-label-big'>
                     Reviews
                     {{^ownProfile}}
@@ -130,8 +101,11 @@
                     </span>
                 </div>
 
-                <p class = "profileContactFavorite">Contact info:
+                <p class = "profileContactFavorite">
+                  {{#profileUser.getContactway}}
+                    Contact info:
                     <span id="info-contactway">{{profileUser.getContactway}}</span>
+                  {{/profileUser.getContactway}}
                 </p>
 
                 {{#reqUserId}}{{^ownProfile}}
@@ -150,7 +124,7 @@
                         </form>
                     </div>
                 </p>
-                {{/ownProfile}}{{/reqUserId}} 
+                {{/ownProfile}}{{/reqUserId}}
 
                 <p class = "info-label title-label-medium jobs">Active jobs</p>
 
@@ -179,7 +153,6 @@
                         <thead>
                             <tr>
                                 <th>Job ID & Summary</th>
-                                <th class="cost">Cost</th>
                                 <th class="time">Time</th>
                             </tr>
                         </thead>
@@ -187,7 +160,6 @@
                             {{#completedJobs}}
                             <tr>
                                 <td id="workitem-{{id}}"><a href="./{{id}}">#{{id}} {{summary}}</a></td>
-                                <td>{{#cost}}{{cost}}{{/cost}}{{^cost}}0.00{{/cost}}</td>
                                 <td>{{#days}}{{days}} days{{/days}}{{^days}}1 day{{/days}}</td>
                             </tr>
                             {{/completedJobs}}
@@ -197,7 +169,7 @@
                 <div>
                     <a href="./jobs?query={{profileUser.getNickname}}&status=">
                         View All Jobs by {{profileUser.getNickname}}
-                    </a> 
+                    </a>
                 </div>
             </div><!-- end of right-column -->
         </div>
@@ -339,7 +311,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>                
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h3>Who has worked for Designer</h3>
@@ -357,7 +329,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <h3>Projects worked on by Designer</h3>  
+                    <h3>Projects worked on by Designer</h3>
                     <div class="runnerProjects" >
                         <table class="table table-striped table-runner-projects" id="runner-projects">
                             <thead>
@@ -371,7 +343,7 @@
                                 {{& runnerProjects}}
                             </tbody>
                         </table>
-                    </div>                                                          
+                    </div>
                 </div>
             </div>
         </div>

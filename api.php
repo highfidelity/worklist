@@ -81,9 +81,6 @@ if(validateAction()) {
                 Utils::validateAPIKey();
                 checkRemovableProjects();
                 break;
-            case 'setFavorite':
-                setFavorite();
-                break;
             case 'getBonusHistory':
                 getBonusHistory();
                 break;
@@ -625,58 +622,6 @@ function dump_row_values($row) {
     return $dump;
 }
 
-function setFavorite() {
-    if ( !isset($_REQUEST['favorite_user_id']) ||
-         !isset($_REQUEST['newVal']) ) {
-        echo json_encode(array( 'error' => "Invalid parameters!"));
-    }
-    $userId = Session::uid();
-    if ($userId > 0) {
-        Utils::initUserById($userId);
-        $user = new User();
-        $user->findUserById( $userId );
-
-        $favorite_user_id = (int) $_REQUEST['favorite_user_id'];
-        $newVal = (int) $_REQUEST['newVal'];
-        $users_favorites  = new Users_Favorite();
-        $res = $users_favorites->setMyFavoriteForUser($userId, $favorite_user_id, $newVal);
-        if ($res == "") {
-            // send chat if user has been marked a favorite
-            $favorite_user = new User();
-            $favorite_user->findUserById($favorite_user_id);
-            if ($newVal == 1) {
-
-                $resetUrl = SECURE_SERVER_URL . 'user/' . $favorite_user_id ;
-                $resetUrl = '<a href="' . $resetUrl . '" title="Your profile">' . $resetUrl . '</a>';
-                $data = array();
-                $data['link'] = $resetUrl;
-                $nick = $favorite_user->getNickname();
-                if (! Utils::sendTemplateEmail($favorite_user->getUsername(), 'trusted', $data)) {
-                    error_log("setFavorite: Utils::send_email failed on favorite notification");
-                }
-
-                // get favourite count
-                $count = $users_favorites->getUserFavoriteCount($favorite_user_id);
-                if ($count > 0) {
-                    if ($count == 1) {
-                        $message = "**{$count}** person";
-                    } else {
-                        $message = "**{$count}** people";
-                    }
-                    $journal_message = '@' . $nick . ' is now trusted by ' . $message . '!';
-                    //sending journal notification
-                    Utils::systemNotification(stripslashes($journal_message));
-                }
-            }
-            echo json_encode(array( 'return' => "Trusted saved."));
-        } else {
-            echo json_encode(array( 'error' => $res));
-        }
-    } else {
-        echo json_encode(array( 'error' => "You must be logged in!"));
-    }
-}
-
 function getBonusHistory() {
     checkLogin();
 
@@ -820,7 +765,7 @@ function getUserList() {
     $limit = 30;
     $page = isset($_REQUEST["page"])?intval($_REQUEST["page"]) : 1;
     $letter = isset($_REQUEST["letter"]) ? mysql_real_escape_string(trim($_REQUEST["letter"])) : "";
-    $order = !empty($_REQUEST["order"]) ? mysql_real_escape_string(trim($_REQUEST["order"])) : "earnings30";
+    $order = !empty($_REQUEST["order"]) ? mysql_real_escape_string(trim($_REQUEST["order"])) : "jobs_count";
     $order_dir =  isset($_REQUEST["order_dir"]) ? mysql_real_escape_string(trim($_REQUEST["order_dir"])) : "DESC";
     $active = isset( $_REQUEST['active'] ) && $_REQUEST['active'] == 'TRUE' ? 'TRUE' : 'FALSE';
     $myfavorite = isset( $_REQUEST['myfavorite'] ) && $_REQUEST['myfavorite'] == 'TRUE' ? 'TRUE' : 'FALSE';
@@ -861,32 +806,20 @@ function getUserList() {
     if( $active == 'FALSE' ) {
         $query = "
         SELECT `id`, `nickname`,`added` AS `joined`, `budget`,
-        IFNULL(`creators`.`count`,0) + IFNULL(`mechanics`.`count`,0) AS `jobs_count`,
-        IFNULL(`earnings`.`sum`,0) AS `earnings`,
-        IFNULL(`earnings30`.`sum`,0) AS `earnings30`,
-        IFNULL(`rewarder`.`sum`,0)AS `rewarder`
+        IFNULL(`creators`.`count`,0) + IFNULL(`mechanics`.`count`,0) AS `jobs_count`
         FROM `".USERS."`
         LEFT JOIN (SELECT `mechanic_id`, COUNT(`mechanic_id`) AS `count` FROM `" . WORKLIST . "` WHERE (`status` IN ('In Progress', 'QA Ready', 'Review', 'Merged', 'Done')) GROUP BY `mechanic_id`) AS `mechanics` ON `".USERS."`.`id` = `mechanics`.`mechanic_id`
         LEFT JOIN (SELECT `creator_id`, COUNT(`creator_id`) AS `count` FROM `" . WORKLIST . "` WHERE (`status` IN ('In Progress', 'QA Ready', 'Review', 'Merged', 'Done')) AND `creator_id` != `mechanic_id` GROUP BY `creator_id`) AS `creators` ON `".USERS."`.`id` = `creators`.`creator_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE $sfilter AND `paid` = 1 AND `withdrawn`=0 AND (`rewarder`=1 OR `bonus`=1) GROUP BY `user_id`) AS `rewarder` ON `".USERS."`.`id` = `rewarder`.`user_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE $sfilter AND `withdrawn`=0 AND `expense`=0 AND `paid` = 1 AND `paid_date` IS NOT NULL GROUP BY `user_id`) AS `earnings` ON `".USERS."`.`id` = `earnings`.`user_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE `withdrawn`=0 AND `paid` = 1 AND `paid_date` IS NOT NULL AND `paid_date` > DATE_SUB(NOW(), INTERVAL 30 DAY) AND `expense`=0 GROUP BY `user_id`) AS `earnings30` ON `".USERS."`.`id` = `earnings30`.`user_id`
         LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE ($sfilter AND `withdrawn`=0 AND `paid` = 1) AND `expense`=1 GROUP BY `user_id`) AS `expenses_billed` ON `".USERS."`.`id` = `expenses_billed`.`user_id`
         WHERE `nickname` REGEXP '^$letter' AND `is_active` = 1 $myfavorite_cond ORDER BY `$order` $order_dir LIMIT " . ($page-1)*$limit . ",$limit";
     }    else if( $active == 'TRUE' )    {
         $query = "
         SELECT `id`, `nickname`,`added` AS `joined`, `budget`,
-        IFNULL(`creators`.`count`,0) + IFNULL(`mechanics`.`count`,0) AS `jobs_count`,
-        IFNULL(`earnings`.`sum`,0) AS `earnings`,
-        IFNULL(`earnings30`.`sum`,0) AS `earnings30`,
-        IFNULL(`rewarder`.`sum`,0)AS `rewarder`
+        IFNULL(`creators`.`count`,0) + IFNULL(`mechanics`.`count`,0) AS `jobs_count`
         FROM `".USERS."`
         LEFT JOIN (SELECT `user_id`,MAX(`date`) AS `date` FROM `".FEES."` WHERE `paid` = 1 AND `amount` != 0 AND `withdrawn` = 0 AND `expense` = 0 GROUP BY `user_id`) AS `dates` ON `".USERS."`.id = `dates`.user_id
         LEFT JOIN (SELECT `mechanic_id`, COUNT(`mechanic_id`) AS `count` FROM `" . WORKLIST . "` WHERE (`status` IN ('In Progress', 'QA Ready', 'Review', 'Merged', 'Done')) GROUP BY `mechanic_id`) AS `mechanics` ON `".USERS."`.`id` = `mechanics`.`mechanic_id`
         LEFT JOIN (SELECT `creator_id`, COUNT(`creator_id`) AS `count` FROM `" . WORKLIST . "` WHERE (`status` IN ('In Progress', 'QA Ready', 'Review', 'Merged', 'Done')) AND `creator_id` != `mechanic_id` GROUP BY `creator_id`) AS `creators` ON `".USERS."`.`id` = `creators`.`creator_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE $sfilter AND `paid` = 1 AND `withdrawn`=0 AND (`rewarder`=1 OR `bonus`= 1) GROUP BY `user_id`) AS `rewarder` ON `".USERS."`.`id` = `rewarder`.`user_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE $sfilter AND `withdrawn`=0 AND `expense`=0 AND `paid` = 1 AND `paid_date` IS NOT NULL GROUP BY `user_id`) AS `earnings` ON `".USERS."`.`id` = `earnings`.`user_id`
-        LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE `withdrawn`=0 AND `paid` = 1 AND `paid_date` IS NOT NULL AND `paid_date` > DATE_SUB(NOW(), INTERVAL 30 DAY) AND `expense`=0 GROUP BY `user_id`) AS `earnings30` ON `".USERS."`.`id` = `earnings30`.`user_id`
         LEFT JOIN (SELECT `user_id`, SUM(amount) AS `sum` FROM `".FEES."` WHERE ($sfilter AND `withdrawn`=0 AND `paid` = 1) AND `expense`=1 GROUP BY `user_id`) AS `expenses_billed` ON `".USERS."`.`id` = `expenses_billed`.`user_id`
         WHERE `date` > DATE_SUB(NOW(), INTERVAL $sfilter DAY) AND `nickname` REGEXP '^$letter' AND `is_active` = 1 $myfavorite_cond ORDER BY `$order` $order_dir LIMIT " . ($page-1)*$limit . ",$limit";
     }

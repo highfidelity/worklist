@@ -567,55 +567,6 @@ class UserController extends Controller {
         echo json_encode($user->budgetHistory($giver_id, $page, $itemsPerPage));
     }
 
-    public function loves($id, $page = 1, $itemsPerPage = 5) {
-        $this->view = null;
-        $user = User::find($id);
-        $page = (is_numeric($page) ? $page : 1);
-        $itemsPerPage = (is_numeric($itemsPerPage) ? $itemsPerPage : 5);
-        echo json_encode($user->loves($page, $itemsPerPage));
-    }
-
-    public function sendLove($to) {
-        $this->view = null;
-        try {
-            if (!Session::uid()) {
-                throw new Exception('Must be logged in to Send Love!');
-            }
-            $from = User::find(Session::uid());
-
-            $to = User::find($to);
-            if (!$to->getId()) {
-                throw new Exception('Not a valid user');
-            }
-
-            $love_message = $_POST['love_message'];
-            if (empty($love_message)) {
-                throw new Exception('Message field is mandatory');
-            }
-
-            if (!$from->sendLove($to, $love_message)) {
-                throw new Exception('Could not send love');
-            }
-
-            $from_nickname = $from->getNickname();
-            $message = $_POST['love_message'];
-            Utils::sendTemplateEmail($to->getUsername(), 'love-received', array(
-                'from_nickname'=> $from_nickname,
-                'message' => $message
-            ));
-
-            echo json_encode(array(
-                'success' => true,
-                'message' => 'Love sent'
-            ));
-        } catch (Exception $e) {
-            echo json_encode(array(
-                'success' => false,
-                'message' => $e->getMessage()
-            ));
-        }
-    }
-
     public function isUSCitizen($id) {
         $this->view = null;
         try {

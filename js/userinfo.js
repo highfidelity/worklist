@@ -9,19 +9,6 @@ var UserInfo = {
         $('#manager').val(userInfo.manager);
         $('#referrer').val(userInfo.referred_by);
 
-        WLFavorites.init( "profileInfoFavorite",userInfo.user_id, userInfo.nickName );
-        // setup the variables needed to call the getFavoriteText function
-        var favCount = $('.profileInfoFavorite span').attr('data-favorite-count');
-        var isMyFav = false;
-        if ($('.profileInfoFavorite .favorite_user').hasClass('myfavorite')) {
-            isMyFav = true;
-        }
-        
-        // set the favText with the getFavoriteText function
-        var favText = WLFavorites.getFavoriteText(favCount, isMyFav, 'Trusted ');
-        
-        $('.profileInfoFavorite span').html(favText);
-
         // master function to handle change in dropdowns
         $('select', '#admin').change(function() {
             var value = $(this).val();
@@ -99,7 +86,7 @@ var UserInfo = {
                     // if (json
                 }
             });
-        
+
         });
 
 
@@ -131,7 +118,7 @@ var UserInfo = {
         });
 
         $('#ping-msg').autogrow(80, 150);
-       
+
         $('#send-ping-btn').click(function() {
             $('#send-ping-btn').attr("disabled", "disabled");
             var msg = $('#ping-msg').val();
@@ -140,9 +127,9 @@ var UserInfo = {
             var cc = $('#copy-me').is(':checked') ? 1 : 0;
             var data = {
                 'action': 'pingTask',
-                'userid' : userInfo.user_id, 
-                'msg' : msg, 
-                'journal' : journal, 
+                'userid' : userInfo.user_id,
+                'msg' : msg,
+                'journal' : journal,
                 'cc' : cc
             };
             $.ajax({
@@ -155,7 +142,7 @@ var UserInfo = {
                         alert("Ping failed:" + json.error);
                     } else {
                         var success_msg = "<p><strong>Your message has been sent.</strong></p>";
-                        
+
                         Utils.emptyModal({
                             content: success_msg,
                             buttons: [
@@ -169,14 +156,14 @@ var UserInfo = {
                     }
                     $('#ping-msg').val("");
                     $('#send-ping-btn').removeAttr("disabled");
-                }, 
+                },
                 error: function() {
                     $('#send-ping-btn').removeAttr("disabled");
                 }
             });
             return false;
         });
-        
+
         $('.reviewAddLink').click(UserInfo.reviewDialog);
 
         $('#give').click(function(){
@@ -263,7 +250,7 @@ var UserInfo = {
             });
             return false;
         });
-       
+
         $('#budgetHistory').click(function(){
             Budget.showBudgetHistory(1, userInfo.user_id);
             return false;
@@ -271,19 +258,19 @@ var UserInfo = {
 
         $('#create_sandbox').click(function(){
             var projects = '';
-            
+
             // get project ids that are newly checked - setup to allow adding
             // projects to sandbox that is already created, sandbox bash
             // script needs updating to support this
             $('#sandboxForm input[type=checkbox]:checked').not(':disabled').each(function() {
                 if ($(this).prop('checked') && !$(this).prop('disabled')) {
                     projects += $(this).next('.repo').val() + ',';
-                } 
+                }
             });
-            
+
             if (projects != '') {
                 // remove the last comma
-                projects = projects.slice(0, -1)        
+                projects = projects.slice(0, -1)
                 $.ajax({
                     type: "POST",
                     url: './user/' + userInfo.user_id,
@@ -305,13 +292,13 @@ var UserInfo = {
             } else {
                 alert('You did not choose any projects to check out.');
             }
-            
+
             return false;
         });
 
         $('#budget-source-combo-bonus').chosen({width: 'auto'});
         var bonus_amount;
-       
+
         $('#pay_bonus').click(function(e) {
             Utils.modal('paybonus', {
                 open: function(modal) {
@@ -394,7 +381,7 @@ var UserInfo = {
             clearStyle: true,
             collapsible: true,
             active: true,
-            create: function(event, ui) { 
+            create: function(event, ui) {
                 var workersIntervalId = setInterval(function() {
                     if($("#runner-workers tr").length) {
                         $('#runner-workers').paginate(limitPerPage, 500);
@@ -408,8 +395,8 @@ var UserInfo = {
                     }
                 }, 2000);
             }
-        });        
-        
+        });
+
         if (! is_payer) {
             $('#ispaypalverified').prop('disabled', true);
             $('#isw9approved').prop('disabled', true);
@@ -471,7 +458,6 @@ var UserInfo = {
             $('#profile-nav a[href="#' + tab + '"]').click();
         }
 
-        $('#user-loves + a').click(UserInfo.displayAllLove);
     },
 
     setW9Status: function(status, reason, fAfter) {
@@ -492,7 +478,7 @@ var UserInfo = {
 
     appendPagination: function(page, cPages, table) {
         var cspan = '4'
-        var pagination = '<tr bgcolor="#FFFFFF" class="row-' + table + '-live ' + table + '-pagination-row" >' + 
+        var pagination = '<tr bgcolor="#FFFFFF" class="row-' + table + '-live ' + table + '-pagination-row" >' +
                          '<td colspan="' + cspan + '" style="text-align:center;">';
         if (page > 1) {
             pagination += '<a href="#" onclick="UserInfo.getBonusHistory(' + (page - 1) + ')" title="' +
@@ -502,7 +488,7 @@ var UserInfo = {
             if (i == page) {
                 pagination += i + " &nbsp;";
             } else {
-                pagination += '<a href="#" onclick="UserInfo.getBonusHistory(' + i + ')" title="' + i + 
+                pagination += '<a href="#" onclick="UserInfo.getBonusHistory(' + i + ')" title="' + i +
                               '">' + i + '</a> &nbsp;';
             }
         }
@@ -513,11 +499,11 @@ var UserInfo = {
         pagination += '</td></tr>';
         $('.table-' + table).append(pagination);
     },
-    
+
     appendRow: function(json, table) {
         var pre = '', post = '';
         var row;
-        
+
         row = '<tr>';
 
         row += '<td>' + pre + json[0] + post + '</td>'; // Date
@@ -526,7 +512,7 @@ var UserInfo = {
         row += '<td>' + pre + json[3] + post + '</td>'; // Description
 
         row += '</tr>';
-        
+
         $('.table-' + table).append(row);
     },
 
@@ -536,16 +522,16 @@ var UserInfo = {
             type: 'GET',
             url: 'api.php',
             data: {
-                action: 'getBonusHistory', 
-                uid: user_id, 
-                rid: UserInfo.user_id, 
+                action: 'getBonusHistory',
+                uid: user_id,
+                rid: UserInfo.user_id,
                 page: page
             },
             dataType: 'json',
             success: function(json) {
                 var footer = '<tr bgcolor="#FFFFFF"><td colspan="4" style="text-align:center;">No bonus history yet</tr>';
                 $('.bonus-history').find("tr:gt(0)").remove();
-                
+
                 for (var i = 1; i < json.length; i++) {
                     UserInfo.appendRow(json[i], 'bonus-history');
                 }
@@ -601,25 +587,6 @@ var UserInfo = {
                             });
                             return false;
                         });
-                    }
-                });
-            }
-        });
-        return false;
-    },
-
-    displayAllLove: function() {
-        var itemsPerPage = 5;
-        var nextPage = $('#user-loves cite').length / itemsPerPage + 1;
-        $.ajax({
-            type: 'GET',
-            url: './user/loves/' + userInfo.nickName + '/' + nextPage + '/' + itemsPerPage,
-            dataType: 'json',
-            success: function(json) {
-                Utils.parseMustache('partials/user/loves', json, function(parsed) {
-                    $('#user-loves').append(parsed);
-                    if (json.page == json.pages) {
-                        $('#user-loves + a').remove();
                     }
                 });
             }

@@ -1958,21 +1958,15 @@ class User {
 
     public function completedJobsWithStats() {
         $sql = "
-            SELECT w.id, w.summary, f.cost,
+            SELECT w.id, w.summary,
             DATEDIFF ((SELECT MAX(change_date) FROM " .STATUS_LOG. " WHERE `status` = 'Done'
             AND `worklist_id` = w.id), b.date) days
             FROM " . WORKLIST . " w
             LEFT JOIN " . FEES . " b ON b.worklist_id = w.id
-            LEFT JOIN (
-                SELECT SUM(amount) cost, worklist_id
-                FROM " . FEES . "
-                WHERE withdrawn = 0
-                GROUP BY worklist_id
-            ) f ON f.worklist_id = w.id
             WHERE
-                b.user_id = " . $this->getId() . " AND
+                b.user_id = " . $this->getId() . " AND (NOT b.`withdrawn`) AND
                 w.`status` = 'Done'
-            GROUP BY w.`id`
+            GROUP BY w.`id`, b.`date`
             ORDER BY w.`id` DESC
             LIMIT 5";
 

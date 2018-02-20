@@ -179,7 +179,7 @@ body > .container-fluid h3 {
     font-size: 14px;
     margin-top: 21px;
     line-height: 17px;
-    padding-bottom: 12px;    
+    padding-bottom: 12px;
 }
 
 #globalinfo > div > .info-label:first-child a,
@@ -265,84 +265,6 @@ p.bottom {
 
 #loading{
     top: 6em;
-}
-
-#love input {
-    background: none;
-    padding-left: 160px;
-    padding-right: 0;
-    width: auto;
-    font-size: 12px !important;
-    font-weight: normal !important;
-    color: #88AAB0 !important;
-    border: 0 none;
-    position: relative;
-    top: 2px;
-}
-
-.loveTitle {
-    border-bottom: 2px solid #E1E8EA;
-    padding-bottom: 6px;
-    width: 415px !important;
-}
-
-.loveTitle a {
-    padding-left: 26px;
-}
-
-#user-loves {
-    padding: .5em 0 .5em;
-    color: #6E6E6E;
-}
-
-#user-loves > * {
-    display: inline;
-    line-height: 110%;
-    font-size: 1em;
-}
-
-#user-loves cite:before {
-    content: '\201c';
-}
-
-#user-loves cite:after {
-    content: '\201d';
-}
-
-#user-loves h6 {
-    margin-top: .4em;
-    margin-bottom: .2em;
-}
-
-#user-loves h6,
-#user-loves h6 a {
-    color: #8B8B8B;
-}
-
-#user-loves h6 span {
-    color: #999;
-}
-
-#user-loves h6 a {
-    text-decoration: underline;
-}
-
-#user-loves h6:after {
-    content: '';
-    display: block;
-    padding-bottom: 10px;
-}
-
-#user-loves h6:before {
-    padding-right: 60px;
-}
-#user-loves + a {
-    font-size: 12px;
-    font-weight: normal;
-    top: 10px;
-    padding-bottom: 20px;
-    position: relative;
-    color: #8B8B8B;
 }
 
 .reviewTitle {
@@ -477,14 +399,14 @@ p.bottom {
 .userName {
     color: #007F7C;
     font-size: 28px;
-    line-height: 60px;
+    line-height: 30px;
     vertical-align: top;
     padding: 6px 11px;
     width: 293px;
     font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: bold;
     display: inline-block;
-    margin-bottom: 45px;
+    margin-top: 58px;
     white-space: nowrap;
 }
 
@@ -511,39 +433,13 @@ p.bottom {
     line-height: 22px;
     vertical-align: top;
     padding: 6px 0;
-    border-bottom: 2px solid #E1E8EA;
-    border-top: 2px solid #e1e8ea;
     width: 100%;
     font-weight: bold;
+    margin-top: 69px;
 }
 
 .profileContactFavorite span{
     font-weight: normal;
-}
-
-.profileContactFavorite,
-.profileInfoFavorite {
-    margin-top: 61px;
-}
-
-.profileInfoFavorite {
-    color: #666;
-    font-size: 12px;
-    line-height: 22px;
-    vertical-align: top;
-    padding: 6px 11px;
-    border-bottom: 2px solid #E1E8EA;
-    border-top: 2px solid #e1e8ea;
-    width: 310px;
-    font-weight: bold;
-    display: inline-block;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-}
-
-.profileInfoFavorite>img {
-    vertical-align: middle;
 }
 
 .favorite_user,
@@ -729,7 +625,7 @@ form#roles ul li {
         margin: 0;
     }
 
-    #jobs-table tr > td:first-child, #loves-table tr > td:first-child  {
+    #jobs-table tr > td:first-child {
         max-width: 125px;
     }
 

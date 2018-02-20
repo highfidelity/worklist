@@ -8,7 +8,6 @@ class JobView extends View {
 
     public $stylesheets = array(
         'css/legacy/workitem.css',
-        'css/favorites.css',
         'css/entries.css',
         'css/job.css'
    );
@@ -25,7 +24,6 @@ class JobView extends View {
         'js/datepicker.js',
         'js/timepicker.js',
         'js/entries.js',
-        'js/favorites.js',
         'js/github.js',
         'js/job.js'
     );
@@ -101,11 +99,11 @@ class JobView extends View {
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
         return $this->currentUser['id'] && (
-            (   !$this->workitem->getIsRelRunner() 
-                || ($user->getIs_admin() == 1 && $is_runner) 
+            (   !$this->workitem->getIsRelRunner()
+                || ($user->getIs_admin() == 1 && $is_runner)
                 || ($worklist['mechanic_id'] == $this->currentUser['id']) &&
                 $worklist['status'] != 'Done'
-            ) 
+            )
           || $workitem->getIsRelRunner()
           || ($worklist['creator_id']== $this->currentUser['user_id'] && $worklist['status'] != 'Done')
         );
@@ -127,7 +125,7 @@ class JobView extends View {
           && $worklist['status'] != 'Done') {
             //mechanics
             $statusList = $statusListMechanic;
-        } else if ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) { 
+        } else if ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) {
             //runners and admins
             $statusList = $statusListRunner;
 
@@ -171,7 +169,7 @@ class JobView extends View {
         $worklist = $this->worklist;
         $ret = '';
         if ($worklist['runner_nickname'] != 'Not funded' && $worklist['runner_nickname'] != '') {
-            $ret .= 
+            $ret .=
                 '<span class="job-info-heading">' .
                 'Designer:</span>' .
                 '<a href="./user/' . $worklist['runner_id'] . '" >' . $worklist['runner_nickname'] . '</a>';
@@ -197,10 +195,10 @@ class JobView extends View {
             $mech = '<span class="job-info-heading">Developer:</span><span id="job-info-not-assigned">Not assigned</span>';
         } else {
             $tooltip = isset($_SESSION['userid']) ? "Ping Developer" : "Log in to Ping Developer";
-            $mech = 
+            $mech =
                 '<span  class="job-info-heading" title="' . $tooltip . '" >' .
                   'Developer:' .
-                '</span>' . 
+                '</span>' .
                 '<a id="ping-btn" href="./user/' . $worklist['mechanic_id'] . '" >' . $mech . '</a>';
         }
         return $mech;
@@ -213,9 +211,9 @@ class JobView extends View {
         $is_runner = $this->currentUser['is_runner'];
 
        return (
-             (($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) && $worklist['status']!='Done') 
+             (($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner)) && $worklist['status']!='Done')
           || (
-                 $worklist['creator_id'] == $this->currentUser['id']  
+                 $worklist['creator_id'] == $this->currentUser['id']
               && ($worklist['status']=='Suggestion') && is_null($worklist['runner_id'])
             )
         );
@@ -248,7 +246,7 @@ class JobView extends View {
                 $ret .= '<option value="' . $status . '" ' . ($status == $worklist['status'] ? ' selected="selected"' : '') . '>' .  $status . '</option>';
             }
             $ret .= '</select>';
-        } else { 
+        } else {
             $ret .= $worklist['status'] . ' <input type="hidden" id="status" name="status" value="' . $worklist['status'] . '" />';
         }
         return $ret;
@@ -278,7 +276,7 @@ class JobView extends View {
         $worklist = $this->worklist;
         $user = $this->user;
         return (
-            $user->isRunnerOfWorkitem($workitem) 
+            $user->isRunnerOfWorkitem($workitem)
           || $_SESSION['userid'] == $worklist['budget_giver_id']
           || strpos(BUDGET_AUTHORIZED_USERS, "," . $_SESSION['userid'] . ",") !== false
         );
@@ -323,7 +321,7 @@ class JobView extends View {
         $is_project_founder = $this->read('is_project_founder');
         return (
              ($worklist['status'] == 'QA Ready' || $worklist['status'] == 'Review')
-          && $worklist['sandbox'] != 'N/A' 
+          && $worklist['sandbox'] != 'N/A'
           || ($worklist['status'] == 'In Progress' && ($user->isRunnerOfWorkitem($workitem) || $is_project_founder || $user->getId() == $worklist['mechanic_id']))
         );
     }
@@ -332,7 +330,7 @@ class JobView extends View {
         $is_project_runner = $this->read('is_project_runner');
         $worklist = $this->worklist;
         return (
-             ($is_project_runner || $worklist['creator_id'] == $this->currentUser['id'] || ($this->currentUser['is_admin'] && $this->currentUser['is_runner'])) 
+             ($is_project_runner || $worklist['creator_id'] == $this->currentUser['id'] || ($this->currentUser['is_admin'] && $this->currentUser['is_runner']))
           && ($worklist['status'] != 'Done')
         );
     }
@@ -362,7 +360,7 @@ class JobView extends View {
         } else {
             return array_reverse($this->read('comments'), true);
         }
-        
+
     }
 
     public function isDescOrder() {
@@ -390,12 +388,12 @@ class JobView extends View {
                 && $this->read('userHasCodeReviewRights')
               )
           && (
-                 $worklist['status'] == 'Review' 
+                 $worklist['status'] == 'Review'
               && (! $workitem->getCRCompleted())
               && (
-                     (! $workitem->getCRStarted()) 
-                  || $this->currentUser['id'] == $workitem->getCReviewerId() 
-                  || $workitem->getIsRelRunner() 
+                     (! $workitem->getCRStarted())
+                  || $this->currentUser['id'] == $workitem->getCReviewerId()
+                  || $workitem->getIsRelRunner()
                   || ($user->getIs_admin() == 1 && $is_runner)
                 )
             )
@@ -406,11 +404,11 @@ class JobView extends View {
         $workitem = $this->workitem;
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
-        return 
+        return
              $workitem->getCRStarted()
           && (
-                 $this->currentUser['id'] == $workitem->getCReviewerId() 
-              || $workitem->getIsRelRunner() 
+                 $this->currentUser['id'] == $workitem->getCReviewerId()
+              || $workitem->getIsRelRunner()
               || ($user->getIs_admin() == 1 && $is_runner)
             )
           && !$workitem->getCRCompleted();
@@ -427,7 +425,7 @@ class JobView extends View {
 
     public function canBid() {
         $worklist = $this->worklist;
-        return $worklist['status'] == 'Bidding' 
+        return $worklist['status'] == 'Bidding'
           || ($worklist['status'] == 'Suggestion' && $worklist['creator_id'] == $this->currentUser['id']);
     }
 
@@ -441,9 +439,9 @@ class JobView extends View {
         $user = $this->user;
         $is_runner = $this->currentUser['is_runner'];
         return (
-             (!empty($bids)) 
-          && ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner) || $this->currentUser['id'] == $workitem->getRunnerId()) 
-          && count($bids) >1 
+             (!empty($bids))
+          && ($workitem->getIsRelRunner() || ($user->getIs_admin() == 1 && $is_runner) || $this->currentUser['id'] == $workitem->getRunnerId())
+          && count($bids) >1
           && !$workitem->hasAcceptedBids()
           && ((($workitem->getStatus()) == "Bidding"))
         );
@@ -498,7 +496,7 @@ class JobView extends View {
             $notes = addcslashes(preg_replace("/\r?\n/", "<br />", $bid['notes']),"\\\'\"&\n\r<>");
 
             if ($canSeeBid) {
-                $ret .= 
+                $ret .=
                     "<script type='data'>".
                         "{id: {$bid['id']}, " .
                         "nickname: '{$bid['nickname']}', " .
@@ -513,10 +511,10 @@ class JobView extends View {
                         "notes: '" .  str_replace(array('\n\r','\r\n','\n','\r'), '<br/>', $notes) . "'}" .
                     "</script>";
             }
-            $ret .= 
+            $ret .=
                  '<td>'
                 . (
-                    $canSeeBid 
+                    $canSeeBid
                       ? '<a href="./user/' . $bid['bidder_id'] . '" bidderId="' . $bid['bidder_id'] . '">' . $bid['nickname'] . '</a>'
                       : $bid['nickname']
                   )
@@ -541,15 +539,15 @@ class JobView extends View {
         $workitem = $this->workitem;
         $worklist = $this->worklist;
         $user = $this->user;
- 
+
         $feeTotal = 0;
         $ret = '';
-        
+
         foreach($fees as $fee) {
             $paid = (bool) $fee['paid'];
             $feeTotal += (float) $fee['amount'];
             $date = explode("/", $fee['date']);
-            $ret .= 
+            $ret .=
                 '<tr class="row-feelist-live">' .
                     '<script type="data">' .
                         "{id: {$fee['id']}, " .
@@ -565,7 +563,7 @@ class JobView extends View {
                         '</a>' .
                     '</td>' .
                     '<td class="fee">' .
-                        '$' . $fee['amount'] . 
+                        '$' . $fee['amount'] .
                     '</td>' .
                     '<td class="pre fee-description what">&nbsp;</td>' .
                     '<td class="when">' .
@@ -586,11 +584,11 @@ class JobView extends View {
                                  $worklist['status'] != 'Done'
                               && (
                                     (
-                                         $workitem->getIsRelRunner() 
+                                         $workitem->getIsRelRunner()
                                       || ($user->getIs_admin() == 1 && $this->currentUser['is_runner'])
-                                      || $this->currentUser['id'] == $workitem->getRunnerId() 
+                                      || $this->currentUser['id'] == $workitem->getRunnerId()
                                       || $this->currentUser['id'] == $fee['user_id']
-                                    ) 
+                                    )
                                   && ($this->currentUser['id'] && !$paid)
                                 )
                             )
@@ -615,7 +613,7 @@ class JobView extends View {
                             '<h5>Job Total :</h5>' .
                             '<span class="data">$ ' . number_format($feeTotal, 2)  . '</span>' .
                     '</td>' .
-                '</tr>';            
+                '</tr>';
         } else {
             $ret = '<tr><td colspan="5">No fees yet.</td></tr>';
         }
@@ -656,10 +654,10 @@ class JobView extends View {
     public function showWithdrawOrDeclineButtons() {
         $worklist = $this->worklist;
         return (int) (
-             $worklist['status'] != 'Done' 
+             $worklist['status'] != 'Done'
           && $worklist['status'] != 'In Progress'
           && $worklist['status'] != 'QA Ready'
-          && $worklist['status'] != 'Review' 
+          && $worklist['status'] != 'Review'
           && $worklist['status'] != 'Merged'
         );
     }
@@ -718,12 +716,12 @@ class JobView extends View {
     }
 
     public function taskEntries() {
-        // we don't need comments from status entries cause 
+        // we don't need comments from status entries cause
         // we are mixing them with real comments
         $worklist_entries = self::removeCommentsEntries($this->read('entries'));
 
         // let's group reply comments so they get rendered toghether, no matter their
-        // date according to the rest of the entries of other groups (only the first 
+        // date according to the rest of the entries of other groups (only the first
         // level comment date is taken for orfering)
         $comments = self::groupComments($this->read('comments'));
 
@@ -741,7 +739,7 @@ class JobView extends View {
                 $date = strtotime($entry->date);
                 $content = self::formatEntry($entry);
 
-                $ret .= 
+                $ret .=
                       '<li entryid="' . $id . '" date="' . $date  . '" type="' . $type .  '">'
                     .     '<h4>' . Utils::relativeTime($date - $now) . '</h4>'
                     .     $content
@@ -799,7 +797,7 @@ class JobView extends View {
                     $ret[] = $currentGroup;
                 }
                 $currentGroup = array(
-                    'date' => $comment['comment']->getDate(), 
+                    'date' => $comment['comment']->getDate(),
                     'content' => array()
                 );
             }

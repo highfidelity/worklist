@@ -1,5 +1,5 @@
 var current_letter = 'all';
-var current_sortkey = 'earnings30';
+var current_sortkey = 'jobs_count';
 var current_order = false;
 var sfilter = '30'; // Default value for the filter
 var show_actives = "FALSE";
@@ -224,9 +224,6 @@ function AppendUserRow(json, odd) {
     row += '<td class="age">'+ json.joined + '</td>';
     row += '<td class="jobs money">' + json.jobs_count + '</td>';
     row += '<td class="money">' + json.budget + '</td>';
-    row += '<td class="money">$' +addCommas(json.earnings.toFixed(2)) + '</td>';
-    row += '<td class="money">$' + addCommas(json.earnings30) + '</td>';
-    row += '<td class="money">(' + (Math.round((parseFloat(json.rewarder) / (parseFloat(json.earnings) + 0.000001)) * 100*100)/100)+ '%) $' + addCommas(json.rewarder) +  '</td>';
     $('#table-userlist tbody').append(row);
 }
 
@@ -243,11 +240,11 @@ function addCommas(nStr) {
 }
 
 function outputPagination(page, cPages) {
-    var previousLink = page > 1 
-            ? '<li><a href="#?page=' + (page - 1) + '">Previous</a></li>' 
+    var previousLink = page > 1
+            ? '<li><a href="#?page=' + (page - 1) + '">Previous</a></li>'
             : '<li>Previous</li> ',
-        nextLink = page < cPages 
-            ? '<li><a href="#?page=' + (page + 1) + '" class = "ln-last">Next</a></li>' 
+        nextLink = page < cPages
+            ? '<li><a href="#?page=' + (page + 1) + '" class = "ln-last">Next</a></li>'
             : '<li>Next</li>';
     var pagination = previousLink;
     var fromPage = 1;
