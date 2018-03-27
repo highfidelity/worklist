@@ -58,7 +58,6 @@ if (!defined('APP_NAME'))       define('APP_NAME','Worklist');
 if (!defined('APP_LOCATION'))   define('APP_LOCATION',substr($_SERVER['SCRIPT_NAME'], 1, strrpos($_SERVER['SCRIPT_NAME'], '/')));
 if (!defined('APP_BASE'))       define('APP_BASE',substr(APP_LOCATION, 0, strrpos(APP_LOCATION, '/', -2)));
 if (!defined('APP_PATH'))       define('APP_PATH', realpath(dirname(__FILE__)));
-if (!defined('UPLOAD_PATH'))    define('UPLOAD_PATH', realpath(APP_PATH . '/uploads'));
 if (!defined('LIB_PATH'))       define('LIB_PATH', realpath(APP_PATH . '/lib'));
 if (!defined('CLASSES_PATH'))   define('CLASSES_PATH', realpath(LIB_PATH . '/classes'));
 
@@ -1309,6 +1308,7 @@ defineOnce('VIEWS_DIR', dirname(__FILE__) . '/views');
 defineOnce('CONTROLLERS_DIR', dirname(__FILE__) . '/controllers');
 defineOnce('MUSTACHE_DIR', VIEWS_DIR . '/mustache');
 defineOnce('TEMP_DIR', dirname(__FILE__) . '/tmp');
+defineOnce('VIRUS_SCAN_DIR', TEMP_DIR . '/uploads');
 defineOnce('CACHE_DIR', TEMP_DIR . '/cache');
 
 defineOnce('DEFAULT_CONTROLLER_NAME', 'Home');

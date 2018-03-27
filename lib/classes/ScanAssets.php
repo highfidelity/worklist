@@ -102,7 +102,7 @@ class ScanAssets {
         $file_name  = pathinfo(parse_url($row['url'],PHP_URL_PATH),PATHINFO_BASENAME);
 
         // Get the full path and prepare it for the command line.
-        $real_path = UPLOAD_PATH . '/' . $file_name;
+        $real_path = VIRUS_SCAN_DIR . '/' . $file_name;
         $safe_path = escapeshellarg($real_path);
         // Reset the values.
         $return = -1;
@@ -113,7 +113,6 @@ class ScanAssets {
         if (!empty($safe_path) && file_exists($real_path) && filesize($real_path) > 0 ) {
             // Execute the command.
             exec ($cmd, $out, $return);
-
             if ($return == 0) { //if clean update db
                 $sql = 'UPDATE `' . FILES . '` SET is_scanned = 1, scan_result = 0 WHERE `id` = ' . $id;
                 $notify = '';

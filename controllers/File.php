@@ -52,7 +52,10 @@ class FileController extends JsonController {
                 $ext = end(explode(".", $name));
                 $fileName = File::uniqueFilename($ext);
             }
-            $path = UPLOAD_PATH . '/' . $fileName;
+            if (!is_dir(VIRUS_SCAN_DIR)) {
+                mkdir(VIRUS_SCAN_DIR, 0750);
+            }
+            $path = VIRUS_SCAN_DIR . '/' . $fileName;
 
             $dest = fopen($path, 'w');
             while (!feof($source)) {

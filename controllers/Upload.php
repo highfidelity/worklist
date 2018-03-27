@@ -4,10 +4,7 @@ class UploadController extends Controller {
     public $view = null;
 
     function run($filename) {
-        $path = UPLOAD_PATH . DIRECTORY_SEPARATOR . $filename;
-        if (!is_readable($path)) {
-            $path = APP_ATTACHMENT_URL . $filename;
-        }
+        $path = APP_ATTACHMENT_URL . $filename;
         $finfo = new finfo(FILEINFO_MIME);
         $content = file_get_contents($path);
         $file = new File();

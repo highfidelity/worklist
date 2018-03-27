@@ -12,7 +12,6 @@ SERVER_NAME=${WORKLIST_SERVER_NAME:="dev.worklist.net"}
 SERVER_CONFIG=$CURRENT_PATH/server.local.php
 CUSTOM_CONFIG=${WORKLIST_CUSTOM_CONFIG:=""}
 TMP_PATH=${WORKLIST_TMP_PATH:=$CURRENT_PATH/tmp}
-UPLOADS_PATH=${WORKLIST_UPLOADS_PATH:=$CURRENT_PATH/uploads}
 DEBUG_FILE=${WORKLIST_DEBUG_FILE:=$CURRENT_PATH/php.errors}
 
 # We assume that developers works on their own forked repos 
@@ -77,10 +76,3 @@ cp .htaccess_default .htaccess
 sed -i s/~unixusername/~$CURRENT_USER/g .htaccess
 sed -i s/sandboxdir/$SANDBOX_NAME/g .htaccess
 sed -i s/#RewriteBase/RewriteBase/g .htaccess
-
-# Uploads dir: same than tmp
-if [ ! -d  $UPLOADS_PATH ]
-then
-  mkdir $UPLOADS_PATH
-fi
-chmod -R 777 $UPLOADS_PATH
