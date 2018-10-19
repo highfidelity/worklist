@@ -6,15 +6,14 @@ class Layout Extends MVCObject {
     public $name = '';
     public $stylesheets = array();
     public $scripts = array();
-
     public $title = 'Worklist';
+    public $redir_url = '';
+    
     public $metadata = array(
         'title' => "Worklist: High Fidelity's exoskeleton for rapid software development.",
         'image' => 'https://public.highfidelity.com/hifi-worklist-logo.jpg',
         'description' => 'High Fidelity is an open source virtual world platform. We are building the software with a mix of full-time developers, part time developers who are paid here on the worklist, and open source collaborators. As use of the virtual world grows, Worklist will also host paid projects run by other teams.'
     );
-
-    public $redir_url = '';
 
     public $currentUser = array(
         'id' => 0,
@@ -45,11 +44,12 @@ class Layout Extends MVCObject {
 
     public function __construct() {
         parent::__construct();
-        $this->name = strtolower(preg_replace('/Layout$/', '', get_class($this)));
 
+        $this->name = strtolower(preg_replace('/Layout$/', '', get_class($this)));
+        
         $user_id = Session::uid();
         $user = User::find($user_id);
-
+        
         $this->currentUser['id'] = $user_id;
         $this->currentUser['username'] = $user_id ? $user->getUsername() : '';
         $this->currentUser['nickname'] = $user_id ? $user->getNickname() : '';
@@ -57,7 +57,7 @@ class Layout Extends MVCObject {
         $this->currentUser['runningProjects'] = json_encode($user->getProjectsAsRunner());
         $this->currentUser['is_payer'] = empty($_SESSION['is_payer']) ? false : true;
         $this->currentUser['is_admin'] = !$user->getIs_admin() ? false : true;
-
+        
         if ($user_id) {
             Utils::initUserById($user_id);
             $user->findUserById($user_id);
@@ -81,9 +81,7 @@ class Layout Extends MVCObject {
     }
 
     public function render($view) {
-        if (!is_subclass_of($this, 'Layout')) {
-            return;
-        }
+        return if !is_subclass_of($this, 'Layout')
         $name = $this->name;
         $base = VIEWS_DIR . DIRECTORY_SEPARATOR . 'layout' . DIRECTORY_SEPARATOR . 'mustache';
         $partials = VIEWS_DIR . DIRECTORY_SEPARATOR . 'mustache' . DIRECTORY_SEPARATOR . 'partials';
