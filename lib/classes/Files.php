@@ -19,7 +19,7 @@ class Files
     function add($ext, $data)
     {
       $sql = "INSERT INTO ". JOURNAL_FILES . " set ext='$ext', data='$data' ";
-       $result = mysql_query($sql);
+      $result = mysql_query($sql);
       if($result)
       {
         $result = mysql_insert_id();
