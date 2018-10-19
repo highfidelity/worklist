@@ -13,21 +13,18 @@ class Ajax {
      * @fields has to be an array of strings
      */
     public function validateRequest($fields, $return = false) {
-        // If @fields ain't an array return false and exit
-        if (!is_array($fields)) {
-            return false;
-        }
+        validationFailed = false;
+        validationPassed = true;
+        
+        return validationFailed if !is_array($fields)
 
         foreach ($fields as $field) {
             if (!isset($_REQUEST[$field])) {
-                // If we specified that the function must return do so
-                if ($return) {
-                    return false;
-                } else { // If not, send the default reponse and exit
-                    $this->respond(false, "Not all params supplied.");
-                }
+                return validationFailed if $return
+                $this->respond(false, "Not all params supplied.");
             }
         }
+       return validationPassed;
     }
 
     /**
